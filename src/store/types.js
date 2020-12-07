@@ -1,0 +1,15 @@
+export const GOOGLE_SEARCH = "GOOGLE_SEARCH";
+export const GOOGLE_SEARCH_CLEAR = "GOOGLE_SEARCH_CLEAR";
+export const GOOGLE_SEARCH_SEARCHED = "GOOGLE_SEARCH_SEARCHED";
+export const ADD_TO_WOO_DB = "ADD_TO_WOO_DB";
+export const UPDATE_WOO_DB = "UPDATE_WOO_DB";
+export const WOO_DB_ALL = "WOO_DB_ALL";
+export const WOO_DB_IN = "WOO_DB_IN";
+export const WOO_DB_OUT = "WOO_DB_OUT";
+export const WOO_DB_DELETE_ALL = "WOO_DB_DELETE_ALL";
+export const WOO_DB_DELETE_IN = "WOO_DB_DELETE_IN";
+export const WOO_DB_DELETE_OUT = "WOO_DB_DELETE_OUT";
+export const WOO_DB_SEARCH_STATE = "WOO_DB_SEARCH_STATE";
+export const WOO_DB_SEARCH_TERM = "WOO_DB_SEARCH_TERM";
+export const WOO_DB_SEARCH_CLEAR = "WOO_DB_SEARCH_CLEAR";
+export const WOO_DB_DATA_READY = "WOO_DB_DATA_READY";
