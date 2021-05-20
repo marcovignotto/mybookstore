@@ -97,15 +97,15 @@ const BookItem = ({ item }) => {
   const [menuContentsAnimation, setMenuContentsAnimation] = useState();
 
   const styleAnimation = {
-    "animation-name": menuAnimation,
-    "animation-duration": "0.2s",
-    "animation-timing-function": "linear",
+    animationName: menuAnimation,
+    animationDuration: "0.2s",
+    animationTimingFunction: "linear",
   };
 
   const styleContentsAnimation = {
-    "animation-name": menuContentsAnimation,
-    "animation-duration": "0.2s",
-    "animation-timing-function": "linear",
+    animationName: menuContentsAnimation,
+    animationDuration: "0.2s",
+    animationTimingFunction: "linear",
   };
 
   // console.log(menuAnimation);
