@@ -310,28 +310,46 @@ const BookItem = ({ item }) => {
           >
             {item.volumeInfo.authors}
           </Grid>
-          <Grid
-            item
-            className="item5"
-            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-          >
-            ----
-          </Grid>
-          <Grid
-            item
-            className="item6"
-            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-          >
-            {identifiers.length === 0
-              ? null
-              : identifiers.map((item) => {
-                  return (
-                    <Grid key={item.identifier} item>
-                      {item.type} : {item.identifier}
+          {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+          {identifiers.length === 0
+            ? null
+            : identifiers.map((item) => {
+                let other = "";
+                let isbn10 = "";
+                let isbn13 = "";
+                if (item.type === "OTHER") other = item.identifier;
+                if (item.type === "ISBN_10") isbn10 = item.identifier;
+                if (item.type === "ISBN_13") isbn13 = item.identifier;
+
+                return (
+                  <>
+                    <Grid
+                      // key={item.identifier}
+                      key={isbn13.length === 0 ? other : isbn13}
+                      item
+                      className="item5"
+                      onClick={
+                        !addToStore ? clickAddToStore : clickRemoveFromStore
+                      }
+                    >
+                      {isbn13.length === 0 ? null : isbn13}
                     </Grid>
-                  );
-                })}
-          </Grid>
+                    <Grid
+                      key={isbn10.length === 0 ? other : isbn10}
+                      item
+                      className="item6"
+                      onClick={
+                        !addToStore ? clickAddToStore : clickRemoveFromStore
+                      }
+                    >
+                      {other.length === 0 ? null : other}
+                      {isbn10.length === 0 ? null : isbn10}
+                    </Grid>
+                  </>
+                );
+              })}
+
+          {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
         </Grid>
 
         {!addToStore ? (
