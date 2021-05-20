@@ -166,7 +166,7 @@ const BookItem = ({ item, loading }) => {
         );
 
         await setIdentifiers(mapIden);
-        const res = await mapIden.map((item) => setIsbnToSend(item.identifier));
+        const res = await mapIden.map((item) => setIsbnToSend(mapIden));
         setIsIdentifiersReady(true);
         return res;
       }

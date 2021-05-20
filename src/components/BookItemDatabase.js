@@ -66,7 +66,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const [itemIsUpdated, setItemIsUpdated] = useState(false);
 
   const [addToStore, setAddToStore] = useState(false);
-  const [codes, setCodes] = useState(["No codes Found"]);
+  const [codes, setCodes] = useState([]);
 
   const [newPrice, setNewPrice] = useState({ price: price });
   const [newStockQuantity, setNewStockQuantity] = useState({
@@ -226,6 +226,12 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
   // });
 
+  // console.log(Array.isArray(ean_code));
+  // console.log(codes.length === 0);
+
+  // console.log(ean_code);
+  // console.log(codes);
+
   return (
     <div className="book-item">
       <div
@@ -262,6 +268,70 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         >
           {short_description}
         </div>
+        {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+        {/* {Array.isArray(ean_code) && codes.length === 0
+          ? null
+          : codes.map((item) => {
+              let other = "";
+              let isbn10 = "";
+              let isbn13 = "";
+              if (item.type === "OTHER") other = item.identifier;
+              if (item.type === "ISBN_10") isbn10 = item.identifier;
+              if (item.type === "ISBN_13") isbn13 = item.identifier;
+
+              if (other.length > 0) {
+                return (
+                  <>
+                    <div
+                      style={{ textAlign: "center" }}
+                      // key={extractIdentifier(other)}
+                      item
+                      className="item5"
+                      onClick={
+                        !addToStore ? clickAddToStore : clickRemoveFromStore
+                      }
+                    >
+                      {other}
+                    </div>
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <div
+                      key={
+                        isbn13.length === 0
+                          ? Math.floor(Math.random() * 100000)
+                          : isbn13
+                      }
+                      item
+                      className="item5"
+                      onClick={
+                        !addToStore ? clickAddToStore : clickRemoveFromStore
+                      }
+                    >
+                      {addToStore ? "ISBN 13: " : null}
+                      {isbn13.length === 0 ? null : isbn13}
+                    </div>
+                    <div
+                      key={isbn10}
+                      item
+                      className="item6"
+                      onClick={
+                        !addToStore ? clickAddToStore : clickRemoveFromStore
+                      }
+                    >
+                      {addToStore ? "ISBN 10: " : null}
+                      {isbn10.length === 0 ? null : isbn10}
+                    </div>
+                  </>
+                );
+              }
+            })} */}
+
+        {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+
+        {/* START OLD DIVS  */}
         <div
           className="item5"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
@@ -272,6 +342,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           className="item6"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
+          {/* {console.log(codes)} */}
           {Array.isArray(ean_code) ? (
             codes.map((item) => {
               return (
@@ -290,6 +361,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             <div className="text-out-of-stock">OUT OF STOCK</div>
           )}
         </div>
+
+        {/* END OLD DIVS  */}
       </div>
       {!addToStore
         ? ""
