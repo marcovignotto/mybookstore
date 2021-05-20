@@ -17,15 +17,19 @@ import {
 } from "../types";
 
 import axios from "axios";
-
+/**
+ * @desc Variables
+ */
 const API = process.env.REACT_APP_GOOGLE_BOOK_API;
-
 const API_CONVERTER = process.env.REACT_APP_API_CONVERTER;
-
 const WOO_CK = process.env.REACT_APP_WOO_CK;
 const WOO_CS = process.env.REACT_APP_WOO_CS;
-
 const RES = 20;
+
+/**
+ * @desc cals the Google Books APIs
+ * and searches based on title/author or ISBN
+ */
 
 export const googleSearch = (entry) => {
   return async (dispatch) => {
@@ -37,7 +41,6 @@ export const googleSearch = (entry) => {
 
     try {
       if (!entry.isbn) {
-        //&langRestrict=it&maxResu...
         const res = await axios.get(
           `https://www.googleapis.com/books/v1/volumes?q=${entry.title}+inauthor:${entry.author}&maxResults=${RES}&key=${API}`,
           entry
@@ -45,12 +48,10 @@ export const googleSearch = (entry) => {
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
         return res;
       } else if (entry.isbn) {
-        console.log(entry.isbn);
         const res = await axios.get(
           `https://www.googleapis.com/books/v1/volumes?q=isbn:${entry.isbn}&maxResults=${RES}&key=${API}`,
           entry
         );
-        console.log("isbn search", res.data.items);
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
         return res;
       }
@@ -71,6 +72,10 @@ export const setGoogleSearchClear = () => {
   };
 };
 
+/**
+ * @desc set the terms searched in google
+ */
+
 export const setGoogleSearched = (state) => {
   return async (dispatch) => {
     try {
@@ -81,7 +86,15 @@ export const setGoogleSearched = (state) => {
   };
 };
 
+/**
+ * @desc POST to WooCommerce
+ */
+
 export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
+  /**
+   * @desc creates obj for the cover
+   * prepares it for the conversion
+   */
   const dataImg = {
     Parameters: [
       {
@@ -102,6 +115,9 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
   };
 
   return async (dispatch) => {
+    /**
+     * @desc converts webp to JPG
+     */
     const fetchData = async () => {
       const result = await axios.request({
         method: "post",
@@ -117,6 +133,9 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
     };
     fetchData()
       .then(function (results) {
+        /**
+         * @desc remapping the data in a new obj
+         */
         const data = {
           name: `${info.title}`,
           type: "simple",
@@ -165,6 +184,10 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
           data: dataJson,
         };
 
+        /**
+         * @desc POST in WooCommerce
+         */
+
         const resultReq = axios({
           method: "post",
           url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
@@ -182,6 +205,10 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
       .catch((error) => console.log(error));
   };
 };
+
+/**
+ * @desc PUT on WooCommerce
+ */
 
 export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
   const data = {
@@ -228,6 +255,10 @@ export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
   };
 };
 
+/**
+ * @desc DELETE from WooCommerce
+ */
+
 export const deleteWooDb = (id) => {
   return async (dispatch) => {
     try {
@@ -247,6 +278,12 @@ export const deleteWooDb = (id) => {
     }
   };
 };
+
+/**
+ * @desc retrives all the data from WooCommerce
+ * @requires setWooDbState to choose the kind of search
+ * stock / out of stock / all
+ */
 
 export const getWooDbAll = (stock, searchTerms) => {
   if (searchTerms === null) {
@@ -295,6 +332,11 @@ export const getWooDbAll = (stock, searchTerms) => {
     };
   }
 };
+
+/**
+ * @desc set the kind of search in WooCommerce
+ * stock / out of stock / all
+ */
 
 export const setWooDbState = (state) => {
   // console.log(state);
