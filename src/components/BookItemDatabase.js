@@ -53,9 +53,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const cover = item?.images[0].src;
   const status = item?.attributes[0].options[0];
 
-  console.log(item);
-  console.log(item?.attributes[0].options[0]);
-
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
 

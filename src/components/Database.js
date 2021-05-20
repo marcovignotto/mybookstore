@@ -216,7 +216,7 @@ const Database = ({
       </div>
     </>
   );
-  console.log(wooDbSearchTerm);
+
   return (
     <div>
       <form className={classes.root} noValidate autoComplete="off">

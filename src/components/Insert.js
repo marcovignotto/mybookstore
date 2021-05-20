@@ -204,9 +204,13 @@ const Insert = ({ data, loading, googleSearched }) => {
     setInProgress(false);
   };
 
+  /**
+   * @desc tablehead for books results
+   */
+
   const tableHead = (
     <>
-      <Grid container className={["table-found", classes.tableFound]}>
+      <Grid container className={`table-found ${classes.tableFound}`}>
         <Grid item className="item1"></Grid>
         <Grid item className="item2">
           Cover
@@ -226,6 +230,10 @@ const Insert = ({ data, loading, googleSearched }) => {
       </Grid>
     </>
   );
+
+  /**
+   * @desc for no results
+   */
 
   const showNodata = (
     <div className="no-data">No books found, try another research</div>
