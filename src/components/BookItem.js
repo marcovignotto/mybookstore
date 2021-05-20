@@ -96,6 +96,8 @@ const BookItem = ({ item }) => {
 
   const [menuContentsAnimation, setMenuContentsAnimation] = useState();
 
+  const [areIdentifiersReady, setIsIdentifiersReady] = useState(false);
+
   const styleAnimation = {
     animationName: menuAnimation,
     animationDuration: "0.2s",
@@ -107,10 +109,6 @@ const BookItem = ({ item }) => {
     animationDuration: "0.2s",
     animationTimingFunction: "linear",
   };
-
-  // console.log(menuAnimation);
-
-  // console.log(styleContentsAnimation);
 
   const [cardSizes, setCardSizes] = useState({
     width: "",
@@ -149,10 +147,14 @@ const BookItem = ({ item }) => {
     }
   }, [addToStore]);
 
+  /**
+   * @desc set indentifiers
+   */
   useEffect(() => {
     if (item.volumeInfo.industryIdentifiers === undefined) {
       setIdentifiers(["00000000000"]);
       setIsbnToSend(["00000000000"]);
+      setIsIdentifiersReady(true);
     } else {
       async function mapIndentifiers() {
         const mapIden = await item.volumeInfo.industryIdentifiers.map(
@@ -163,6 +165,7 @@ const BookItem = ({ item }) => {
 
         await setIdentifiers(mapIden);
         const res = await mapIden.map((item) => setIsbnToSend(item.identifier));
+        setIsIdentifiersReady(true);
         return res;
       }
       mapIndentifiers();
@@ -271,136 +274,175 @@ const BookItem = ({ item }) => {
 
   return (
     <>
-      <Grid container className="book-item">
-        <Grid
-          container
-          className={!addToStore ? "items-table" : "items-table-selected"}
-          style={(cardStyle, styleAnimation, styleContentsAnimation)}
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          <Grid item className="item1">
-            {!addToStore ? (
-              <button onClick={clickAddToStore} className="btn-add">
-                <i className="fas fa-plus"></i>
-              </button>
-            ) : (
-              <button onClick={clickRemoveFromStore} className="btn-add">
-                <i className="fas fa-minus"></i>
-              </button>
-            )}
-          </Grid>
+      {!areIdentifiersReady ? null : (
+        <Grid container className="book-item">
           <Grid
-            item
-            className="item2"
+            container
+            className={!addToStore ? "items-table" : "items-table-selected"}
+            style={(cardStyle, styleAnimation, styleContentsAnimation)}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
-            <img src={imgSrc} alt="" />
-          </Grid>
-          <Grid
-            item
-            className="item3"
-            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-          >
-            {item.volumeInfo.title}
-          </Grid>
-          <Grid
-            item
-            className="item4"
-            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-          >
-            {item.volumeInfo.authors}
-          </Grid>
-          {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
-          {identifiers.length === 0
-            ? null
-            : identifiers.map((item) => {
-                let other = "";
-                let isbn10 = "";
-                let isbn13 = "";
-                if (item.type === "OTHER") other = item.identifier;
-                if (item.type === "ISBN_10") isbn10 = item.identifier;
-                if (item.type === "ISBN_13") isbn13 = item.identifier;
+            <Grid item className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </Grid>
+            <Grid
+              item
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={imgSrc} alt="" />
+            </Grid>
+            <Grid
+              item
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {item.volumeInfo.title}
+            </Grid>
+            <Grid
+              item
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {item.volumeInfo.authors}
+            </Grid>
+            {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+            {identifiers.length === 0
+              ? null
+              : identifiers.map((item) => {
+                  let other = "";
+                  let isbn10 = "";
+                  let isbn13 = "";
+                  if (item.type === "OTHER") other = item.identifier;
+                  if (item.type === "ISBN_10") isbn10 = item.identifier;
+                  if (item.type === "ISBN_13") isbn13 = item.identifier;
 
-                return (
-                  <>
-                    <Grid
-                      // key={item.identifier}
-                      key={isbn13.length === 0 ? other : isbn13}
-                      item
-                      className="item5"
-                      onClick={
-                        !addToStore ? clickAddToStore : clickRemoveFromStore
-                      }
-                    >
-                      {isbn13.length === 0 ? null : isbn13}
-                    </Grid>
-                    <Grid
-                      key={isbn10.length === 0 ? other : isbn10}
-                      item
-                      className="item6"
-                      onClick={
-                        !addToStore ? clickAddToStore : clickRemoveFromStore
-                      }
-                    >
-                      {other.length === 0 ? null : other}
-                      {isbn10.length === 0 ? null : isbn10}
-                    </Grid>
-                  </>
-                );
-              })}
+                  /**
+                   * @desc wait for loading
+                   */
 
-          {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+                  if (
+                    other.length === 0 ||
+                    isbn10.length === 0 ||
+                    isbn13.length === 0
+                  ) {
+                    return null;
+                  } else {
+                    if (other.length > 0) {
+                      return (
+                        <>
+                          <Grid
+                            key={other}
+                            item
+                            className="item6"
+                            onClick={
+                              !addToStore
+                                ? clickAddToStore
+                                : clickRemoveFromStore
+                            }
+                          >
+                            {other}
+                          </Grid>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <>
+                          <Grid
+                            key={
+                              isbn13.length === 0
+                                ? Math.floor(Math.random() * 100000)
+                                : isbn13
+                            }
+                            item
+                            className="item5"
+                            onClick={
+                              !addToStore
+                                ? clickAddToStore
+                                : clickRemoveFromStore
+                            }
+                          >
+                            {isbn13.length === 0 ? null : isbn13}
+                          </Grid>
+                          <Grid
+                            key={isbn10}
+                            item
+                            className="item6"
+                            onClick={
+                              !addToStore
+                                ? clickAddToStore
+                                : clickRemoveFromStore
+                            }
+                          >
+                            {isbn10.length === 0 ? null : isbn10}
+                          </Grid>
+                        </>
+                      );
+                    }
+                  }
+                })}
+
+            {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+          </Grid>
+
+          {!addToStore ? (
+            ""
+          ) : (
+            <Grid container className="add-to-store" style={cardStyleAddDb}>
+              <Grid item className="item1"></Grid>
+              <Grid item className="item2"></Grid>
+              <Grid item className="item3">
+                <input
+                  className="input-price"
+                  type="number"
+                  name="price"
+                  value={price.price}
+                  placeholder="10"
+                  onChange={bookPrice}
+                />
+                €
+              </Grid>
+              <Grid item className="item4">
+                <input
+                  className="input-stock"
+                  type="number"
+                  name="stock"
+                  value={stockQuantity.books}
+                  defaultValue="1"
+                  onChange={bookQuantity}
+                />
+              </Grid>
+              <Grid item className="item5">
+                <form>
+                  <select
+                    className="input-status"
+                    id="status"
+                    name="status"
+                    onChange={changeBookStatus}
+                    value={bookStatus.status}
+                  >
+                    <option value="crap">Crap</option>
+                    <option value="good">Good</option>
+                    <option value="like-new">Like New</option>
+                  </select>
+                </form>
+              </Grid>
+
+              <Grid item className="item6">
+                {isItemAdded ? itemAdded : addItem}
+              </Grid>
+            </Grid>
+          )}
         </Grid>
-
-        {!addToStore ? (
-          ""
-        ) : (
-          <Grid container className="add-to-store" style={cardStyleAddDb}>
-            <Grid item className="item1"></Grid>
-            <Grid item className="item2"></Grid>
-            <Grid item className="item3">
-              <input
-                className="input-price"
-                type="number"
-                name="price"
-                value={price.price}
-                placeholder="10"
-                onChange={bookPrice}
-              />
-              €
-            </Grid>
-            <Grid item className="item4">
-              <input
-                className="input-stock"
-                type="number"
-                name="stock"
-                value={stockQuantity.books}
-                defaultValue="1"
-                onChange={bookQuantity}
-              />
-            </Grid>
-            <Grid item className="item5">
-              <form>
-                <select
-                  className="input-status"
-                  id="status"
-                  name="status"
-                  onChange={changeBookStatus}
-                  value={bookStatus.status}
-                >
-                  <option value="crap">Crap</option>
-                  <option value="good">Good</option>
-                  <option value="like-new">Like New</option>
-                </select>
-              </form>
-            </Grid>
-
-            <Grid item className="item6">
-              {isItemAdded ? itemAdded : addItem}
-            </Grid>
-          </Grid>
-        )}
-      </Grid>
+      )}
     </>
   );
 };
