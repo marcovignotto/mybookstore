@@ -64,14 +64,12 @@ export const theme = createMuiTheme({
     },
     btnUpdateItem: {
       fontSize: "0.8rem",
-      // width: "250px",
-      textTransform: colors.secondaryMain,
-      backgroundColor: "red",
+      textTransform: "uppercase",
+      backgroundColor: colors.secondaryMain,
       color: "white",
       borderRadius: "5px",
-      padding: "0px",
-      paddingRight: "8px",
-      paddingLeft: "8px",
+      marginBottom: "5px",
+      marginTop: "5px",
       "&:hover": {
         backgroundColor: colors.btnOver,
       },

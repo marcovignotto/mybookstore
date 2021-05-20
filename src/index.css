@@ -109,6 +109,8 @@ body {
 }
 
 /* END BTNS */
+
+/* NAV BAR */
 .navbar {
   padding: 20px 0 20px 0;
   text-decoration: none;
@@ -142,6 +144,8 @@ body {
   /* border-color: black; */
   border-bottom: 4px solid chocolate;
 }
+
+/* BOOKS */
 
 #book-search {
 }
@@ -189,6 +193,7 @@ body {
   width: 470px; */
 }
 
+/* TABLES GRIDS */
 .table-found {
   margin-top: 20px;
   padding-top: 10px;
@@ -228,6 +233,10 @@ body {
   grid-row: 1;
 }
 
+.items-found {
+  margin-top: 20px;
+}
+
 .book-item .items-table {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -253,6 +262,7 @@ body {
 
 /* END OUT OF STOCK */
 
+/* BOOK ITEM */
 .book-item .items-table:hover {
   background-color: lightgray;
   cursor: pointer;
@@ -356,6 +366,10 @@ body {
 }
 
 /* END .items-table-selected */
+
+.add-to-store {
+  border-radius: 10px;
+}
 
 .book-item .add-to-store {
   padding-top: 20px;

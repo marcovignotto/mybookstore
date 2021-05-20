@@ -357,6 +357,7 @@ const BookItem = ({ item, loading }) => {
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
+                          {addToStore ? "ISBN 13: " : null}
                           {isbn13.length === 0 ? null : isbn13}
                         </Grid>
                         <Grid
@@ -367,6 +368,7 @@ const BookItem = ({ item, loading }) => {
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
+                          {addToStore ? "ISBN 10: " : null}
                           {isbn10.length === 0 ? null : isbn10}
                         </Grid>
                       </>
