@@ -369,7 +369,6 @@ const BookItem = ({ item }) => {
                   name="status"
                   onChange={changeBookStatus}
                   value={bookStatus.status}
-                  defaultValue="good"
                 >
                   <option value="crap">Crap</option>
                   <option value="good">Good</option>
