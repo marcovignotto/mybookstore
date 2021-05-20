@@ -232,7 +232,7 @@ const Insert = ({ data, loading, googleSearched }) => {
   );
 
   /**
-   * @desc for no results
+   * @desc message for no results
    */
 
   const showNodata = (
@@ -312,7 +312,6 @@ const Insert = ({ data, loading, googleSearched }) => {
         </div>
       </div>
       {isDataReady ? tableHead : null}
-
       <div className="items-found">
         {loading ? (
           <>

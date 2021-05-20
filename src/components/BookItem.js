@@ -83,7 +83,7 @@ const BookItem = ({ item }) => {
   const classes = useStyles();
 
   const [imgSrc, setImgSrc] = useState(undefined);
-  const [identifiers, setIdentifiers] = useState(["00000000000"]);
+  const [identifiers, setIdentifiers] = useState([]);
   const [isbnToSend, setIsbnToSend] = useState();
 
   const [thumbAdd, setThumbAdd] = useState();
@@ -240,116 +240,151 @@ const BookItem = ({ item }) => {
       </div>
     </>
   );
+
+  // console.log(identifiers.length);
+  // useEffect(() => {
+  //   // console.log(identifiers === undefined);
+  //   identifiers.map((item) => {
+  //     if (item.identifier?.search(":") === -1) {
+  //       return item.identifier;
+  //     } else {
+  //       console.log(
+  //         item.identifier?.substring(item.identifier.search(":") + 1)
+  //       );
+  //       return item.identifier?.substring(item.identifier.search(":") + 1);
+  //     }
+  //   });
+  // }, [identifiers]);
+
+  // key={extractIdentifier(item.identifier)}
+
+  // const extractIdentifier = (id) => {
+  //   // console.log(id);
+  //   if (id.search(":") === -1) {
+  //     return id;
+  //   } else {
+  //     return id.substring(id.search(":") + 1);
+  //   }
+  // };
+
+  // console.log(identifiers.length);
+
   return (
-    <Grid container className="book-item">
-      <Grid
-        container
-        className={!addToStore ? "items-table" : "items-table-selected"}
-        style={(cardStyle, styleAnimation, styleContentsAnimation)}
-        onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-      >
-        <Grid item className="item1">
-          {!addToStore ? (
-            <button onClick={clickAddToStore} className="btn-add">
-              <i className="fas fa-plus"></i>
-            </button>
-          ) : (
-            <button onClick={clickRemoveFromStore} className="btn-add">
-              <i className="fas fa-minus"></i>
-            </button>
-          )}
-        </Grid>
+    <>
+      <Grid container className="book-item">
         <Grid
-          item
-          className="item2"
+          container
+          className={!addToStore ? "items-table" : "items-table-selected"}
+          style={(cardStyle, styleAnimation, styleContentsAnimation)}
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
-          <img src={imgSrc} alt="" />
+          <Grid item className="item1">
+            {!addToStore ? (
+              <button onClick={clickAddToStore} className="btn-add">
+                <i className="fas fa-plus"></i>
+              </button>
+            ) : (
+              <button onClick={clickRemoveFromStore} className="btn-add">
+                <i className="fas fa-minus"></i>
+              </button>
+            )}
+          </Grid>
+          <Grid
+            item
+            className="item2"
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <img src={imgSrc} alt="" />
+          </Grid>
+          <Grid
+            item
+            className="item3"
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            {item.volumeInfo.title}
+          </Grid>
+          <Grid
+            item
+            className="item4"
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            {item.volumeInfo.authors}
+          </Grid>
+          <Grid
+            item
+            className="item5"
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            ----
+          </Grid>
+          <Grid
+            item
+            className="item6"
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            {identifiers.length === 0
+              ? null
+              : identifiers.map((item) => {
+                  return (
+                    <Grid key={item.identifier} item>
+                      {item.type} : {item.identifier}
+                    </Grid>
+                  );
+                })}
+          </Grid>
         </Grid>
-        <Grid
-          item
-          className="item3"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {item.volumeInfo.title}
-        </Grid>
-        <Grid
-          item
-          className="item4"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {item.volumeInfo.authors}
-        </Grid>
-        <Grid
-          item
-          className="item5"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          ----
-        </Grid>
-        <Grid
-          item
-          className="item6"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {identifiers.map((item) => (
-            <Grid item>
-              {item.type} : {item.identifier}
+
+        {!addToStore ? (
+          ""
+        ) : (
+          <Grid container className="add-to-store" style={cardStyleAddDb}>
+            <Grid item className="item1"></Grid>
+            <Grid item className="item2"></Grid>
+            <Grid item className="item3">
+              <input
+                className="input-price"
+                type="number"
+                name="price"
+                value={price.price}
+                placeholder="10"
+                onChange={bookPrice}
+              />
+              €
             </Grid>
-          ))}
-        </Grid>
+            <Grid item className="item4">
+              <input
+                className="input-stock"
+                type="number"
+                name="stock"
+                value={stockQuantity.books}
+                defaultValue="1"
+                onChange={bookQuantity}
+              />
+            </Grid>
+            <Grid item className="item5">
+              <form>
+                <select
+                  className="input-status"
+                  id="status"
+                  name="status"
+                  onChange={changeBookStatus}
+                  value={bookStatus.status}
+                  defaultValue="good"
+                >
+                  <option value="crap">Crap</option>
+                  <option value="good">Good</option>
+                  <option value="like-new">Like New</option>
+                </select>
+              </form>
+            </Grid>
+
+            <Grid item className="item6">
+              {isItemAdded ? itemAdded : addItem}
+            </Grid>
+          </Grid>
+        )}
       </Grid>
-
-      {!addToStore ? (
-        ""
-      ) : (
-        <Grid container className="add-to-store" style={cardStyleAddDb}>
-          <Grid item className="item1"></Grid>
-          <Grid item className="item2"></Grid>
-          <Grid item className="item3">
-            <input
-              className="input-price"
-              type="number"
-              name="price"
-              value={price.price}
-              placeholder="10"
-              onChange={bookPrice}
-            />
-            €
-          </Grid>
-          <Grid item className="item4">
-            <input
-              className="input-stock"
-              type="number"
-              name="stock"
-              value={stockQuantity.books}
-              defaultValue="1"
-              onChange={bookQuantity}
-            />
-          </Grid>
-          <Grid item className="item5">
-            <form>
-              <select
-                className="input-status"
-                id="status"
-                name="status"
-                onChange={changeBookStatus}
-                value={bookStatus.status}
-                defaultValue="good"
-              >
-                <option value="crap">Crap</option>
-                <option value="good">Good</option>
-                <option value="like-new">Like New</option>
-              </select>
-            </form>
-          </Grid>
-
-          <Grid item className="item6">
-            {isItemAdded ? itemAdded : addItem}
-          </Grid>
-        </Grid>
-      )}
-    </Grid>
+    </>
   );
 };
 
