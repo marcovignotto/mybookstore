@@ -261,14 +261,14 @@ const BookItem = ({ item, loading }) => {
 
   // key={extractIdentifier(item.identifier)}
 
-  // const extractIdentifier = (id) => {
-  //   // console.log(id);
-  //   if (id.search(":") === -1) {
-  //     return id;
-  //   } else {
-  //     return id.substring(id.search(":") + 1);
-  //   }
-  // };
+  const extractIdentifier = (id) => {
+    // console.log(id);
+    if (id.search(":") === -1) {
+      return id;
+    } else {
+      return id.substring(id.search(":") + 1);
+    }
+  };
 
   // console.log(identifiers.length);
 
@@ -331,7 +331,7 @@ const BookItem = ({ item, loading }) => {
                       <>
                         <Grid
                           style={{ textAlign: "center" }}
-                          key={other}
+                          key={extractIdentifier(other)}
                           item
                           className="item5"
                           onClick={
