@@ -1,3 +1,9 @@
+/**
+ * @description Insert section of the app
+ * to search into Google Books APIs
+ * and insert into WooCommerce
+ */
+
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useDispatch, connect } from "react-redux";
@@ -10,14 +16,15 @@ import {
 
 import BookItem from "./BookItem";
 
+/**
+ * @description MatUI
+ */
+
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
 import { makeStyles } from "@material-ui/core/styles";
-
 import Typography from "@material-ui/core/Typography";
-
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
@@ -163,9 +170,13 @@ const Insert = ({ data, loading, googleSearched }) => {
     }
   };
 
+  /**
+   * @description Adds book to WooCommerce
+   * @param {*} e
+   */
+
   const onSubmit = (e) => {
     e.preventDefault();
-
     setInProgress(true);
     setItem(item);
     dispatch(googleSearch(item));
@@ -173,6 +184,9 @@ const Insert = ({ data, loading, googleSearched }) => {
     setSearched(true);
   };
 
+  /**
+   * @description clear search once is over
+   */
   const clearSearch = () => {
     setItem({
       title: "",

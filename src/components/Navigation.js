@@ -1,6 +1,13 @@
+/**
+ * @description App's menu
+ */
 import React, { Fragment, useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
+
+/**
+ * @description MatUI
+ */
 
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Slide from "@material-ui/core/Slide";
@@ -29,11 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function HideOnScroll(props) {
   const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
   const trigger = useScrollTrigger();
-
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       {children}
@@ -59,10 +62,18 @@ const Navigation = (props) => {
     }
   }, [value]);
 
+  /**
+   * @desc Menu's routes
+   */
+
   const routes = [
     { name: "Insert Book", link: "/insert", activeIndex: 0 },
     { name: "Book's Database", link: "/database", activeIndex: 1 },
   ];
+
+  /**
+   * @description set current path
+   */
 
   useEffect(() => {
     [...routes].forEach((route) => {

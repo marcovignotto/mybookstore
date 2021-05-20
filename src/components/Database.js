@@ -1,3 +1,8 @@
+/**
+ * @description Database section of the app
+ * to handle the WooCommerce Books Database
+ */
+
 import React, { useState, useEffect } from "react";
 
 import { connect, useDispatch } from "react-redux";

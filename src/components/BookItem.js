@@ -1,3 +1,7 @@
+/**
+ * @description Single Book Item for insert
+ */
+
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, connect } from "react-redux";
