@@ -219,8 +219,6 @@ const Database = ({
     </>
   );
 
-  console.log(dataToMap);
-
   return (
     <div>
       <form className={classes.root} noValidate autoComplete="off">

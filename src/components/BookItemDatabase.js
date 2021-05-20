@@ -51,9 +51,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     id,
     price,
     ean_code,
-    name,
+    name, // Title
     stock_quantity,
-    short_description,
+    short_description, // Authors
     stock_status,
   } = item;
 
@@ -226,12 +226,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
   // });
 
-  // console.log(Array.isArray(ean_code));
-  // console.log(codes.length === 0);
-
-  // console.log(ean_code);
-  // console.log(codes);
-
   return (
     <div className="book-item">
       <div
@@ -266,10 +260,11 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           className="item4"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
-          {short_description}
+          {/* Removed <p> and </p> taken from WooCommerce */}
+          {short_description.substring(3, short_description.search("</p>"))}
         </div>
         {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
-        {/* {Array.isArray(ean_code) && codes.length === 0
+        {Array.isArray(ean_code) && codes.length === 0
           ? null
           : codes.map((item) => {
               let other = "";
@@ -323,16 +318,21 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                     >
                       {addToStore ? "ISBN 10: " : null}
                       {isbn10.length === 0 ? null : isbn10}
+                      {stockStatus === "instock" ? (
+                        ""
+                      ) : (
+                        <div className="text-out-of-stock">OUT OF STOCK</div>
+                      )}
                     </div>
                   </>
                 );
               }
-            })} */}
+            })}
 
         {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
 
         {/* START OLD DIVS  */}
-        <div
+        {/* <div
           className="item5"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
@@ -343,24 +343,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
           {/* {console.log(codes)} */}
-          {Array.isArray(ean_code) ? (
-            codes.map((item) => {
-              return (
-                <div>
-                  {item.type} : {item.identifier}
-                </div>
-              );
-            })
-          ) : (
-            <div>{codes}</div>
-          )}
-
-          {stockStatus === "instock" ? (
-            ""
-          ) : (
-            <div className="text-out-of-stock">OUT OF STOCK</div>
-          )}
-        </div>
 
         {/* END OLD DIVS  */}
       </div>

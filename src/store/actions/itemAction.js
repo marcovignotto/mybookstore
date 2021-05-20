@@ -136,7 +136,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
         /**
          * @desc remapping the data in a new obj
          */
-        console.log("info", info.authors);
         const data = {
           name: `${info.title}`,
           type: "simple",
@@ -195,7 +194,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
           data,
         });
 
-        // console.log("res from items", resultReq);
+        console.log("res from items", resultReq);
         dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
         // return resultReq.then((x) => console.log("Done!"));
         return resultReq;
