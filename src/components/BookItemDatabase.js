@@ -29,6 +29,13 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 
+import {
+  useTransition,
+  animated,
+  AnimatedProps,
+  config,
+} from "@react-spring/web";
+
 const useStyles = makeStyles((theme) => ({
   btnUpdateItem: {
     ...theme.buttons.btnUpdateItem,
@@ -87,9 +94,11 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const clickAddToStore = () => {
     setAddToStore(true);
+    setShowAnimation(true);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
+    setShowAnimation(false);
   };
 
   const handleBookPrice = (e) => {
@@ -194,6 +203,29 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     </div>
   );
 
+  const [showAnimation, setShowAnimation] = useState(false);
+  const transitions = useTransition(showAnimation, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 400,
+    // config: config.molasses,
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+  });
+  // return transitions(
+  //   (styles, item) => item && <animated.div style={styles}>✌️</animated.div>
+  // );
+  // const [index, set] = useState(0);
+  // const transitions = useTransition(index, {
+  //   keys: null,
+  //   from: { opacity: 0, transform: "translate3d(100%,0,0)" },
+  //   enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
+  //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
+  // });
+
   return (
     <div className="book-item">
       <div
@@ -259,64 +291,71 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           )}
         </div>
       </div>
-      {!addToStore ? (
-        ""
-      ) : (
-        <div className="add-to-store" style={cardStyleAddDb}>
-          <div className="item1"></div>
-          <div className="item2"></div>
-          <div className="item3">
-            <input
-              className="input-price"
-              type="number"
-              name="price"
-              value={price.price}
-              defaultValue={newPrice.price}
-              placeholder={newPrice.price}
-              onChange={handleBookPrice}
-            />
-            €
-          </div>
-          <div className="item4">
-            <input
-              className="input-stock"
-              type="number"
-              name="stock"
-              value={stock_quantity.quantity}
-              defaultValue={newStockQuantity.stock}
-              placeholder={newStockQuantity.stock}
-              onChange={handleBookQuantity}
-            />{" "}
-            pcs
-          </div>
-          <div className="item5">
-            <form>
-              <select
-                className="input-status"
-                id="status"
-                name="status"
-                onChange={handleBookStatus}
-                value={status.books}
-                defaultValue={newBookStatus.status}
-              >
-                <option value="Crap">Crap</option>
-                <option value="Good">Good</option>
-                <option value="like-new">Like New</option>
-              </select>
-            </form>
-          </div>
+      {!addToStore
+        ? ""
+        : transitions(
+            (styles, item) =>
+              item && (
+                <animated.div style={styles}>
+                  <div className="add-to-store" style={cardStyleAddDb}>
+                    <div className="item1"></div>
+                    <div className="item2"></div>
+                    <div className="item3">
+                      <input
+                        className="input-price"
+                        type="number"
+                        name="price"
+                        value={price.price}
+                        defaultValue={newPrice.price}
+                        placeholder={newPrice.price}
+                        onChange={handleBookPrice}
+                      />
+                      €
+                    </div>
+                    <div className="item4">
+                      <input
+                        className="input-stock"
+                        type="number"
+                        name="stock"
+                        value={stock_quantity.quantity}
+                        defaultValue={newStockQuantity.stock}
+                        placeholder={newStockQuantity.stock}
+                        onChange={handleBookQuantity}
+                      />{" "}
+                      pcs
+                    </div>
+                    <div className="item5">
+                      <form>
+                        <select
+                          className="input-status"
+                          id="status"
+                          name="status"
+                          onChange={handleBookStatus}
+                          value={status.books}
+                          defaultValue={newBookStatus.status}
+                        >
+                          <option value="Crap">Crap</option>
+                          <option value="Good">Good</option>
+                          <option value="like-new">Like New</option>
+                        </select>
+                      </form>
+                    </div>
 
-          <div className="item6">
-            {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
-              ? updateAndDelete
-              : null}
+                    <div className="item6">
+                      {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
+                        ? updateAndDelete
+                        : null}
 
-            {!showDeleteBtns && showDeleteConfirm ? confirmation : null}
-            {itemIsDeleted && !itemIsUpdated ? bookDeleted : null}
-            {itemIsUpdated ? bookUpdated : null}
-          </div>
-        </div>
-      )}
+                      {!showDeleteBtns && showDeleteConfirm
+                        ? confirmation
+                        : null}
+                      {itemIsDeleted && !itemIsUpdated ? bookDeleted : null}
+                      {itemIsUpdated ? bookUpdated : null}
+                    </div>
+                  </div>
+                </animated.div>
+              )
+          )}
     </div>
   );
 };
