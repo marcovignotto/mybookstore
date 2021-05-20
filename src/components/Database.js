@@ -3,7 +3,7 @@
  * to handle the WooCommerce Books Database
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 
 import { connect, useDispatch } from "react-redux";
 
@@ -95,7 +95,7 @@ const Database = ({
     });
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let where = wooDbSeaState;
 
     if (!wooDbDataReady) {
@@ -124,7 +124,7 @@ const Database = ({
     //eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wooDbSeaState === null) {
       dispatch(setWooDbState("stock_status=instock&"));
     } else {
@@ -133,7 +133,7 @@ const Database = ({
     //eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (wooDbSeaState === "") {
       setDataToMap(dataAll);
     } else if (wooDbSeaState === "stock_status=instock&") {
@@ -143,7 +143,7 @@ const Database = ({
     }
   }, [dataAll, dataIn, dataOut]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let where = wooDbSeaState;
 
     if (!wooDbDataReady) {
@@ -216,7 +216,7 @@ const Database = ({
       </div>
     </>
   );
-
+  console.log(wooDbSearchTerm);
   return (
     <div>
       <form className={classes.root} noValidate autoComplete="off">
@@ -280,7 +280,7 @@ const Database = ({
       <div className="items-found">
         {loading || !wooDbDataReady ? (
           <>
-            {inProgress ? (
+            {inProgress && dataToMap === null ? (
               <div className="in-progress">
                 <CircularProgress />
               </div>

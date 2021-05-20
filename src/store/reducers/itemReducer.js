@@ -23,7 +23,7 @@ const initialState = {
   wooDbIn: null,
   wooDbOut: null,
   wooDbSearchState: null,
-  wooDbSearchTerm: null,
+  wooDbSearchTerm: "",
   wooDbDataReady: false,
   loading: true,
 };
