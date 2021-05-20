@@ -273,7 +273,7 @@ const BookItem = ({ item, loading }) => {
   };
 
   // console.log(identifiers.length);
-
+  // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
   return (
     <>
       {/* to start waits loading from reducer */}
@@ -315,7 +315,9 @@ const BookItem = ({ item, loading }) => {
               className="item4"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
-              {item.volumeInfo.authors}
+              {item.volumeInfo.authors === undefined
+                ? ""
+                : item.volumeInfo.authors.join(", ")}
             </Grid>
             {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
             {identifiers.length === 0

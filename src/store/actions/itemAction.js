@@ -136,12 +136,13 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
         /**
          * @desc remapping the data in a new obj
          */
+        console.log("info", info.authors);
         const data = {
           name: `${info.title}`,
           type: "simple",
           regular_price: `${price.price}`,
           description: `${info.description}`,
-          short_description: `${info.authors}`,
+          short_description: `${info.authors.join(", ")}`,
           categories: [{ id: 9 }, { id: 14 }],
           manage_stock: true,
           stock_quantity: quantity.stock,
