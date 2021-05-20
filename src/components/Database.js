@@ -193,8 +193,8 @@ const Database = ({
     setInProgress(true);
     const data = await getDb(where, terms);
     await setDataToMap(data);
-    await setInProgress(false);
     await dispatch(setWooDbDataReady(true));
+    await setInProgress(false);
   };
 
   const clearWooDbSearch = () => {

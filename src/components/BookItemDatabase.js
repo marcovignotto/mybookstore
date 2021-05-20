@@ -16,12 +16,17 @@ import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import classNames from "classnames/bind";
 
+/**
+ * @desc converts Promises in true/false
+ */
 import { MakeQuerablePromise } from "../utils/convertPromises";
 
+/**
+ * @desc MatUI
+ */
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +52,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const cover = item.images[0].src;
   const status = item.attributes[0].options[0];
+
+  console.log(item);
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
