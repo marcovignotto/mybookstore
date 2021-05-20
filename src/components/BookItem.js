@@ -78,7 +78,7 @@ function getSizeOpen() {
   };
 }
 
-const BookItem = ({ item }) => {
+const BookItem = ({ item, loading }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -274,7 +274,8 @@ const BookItem = ({ item }) => {
 
   return (
     <>
-      {!areIdentifiersReady ? null : (
+      {/* to start waits loading from reducer */}
+      {loading ? null : (
         <Grid container className="book-item">
           <Grid
             container
@@ -325,68 +326,51 @@ const BookItem = ({ item }) => {
                   if (item.type === "ISBN_10") isbn10 = item.identifier;
                   if (item.type === "ISBN_13") isbn13 = item.identifier;
 
-                  /**
-                   * @desc wait for loading
-                   */
-
-                  if (
-                    other.length === 0 ||
-                    isbn10.length === 0 ||
-                    isbn13.length === 0
-                  ) {
-                    return null;
+                  if (other.length > 0) {
+                    return (
+                      <>
+                        <Grid
+                          style={{ textAlign: "center" }}
+                          key={other}
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {other}
+                        </Grid>
+                      </>
+                    );
                   } else {
-                    if (other.length > 0) {
-                      return (
-                        <>
-                          <Grid
-                            key={other}
-                            item
-                            className="item6"
-                            onClick={
-                              !addToStore
-                                ? clickAddToStore
-                                : clickRemoveFromStore
-                            }
-                          >
-                            {other}
-                          </Grid>
-                        </>
-                      );
-                    } else {
-                      return (
-                        <>
-                          <Grid
-                            key={
-                              isbn13.length === 0
-                                ? Math.floor(Math.random() * 100000)
-                                : isbn13
-                            }
-                            item
-                            className="item5"
-                            onClick={
-                              !addToStore
-                                ? clickAddToStore
-                                : clickRemoveFromStore
-                            }
-                          >
-                            {isbn13.length === 0 ? null : isbn13}
-                          </Grid>
-                          <Grid
-                            key={isbn10}
-                            item
-                            className="item6"
-                            onClick={
-                              !addToStore
-                                ? clickAddToStore
-                                : clickRemoveFromStore
-                            }
-                          >
-                            {isbn10.length === 0 ? null : isbn10}
-                          </Grid>
-                        </>
-                      );
-                    }
+                    return (
+                      <>
+                        <Grid
+                          key={
+                            isbn13.length === 0
+                              ? Math.floor(Math.random() * 100000)
+                              : isbn13
+                          }
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {isbn13.length === 0 ? null : isbn13}
+                        </Grid>
+                        <Grid
+                          key={isbn10}
+                          item
+                          className="item6"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {isbn10.length === 0 ? null : isbn10}
+                        </Grid>
+                      </>
+                    );
                   }
                 })}
 
