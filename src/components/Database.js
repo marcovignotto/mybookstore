@@ -30,6 +30,8 @@ import {
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import FadeIn from "react-fade-in";
+
 import BookItemDatabase from "../components/BookItemDatabase";
 
 const useStyles = makeStyles((theme) => ({
@@ -291,9 +293,11 @@ const Database = ({
             )}
           </>
         ) : (
-          dataToMap.map((item) => (
-            <BookItemDatabase item={item} key={item.id} />
-          ))
+          <FadeIn>
+            {dataToMap.map((item) => (
+              <BookItemDatabase item={item} key={item.id} />
+            ))}
+          </FadeIn>
         )}
       </div>
     </div>

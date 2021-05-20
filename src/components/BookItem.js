@@ -20,6 +20,8 @@ import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
 
+import FadeIn from "react-fade-in";
+
 // new MAT UI import
 
 import clsx from "clsx";

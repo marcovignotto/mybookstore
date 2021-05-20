@@ -27,6 +27,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import FadeIn from "react-fade-in";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -326,11 +328,11 @@ const Insert = ({ data, loading, googleSearched }) => {
             )}
           </>
         ) : (
-          <>
+          <FadeIn>
             {noDatafound
               ? showNodata
               : dataFound.map((item) => <BookItem item={item} key={item.id} />)}
-          </>
+          </FadeIn>
         )}
       </div>
     </Fragment>
