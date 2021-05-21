@@ -322,10 +322,19 @@ body {
 .book-item .items-table-selected {
   z-index: 1;
   background-color: wheat !important;
+  background: rgb(218, 193, 116);
+  background: linear-gradient(
+    186deg,
+    rgba(218, 193, 116, 1) 12%,
+    rgba(255, 255, 234, 1) 90%
+  );
+
   cursor: pointer;
   display: grid;
   grid-template-columns: repeat(18, 1fr);
-  border-radius: 0px 10px 0 0;
+  border-radius: 0px 0px 10px 10px;
+  -webkit-box-shadow: 0px 7px 9px -6px rgba(0, 0, 0, 0.72);
+  box-shadow: 0px 4px 7px -6px rgba(0, 0, 0, 0.5);
 }
 
 .items-table-selected-out-of-stock {
@@ -341,9 +350,13 @@ body {
   grid-row: 1;
 }
 
+/* Covewr once tab is open */
+
 .book-item .items-table-selected .item2 {
   grid-column: 2 / span 4;
   grid-row: 1 / span 8;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .book-item .items-table-selected img {
@@ -375,7 +388,8 @@ body {
 /* END .items-table-selected */
 
 .add-to-store {
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  border-radius: 0px 0px 7px 7px;
 }
 
 .book-item .add-to-store {
@@ -384,7 +398,7 @@ body {
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   /* background-color: aquamarine; */
-  border-radius: 0 0 10px 10px;
+  /* border-radius: 0 0 10px 10px; */
 }
 
 .book-item .add-to-store .item1 {
