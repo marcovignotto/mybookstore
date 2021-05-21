@@ -73,6 +73,7 @@ export const theme = createMuiTheme({
       padding: "5px",
       paddingRight: "8px",
       paddingLeft: "8px",
+      marginLeft: "20px",
       "&:hover": {
         backgroundColor: colors.btnOver,
       },

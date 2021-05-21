@@ -396,6 +396,7 @@ const BookItem = ({ item, loading }) => {
               <Grid item className="item2"></Grid> */}
               <div item className="add-to-store-inputs">
                 <Divider orientation="vertical" flexItem light />
+                <label>€:</label>
                 <input
                   className="input-price"
                   type="number"
@@ -404,11 +405,11 @@ const BookItem = ({ item, loading }) => {
                   placeholder="10"
                   onChange={bookPrice}
                 />
-                <label>€</label>
 
                 {/* </Grid> */}
                 <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item4" lg={1}> */}
+                <label>Qnt:</label>
                 <input
                   className="input-stock"
                   type="number"
@@ -420,6 +421,7 @@ const BookItem = ({ item, loading }) => {
                 {/* </Grid> */}
                 <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item5" lg={4}> */}
+                <label>Status:</label>
                 <form>
                   <select
                     className="input-status"

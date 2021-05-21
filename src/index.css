@@ -7,6 +7,7 @@
 body {
   --text-list-color: #324376;
   --add-to-store-bg: #fcf9f0;
+  --add-to-store-input: rgb(235, 89, 35);
   /* font-family: "Roboto", sans-serif; */
   font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -404,14 +405,22 @@ body {
 .add-to-store {
   /* border-radius: 10px; */
   border-radius: 0px 0px 7px 7px;
+  padding-right: 30px;
 }
 .add-to-store-inputs {
-  grid-column: 10 / span 18;
+  grid-column: 7 / span 18;
   grid-row: 1;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+
+.add-to-store-inputs label {
+  font-size: 18px;
+  margin-top: -2px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .book-item .add-to-store {
@@ -467,9 +476,10 @@ body {
 .book-item .add-to-store * .input-price {
   width: 50px;
   height: 20px;
-  font-size: 16px;
+  font-size: 18px;
   border: 0;
   padding: 5px;
+  color: var(--add-to-store-input);
 }
 .book-item .add-to-store * .input-stock {
   height: 20px;
@@ -477,6 +487,7 @@ body {
   border: 0;
   width: 50px;
   padding: 5px;
+  color: var(--add-to-store-input);
 }
 .book-item .add-to-store * .input-status {
   height: 30px;
@@ -484,7 +495,8 @@ body {
   border: 0;
   width: 100px;
   /* padding: 5px; */
-  color: black;
+  color: var(--add-to-store-input);
+  margin-right: 20px;
 }
 .book-item .add-to-store * :focus {
   background-color: coral;
