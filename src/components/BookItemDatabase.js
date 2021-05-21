@@ -210,7 +210,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     // reverse: show,
-    delay: 400,
+    delay: 600,
     // config: config.molasses,
     // onStart: () => set(!show),
     // onChange: () => set(!show),
