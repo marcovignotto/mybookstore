@@ -71,11 +71,13 @@ const useStyles = makeStyles((theme) => ({
     // width: 800,
     display: "flex",
     flexDirection: "column",
+    marginRight: "30px",
     "& > :first-child": {
       marginRight: 20,
     },
     "& > div": {
-      width: 450,
+      width: "100%",
+      paddingRight: 30,
       marginBottom: 20,
     },
     "& > :last-child": {
@@ -89,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "30px",
     // marginRight: "30px",
     "& > *": {
-      // width: "40%",
+      width: "100%",
       // marginBottom: 20,
     },
     "& > :first-child": {
@@ -102,16 +104,16 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
     flexDirection: "row",
-    // justifyContent: "center",
+    justifyContent: "center",
     marginTop: 20,
     "& > *": {
       width: 200,
       marginBottom: 20,
-      // marginRight: 50,
-      // marginLeft: 50,
+      marginRight: 50,
+      marginLeft: 50,
     },
     "& > :last-child": {
-      marginLeft: "2rem",
+      // marginLeft: "2rem",
       // marginRight: 20,
     },
   },
@@ -171,6 +173,12 @@ const Insert = ({ data, loading, googleSearched }) => {
   });
 
   const { title, author, isbn } = item;
+
+  /**
+   * @desc sets the kind of search
+   * and controlls the opacity and the status of the inputs
+   * @param {*} e
+   */
 
   const onChange = (e) => {
     e.preventDefault();
@@ -276,7 +284,7 @@ const Insert = ({ data, loading, googleSearched }) => {
                 variant="outlined"
                 value={title}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableTitleAuthorsText}
               />
               <TextField
                 id="author"
@@ -284,7 +292,7 @@ const Insert = ({ data, loading, googleSearched }) => {
                 variant="outlined"
                 value={author}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableTitleAuthorsText}
               />
             </div>
 
@@ -314,7 +322,7 @@ const Insert = ({ data, loading, googleSearched }) => {
                 variant="outlined"
                 value={isbn}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableIsbnText}
               />
             </div>
           </div>
