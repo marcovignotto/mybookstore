@@ -412,6 +412,7 @@ body {
 .book-item .add-to-store .item3 {
   grid-column: 5 / span 7;
   grid-row: 1;
+  display: flex;
 }
 .book-item .add-to-store .item4 {
   grid-column: 8 / span 11;

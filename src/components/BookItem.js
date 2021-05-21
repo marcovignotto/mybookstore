@@ -391,9 +391,9 @@ const BookItem = ({ item, loading }) => {
             ""
           ) : (
             <Grid container className="add-to-store" style={cardStyleAddDb}>
-              <Grid item className="item1"></Grid>
-              <Grid item className="item2"></Grid>
-              <Grid item className="item3">
+              {/* <Grid item className="item1"></Grid>
+              <Grid item className="item2"></Grid> */}
+              <Grid item className="item6" lg={12}>
                 <input
                   className="input-price"
                   type="number"
@@ -402,9 +402,8 @@ const BookItem = ({ item, loading }) => {
                   placeholder="10"
                   onChange={bookPrice}
                 />
-                €
-              </Grid>
-              <Grid item className="item4">
+                €{/* </Grid> */}
+                {/* <Grid item className="item4" lg={1}> */}
                 <input
                   className="input-stock"
                   type="number"
@@ -413,8 +412,8 @@ const BookItem = ({ item, loading }) => {
                   defaultValue="1"
                   onChange={bookQuantity}
                 />
-              </Grid>
-              <Grid item className="item5">
+                {/* </Grid> */}
+                {/* <Grid item className="item5" lg={4}> */}
                 <form>
                   <select
                     className="input-status"
@@ -428,9 +427,8 @@ const BookItem = ({ item, loading }) => {
                     <option value="like-new">Like New</option>
                   </select>
                 </form>
-              </Grid>
-
-              <Grid item className="item6">
+                {/* </Grid> */}
+                {/* <Grid item className="item6" lg={6}> */}
                 {isItemAdded ? itemAdded : addItem}
               </Grid>
             </Grid>
