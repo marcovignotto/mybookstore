@@ -275,9 +275,17 @@ const Insert = ({ data, loading, googleSearched }) => {
               className={classes.titleauthor}
               style={{ opacity: !disableTitleAuthorsText ? 1 : 0.5 }}
             >
-              <Typography variant="h4" color="primary" gutterBottom>
-                Search for a book to insert
-              </Typography>
+              <div style={{ display: !disableIsbnText ? "flex" : "none" }}>
+                <Typography variant="h4" color="primary" gutterBottom>
+                  Search for a book to add
+                </Typography>
+              </div>
+              <div style={{ display: disableIsbnText ? "flex" : "none" }}>
+                <Typography variant="h4" color="primary" gutterBottom>
+                  Insert Title / Author
+                </Typography>
+              </div>
+
               <TextField
                 id="title"
                 label="Title"
