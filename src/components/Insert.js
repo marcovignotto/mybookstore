@@ -177,6 +177,7 @@ const Insert = ({ data, loading, googleSearched }) => {
     title: "",
     author: "",
     isbn: "",
+    results: "",
   });
 
   const { title, author, isbn } = item;
@@ -189,7 +190,7 @@ const Insert = ({ data, loading, googleSearched }) => {
 
   const onChange = (e) => {
     e.preventDefault();
-    setItem({ ...item, [e.target.id]: e.target.value });
+    setItem({ ...item, [e.target.id]: e.target.value, results: results });
 
     if (item.title || item.author) {
       setDisableIsbnText(true);
@@ -214,12 +215,12 @@ const Insert = ({ data, loading, googleSearched }) => {
       label: 20,
     },
     {
-      value: 35,
-      label: 35,
+      value: 30,
+      label: 30,
     },
     {
-      value: 50,
-      label: 50,
+      value: 40,
+      label: 40,
     },
   ];
 

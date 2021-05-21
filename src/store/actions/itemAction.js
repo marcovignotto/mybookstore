@@ -24,7 +24,6 @@ const API = process.env.REACT_APP_GOOGLE_BOOK_API;
 const API_CONVERTER = process.env.REACT_APP_API_CONVERTER;
 const WOO_CK = process.env.REACT_APP_WOO_CK;
 const WOO_CS = process.env.REACT_APP_WOO_CS;
-const RES = 20;
 
 /**
  * @desc cals the Google Books APIs
@@ -42,14 +41,14 @@ export const googleSearch = (entry) => {
     try {
       if (!entry.isbn) {
         const res = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=${entry.title}+inauthor:${entry.author}&maxResults=${RES}&key=${API}`,
+          `https://www.googleapis.com/books/v1/volumes?q=${entry.title}+inauthor:${entry.author}&maxResults=${entry.results}&key=${API}`,
           entry
         );
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
         return res;
       } else if (entry.isbn) {
         const res = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=isbn:${entry.isbn}&maxResults=${RES}&key=${API}`,
+          `https://www.googleapis.com/books/v1/volumes?q=isbn:${entry.isbn}&maxResults=${entry.results}&key=${API}`,
           entry
         );
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
