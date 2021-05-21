@@ -13,6 +13,8 @@ import {
 } from "../store/actions/itemAction";
 
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
+import Grid from "@material-ui/core/Grid";
+
 import Divider from "@material-ui/core/Divider";
 
 import classNames from "classnames/bind";
@@ -238,7 +240,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   return (
     <div className="book-item">
       <div
-        style={cardStyle}
+        // style={cardStyle}
         className={itemClass}
         onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
       >
@@ -366,7 +368,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             (styles, item) =>
               item && (
                 <animated.div style={styles}>
-                  <div className="add-to-store" style={cardStyleAddDb}>
+                  <Grid className="add-to-store" style={cardStyleAddDb}>
                     <div className="add-to-store-inputs">
                       <Divider orientation="vertical" flexItem light />
                       <label>€:</label>
@@ -422,7 +424,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       {itemIsDeleted && !itemIsUpdated ? bookDeleted : null}
                       {itemIsUpdated ? bookUpdated : null}
                     </div>
-                  </div>
+                  </Grid>
                 </animated.div>
               )
           )}
