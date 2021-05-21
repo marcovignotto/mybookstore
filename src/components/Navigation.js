@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme) => ({
   tab: {
     ...theme.typography.tab,
     minWidth: 10,
-    marginLeft: "100px",
+    marginLeft: "50px",
+    marginRight: "50px",
+    textAlign: "center",
+    justifyContent: "center",
+    justifyItems: "center",
     "&:hover": {
       color: "white",
     },
@@ -97,7 +101,18 @@ const Navigation = (props) => {
     <Fragment>
       <HideOnScroll {...props}>
         <AppBar>
-          <Toolbar>
+          {/* <div>Logo</div> */}
+          <Toolbar
+            style={{
+              float: "none",
+              width: "100%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              // textAlign: "center",
+              // alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
             <Tabs value={value} onChange={handleChange}>
               <Tab
                 className={classes.tab}
