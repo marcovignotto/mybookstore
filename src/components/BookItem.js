@@ -308,7 +308,9 @@ const BookItem = ({ item, loading }) => {
               className="item3"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
-              {item.volumeInfo.title}
+              {!addToStore && item.volumeInfo.title.length > 59
+                ? item.volumeInfo.title.substring(0, 60) + "..."
+                : item.volumeInfo.title}
             </Grid>
             <Grid
               item
@@ -317,6 +319,8 @@ const BookItem = ({ item, loading }) => {
             >
               {item.volumeInfo.authors === undefined
                 ? ""
+                : !addToStore && item.volumeInfo.authors.join(", ").length > 59
+                ? item.volumeInfo.authors.join(", ").substring(0, 60) + "..."
                 : item.volumeInfo.authors.join(", ")}
             </Grid>
             {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
