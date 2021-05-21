@@ -265,7 +265,7 @@ const Insert = ({ data, loading, googleSearched }) => {
 
             <div
               className={classes.titleauthor}
-              style={{ display: !disableTitleAuthorsText ? "flex" : "none" }}
+              style={{ opacity: !disableTitleAuthorsText ? 1 : 0.5 }}
             >
               <Typography variant="h4" color="primary" gutterBottom>
                 Search for a book to insert
@@ -291,7 +291,7 @@ const Insert = ({ data, loading, googleSearched }) => {
             <Divider orientation="vertical" flexItem light />
             <div
               className={classes.isbn}
-              style={{ display: !disableIsbnText ? "flex" : "none" }}
+              style={{ opacity: !disableIsbnText ? 1 : 0.5 }}
             >
               <div
                 style={{ display: !disableTitleAuthorsText ? "flex" : "none" }}
