@@ -100,7 +100,11 @@ export const theme = createMuiTheme({
 export const cardColors = {
   cardBackground: "white",
   cardText: colors.primaryMain,
-  cardAddDbBackground: "#e5e5e5",
+  // cardAddDbBackground:
+  //   "linear-gradient(36deg, rgba(255,228,145,1) 12%, rgba(255,214,88,1) 90%)",
+  // cardAddDbBackground: "#ffd961",
+  // cardAddDbBackground: "#e5e5e5",
+  cardAddDbBackground: "white",
 };
 
 export const cardStyle = {
@@ -122,7 +126,7 @@ export const cardStyleAddDb = {
   marginBottom: 5,
   backgroundColor: cardColors.cardAddDbBackground,
   color: cardColors.cardText,
-  border: "0px 0px 2px 2px solid rgba(0, 0, 0, 0)",
-  borderRadius: 3,
-  boxShadow: "1px 2px 9px -4px rgba(0,0,0,0.10)",
+  border: "1px solid rgba(0, 0, 0, 0.1)",
+  borderRadius: "0px 0px 5px 5px",
+  boxShadow: "0px 2px 5px -4px rgba(0,0,0,0.50)",
 };

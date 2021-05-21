@@ -5,6 +5,8 @@
 }
 
 body {
+  --text-list-color: #324376;
+  --add-to-store-bg: #fcf9f0;
   /* font-family: "Roboto", sans-serif; */
   font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -67,7 +69,7 @@ body {
 .btn-add:hover {
   border: 0;
   color: white;
-  background-color: grey;
+  /* background-color: grey; */
   border: 3px;
   padding-right: 10px;
   padding-left: 10px;
@@ -266,6 +268,11 @@ body {
 /* END OUT OF STOCK */
 
 /* BOOK ITEM */
+
+.book-item {
+  color: var(--text-list-color);
+}
+
 .book-item .items-table:hover {
   background-color: lightgray;
   cursor: pointer;
@@ -305,6 +312,7 @@ body {
   grid-column: 12 / span 15;
   grid-row: 1;
   padding-left: 6px;
+  /* text-align: left; */
 }
 .book-item .items-table .item6 {
   grid-column: 16 / span 18;
@@ -327,6 +335,11 @@ body {
     186deg,
     rgba(218, 193, 116, 1) 12%,
     rgba(255, 255, 234, 1) 90%
+  );
+  background: linear-gradient(
+    36deg,
+    rgba(252, 249, 240, 1) 12%,
+    rgba(213, 223, 255, 1) 90%
   );
 
   cursor: pointer;
@@ -379,6 +392,7 @@ body {
 .book-item .items-table-selected .item5 {
   grid-column: 5 / span 7;
   grid-row: 4;
+  text-align: left !important;
 }
 .book-item .items-table-selected .item6 {
   grid-column: 5 / span 7;
@@ -390,6 +404,14 @@ body {
 .add-to-store {
   /* border-radius: 10px; */
   border-radius: 0px 0px 7px 7px;
+}
+.add-to-store-inputs {
+  grid-column: 10 / span 18;
+  grid-row: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .book-item .add-to-store {

@@ -19,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
 
 import FadeIn from "react-fade-in";
 
@@ -393,7 +394,8 @@ const BookItem = ({ item, loading }) => {
             <Grid container className="add-to-store" style={cardStyleAddDb}>
               {/* <Grid item className="item1"></Grid>
               <Grid item className="item2"></Grid> */}
-              <Grid item className="item6" lg={12}>
+              <div item className="add-to-store-inputs">
+                <Divider orientation="vertical" flexItem light />
                 <input
                   className="input-price"
                   type="number"
@@ -402,7 +404,10 @@ const BookItem = ({ item, loading }) => {
                   placeholder="10"
                   onChange={bookPrice}
                 />
-                €{/* </Grid> */}
+                <label>€</label>
+
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item4" lg={1}> */}
                 <input
                   className="input-stock"
@@ -413,6 +418,7 @@ const BookItem = ({ item, loading }) => {
                   onChange={bookQuantity}
                 />
                 {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item5" lg={4}> */}
                 <form>
                   <select
@@ -428,9 +434,10 @@ const BookItem = ({ item, loading }) => {
                   </select>
                 </form>
                 {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item6" lg={6}> */}
                 {isItemAdded ? itemAdded : addItem}
-              </Grid>
+              </div>
             </Grid>
           )}
         </Grid>
