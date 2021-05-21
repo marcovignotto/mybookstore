@@ -225,6 +225,14 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   //   enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
   //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
   // });
+  {
+    /* Removed <p> and </p> taken from WooCommerce */
+  }
+
+  let authorsString = short_description.substring(
+    3,
+    short_description.search("</p>")
+  );
 
   return (
     <div className="book-item">
@@ -254,14 +262,19 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           className="item3"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
-          {name}
+          {/* {name} */}
+          {!addToStore && name.length > 59
+            ? name.substring(0, 60) + "..."
+            : name}
         </div>
         <div
           className="item4"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
           {/* Removed <p> and </p> taken from WooCommerce */}
-          {short_description.substring(3, short_description.search("</p>"))}
+          {!addToStore && authorsString.length > 85
+            ? authorsString.substring(0, 86) + "..."
+            : authorsString}
         </div>
         {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
         {Array.isArray(ean_code) && codes.length === 0
