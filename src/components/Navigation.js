@@ -23,18 +23,11 @@ const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "1em",
+    marginLeft: 0,
   },
   tab: {
     ...theme.typography.tab,
-    minWidth: 10,
-    marginLeft: "50px",
-    marginRight: "50px",
-    textAlign: "center",
-    justifyContent: "center",
-    justifyItems: "center",
-    "&:hover": {
-      color: "white",
-    },
+    ...theme.css.tab,
   },
 }));
 
@@ -103,6 +96,7 @@ const Navigation = (props) => {
         <AppBar>
           {/* <div>Logo</div> */}
           <Toolbar
+            disableGutters={true}
             style={{
               float: "none",
               width: "100%",

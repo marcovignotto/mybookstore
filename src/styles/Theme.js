@@ -45,6 +45,21 @@ export const theme = createMuiTheme({
       textTransform: "uppercase",
     },
   },
+
+  css: {
+    tab: {
+      minWidth: 10,
+      marginLeft: "50px",
+      marginRight: "50px",
+      textAlign: "center",
+      justifyContent: "center",
+      justifyItems: "center",
+      "&:hover": {
+        color: colors.secondaryMain,
+      },
+    },
+  },
+
   "& .MuiButton-root": {
     padding: "0px",
   },
