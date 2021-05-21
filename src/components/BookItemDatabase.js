@@ -13,6 +13,7 @@ import {
 } from "../store/actions/itemAction";
 
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
+import Divider from "@material-ui/core/Divider";
 
 import classNames from "classnames/bind";
 
@@ -366,9 +367,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
               item && (
                 <animated.div style={styles}>
                   <div className="add-to-store" style={cardStyleAddDb}>
-                    <div className="item1"></div>
-                    <div className="item2"></div>
-                    <div className="item3">
+                    <div className="add-to-store-inputs">
+                      <Divider orientation="vertical" flexItem light />
+                      <label>€:</label>
                       <input
                         className="input-price"
                         type="number"
@@ -378,9 +379,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         placeholder={newPrice.price}
                         onChange={handleBookPrice}
                       />
-                      €
-                    </div>
-                    <div className="item4">
+                      {/* </div>
+                    <div className="item4"> */}
+                      <Divider orientation="vertical" flexItem light />
+                      <label>Qnt:</label>
                       <input
                         className="input-stock"
                         type="number"
@@ -390,9 +392,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         placeholder={newStockQuantity.stock}
                         onChange={handleBookQuantity}
                       />{" "}
-                      pcs
-                    </div>
-                    <div className="item5">
+                      {/* </div>
+                    <div className="item5"> */}
+                      <Divider orientation="vertical" flexItem light />
+                      <label>Status:</label>
                       <form>
                         <select
                           className="input-status"
@@ -407,13 +410,12 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                           <option value="like-new">Like New</option>
                         </select>
                       </form>
-                    </div>
-
-                    <div className="item6">
+                      {/* </div> */}
+                      <Divider orientation="vertical" flexItem light />
+                      {/* <div className="item6"> */}
                       {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
                         ? updateAndDelete
                         : null}
-
                       {!showDeleteBtns && showDeleteConfirm
                         ? confirmation
                         : null}

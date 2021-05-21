@@ -405,14 +405,17 @@ body {
 .add-to-store {
   /* border-radius: 10px; */
   border-radius: 0px 0px 7px 7px;
+  padding: 10px;
   padding-right: 30px;
 }
 .add-to-store-inputs {
-  grid-column: 7 / span 18;
+  grid-column: 1 / span 18;
   grid-row: 1;
+  float: right;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+  justify-content: flex-end;
   align-items: center;
 }
 
