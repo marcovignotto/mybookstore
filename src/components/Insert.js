@@ -26,6 +26,8 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
+import Box from "@material-ui/core/Box";
 
 import FadeIn from "react-fade-in";
 
@@ -57,14 +59,15 @@ const useStyles = makeStyles((theme) => ({
 
   inputs: {
     display: "flex",
-    flexDirection: "column",
-    // width: 800,
+    flexDirection: "row",
+    width: "100%",
     marginRight: 30,
     "& > *": {
       marginTop: 20,
     },
   },
   titleauthor: {
+    width: "50%",
     // width: 800,
     display: "flex",
     flexDirection: "column",
@@ -80,14 +83,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   isbn: {
+    width: "50%",
     display: "flex",
     flexDirection: "column",
+    marginLeft: "30px",
+    // marginRight: "30px",
     "& > *": {
-      width: 450,
-      marginBottom: 20,
+      // width: "40%",
+      // marginBottom: 20,
     },
     "& > :first-child": {
-      marginRight: 20,
+      // marginRight: 20,
     },
   },
 
@@ -96,10 +102,17 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
     flexDirection: "row",
+    // justifyContent: "center",
+    marginTop: 20,
     "& > *": {
       width: 200,
       marginBottom: 20,
-      marginRight: 20,
+      // marginRight: 50,
+      // marginLeft: 50,
+    },
+    "& > :last-child": {
+      marginLeft: "2rem",
+      // marginRight: 20,
     },
   },
 
@@ -245,7 +258,11 @@ const Insert = ({ data, loading, googleSearched }) => {
     <Fragment>
       <div id="book-search">
         <div className="items">
+          {/* <Divider light /> */}
+
           <div className={classes.inputs}>
+            {/* <Divider orientation="vertical" flexItem light /> */}
+
             <div
               className={classes.titleauthor}
               style={{ display: !disableTitleAuthorsText ? "flex" : "none" }}
@@ -270,6 +287,8 @@ const Insert = ({ data, loading, googleSearched }) => {
                 disabled={searched}
               />
             </div>
+
+            <Divider orientation="vertical" flexItem light />
             <div
               className={classes.isbn}
               style={{ display: !disableIsbnText ? "flex" : "none" }}
@@ -298,18 +317,15 @@ const Insert = ({ data, loading, googleSearched }) => {
                 disabled={searched}
               />
             </div>
-            <div className={classes.buttons}>
-              <Button
-                variant="contained"
-                onClick={onSubmit}
-                disabled={searched}
-              >
-                Search
-              </Button>
-              <Button variant="contained" onClick={clearSearch}>
-                Clear Search
-              </Button>
-            </div>
+          </div>
+          <Divider light />
+          <div className={classes.buttons}>
+            <Button variant="contained" onClick={onSubmit} disabled={searched}>
+              Search
+            </Button>
+            <Button variant="contained" onClick={clearSearch}>
+              Clear Search
+            </Button>
           </div>
         </div>
       </div>
