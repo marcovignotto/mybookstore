@@ -15,9 +15,10 @@ export const colors = {
 
 export const theme = createMuiTheme({
   overrides: {
-    MuiButton: {
+    MuiFormLabel: {
       root: {
         // padding: "0px",
+        lineHeight: "1.11",
       },
     },
   },
