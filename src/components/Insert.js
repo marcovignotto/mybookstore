@@ -21,18 +21,22 @@ import BookItem from "./BookItem";
  */
 
 import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Divider from "@material-ui/core/Divider";
-import Box from "@material-ui/core/Box";
 
 import FadeIn from "react-fade-in";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
     "& > *": {
       margin: theme.spacing(1),
       width: "50ch",
@@ -105,6 +109,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
+    height: 60,
     marginTop: 20,
     "& > *": {
       width: 200,
@@ -137,6 +142,8 @@ const Insert = ({ data, loading, googleSearched }) => {
   const [disableTitleAuthorsText, setDisableTitleAuthorsText] = useState(false);
 
   const [searched, setSearched] = useState(false);
+
+  const [results, setResults] = useState(20);
 
   function noDataTimeout() {
     setTimeout(() => {
@@ -192,6 +199,29 @@ const Insert = ({ data, loading, googleSearched }) => {
       dispatch(setGoogleSearched("isbn"));
     }
   };
+
+  const handleChangeResults = (event) => {
+    setResults(event.target.value);
+  };
+
+  const itemsToDisplay = [
+    {
+      value: 10,
+      label: 10,
+    },
+    {
+      value: 20,
+      label: 20,
+    },
+    {
+      value: 35,
+      label: 35,
+    },
+    {
+      value: 50,
+      label: 50,
+    },
+  ];
 
   /**
    * @description Adds book to WooCommerce
@@ -334,6 +364,20 @@ const Insert = ({ data, loading, googleSearched }) => {
             <Button variant="contained" onClick={clearSearch}>
               Clear Search
             </Button>
+            <TextField
+              id="standard-select-results"
+              select
+              // label="Select"
+              value={results}
+              onChange={handleChangeResults}
+              helperText="Max items to display"
+            >
+              {itemsToDisplay.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
           </div>
         </div>
       </div>
