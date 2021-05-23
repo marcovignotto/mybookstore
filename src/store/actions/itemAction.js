@@ -1,19 +1,45 @@
 import {
+  // GOOGLE_SEARCH,
+  // GOOGLE_SEARCH_CLEAR,
+  // GOOGLE_SEARCH_SEARCHED,
+  // ADD_TO_WOO_DB,
+  // UPDATE_WOO_DB,
+  // WOO_DB_ALL,
+  // WOO_DB_IN,
+  // WOO_DB_OUT,
+  // WOO_DB_DELETE_ALL,
+  // WOO_DB_DELETE_IN,
+  // WOO_DB_DELETE_OUT,
+  // WOO_DB_SEARCH_STATE,
+  // WOO_DB_SEARCH_TERM,
+  // WOO_DB_SEARCH_CLEAR,
+  // WOO_DB_DATA_READY,
   GOOGLE_SEARCH,
+  GOOGLE_SEARCH_ERROR,
   GOOGLE_SEARCH_CLEAR,
+  GOOGLE_SEARCH_CLEAR_ERROR,
   GOOGLE_SEARCH_SEARCHED,
-  ADD_TO_WOO_DB,
-  UPDATE_WOO_DB,
+  GOOGLE_SEARCH_SEARCHED_ERROR,
+  // ADD_TO_WOO_DB,
+  ADD_TO_WOO_DB_ERROR,
+  // UPDATE_WOO_DB,
+  UPDATE_WOO_DB_ERROR,
   WOO_DB_ALL,
   WOO_DB_IN,
   WOO_DB_OUT,
+  WOO_DB_ERROR,
   WOO_DB_DELETE_ALL,
   WOO_DB_DELETE_IN,
   WOO_DB_DELETE_OUT,
+  WOO_DB_DELETE_ERROR,
   WOO_DB_SEARCH_STATE,
+  WOO_DB_SEARCH_STATE_ERROR,
   WOO_DB_SEARCH_TERM,
+  WOO_DB_SEARCH_TERM_ERROR,
   WOO_DB_SEARCH_CLEAR,
+  WOO_DB_SEARCH_CLEAR_ERROR,
   WOO_DB_DATA_READY,
+  WOO_DB_DATA_READY_ERROR,
 } from "../types";
 
 import axios from "axios";
@@ -24,7 +50,6 @@ const API = process.env.REACT_APP_GOOGLE_BOOK_API;
 const API_CONVERTER = process.env.REACT_APP_API_CONVERTER;
 const WOO_CK = process.env.REACT_APP_WOO_CK;
 const WOO_CS = process.env.REACT_APP_WOO_CS;
-const RES = 20;
 
 /**
  * @desc cals the Google Books APIs
@@ -42,22 +67,22 @@ export const googleSearch = (entry) => {
     try {
       if (!entry.isbn) {
         const res = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=${entry.title}+inauthor:${entry.author}&maxResults=${RES}&key=${API}`,
+          `https://www.googleapis.com/books/v1/volumes?q=${entry.title}+inauthor:${entry.author}&maxResults=${entry.results}&key=${API}`,
           entry
         );
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
         return res;
       } else if (entry.isbn) {
         const res = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes?q=isbn:${entry.isbn}&maxResults=${RES}&key=${API}`,
+          `https://www.googleapis.com/books/v1/volumes?q=isbn:${entry.isbn}&maxResults=${entry.results}&key=${API}`,
           entry
         );
         await dispatch({ type: GOOGLE_SEARCH, payload: res.data.items });
         return res;
       }
     } catch (error) {
-      // dispatch({type: CONTACT_ERROR})
-      console.log("error", error);
+      dispatch({ type: GOOGLE_SEARCH_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -67,7 +92,8 @@ export const setGoogleSearchClear = () => {
     try {
       await dispatch({ type: GOOGLE_SEARCH_CLEAR });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: GOOGLE_SEARCH_CLEAR_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -81,7 +107,8 @@ export const setGoogleSearched = (state) => {
     try {
       await dispatch({ type: GOOGLE_SEARCH_SEARCHED, payload: state });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: GOOGLE_SEARCH_SEARCHED_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -194,15 +221,19 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
           data,
         });
 
-        console.log("res from items", resultReq);
-        dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
-        // return resultReq.then((x) => console.log("Done!"));
-        return resultReq;
+        // console.log("res from items", resultReq);
+        return resultReq.then((x) => x.status);
+        // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
+        // return resultReq;
       })
-      .then(function (res) {
-        return res;
-      })
-      .catch((error) => console.log(error));
+      // .then(function (res) {
+      //   console.log(res);
+      //   return res;
+      // })
+      .catch((error) => {
+        dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
+        console.log(error);
+      });
   };
 };
 
@@ -246,10 +277,12 @@ export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
         data,
       });
 
-      return resultReq;
-
-      // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq.data });
+      /**
+       * @desc sends status back
+       */
+      return resultReq.then((x) => x.status);
     } catch (error) {
+      dispatch({ type: UPDATE_WOO_DB_ERROR, payload: error });
       console.log(error);
     }
   };
@@ -274,7 +307,8 @@ export const deleteWooDb = (id) => {
       }, 2000);
       return resultReq;
     } catch (error) {
-      console.log(error);
+      dispatch({ type: WOO_DB_DELETE_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -305,7 +339,8 @@ export const getWooDbAll = (stock, searchTerms) => {
           return await res.data;
         }
       } catch (error) {
-        console.log("error", error);
+        dispatch({ type: WOO_DB_ERROR, payload: error });
+        console.error("error", error);
       }
     };
   } else {
@@ -327,7 +362,8 @@ export const getWooDbAll = (stock, searchTerms) => {
           return await res.data;
         }
       } catch (error) {
-        console.log("error", error);
+        dispatch({ type: WOO_DB_ERROR, payload: error });
+        console.error("error", error);
       }
     };
   }
@@ -344,7 +380,8 @@ export const setWooDbState = (state) => {
     try {
       await dispatch({ type: WOO_DB_SEARCH_STATE, payload: state });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: WOO_DB_SEARCH_STATE_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -354,7 +391,8 @@ export const setWooSearchTerm = (state) => {
     try {
       await dispatch({ type: WOO_DB_SEARCH_TERM, payload: state });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: WOO_DB_SEARCH_TERM_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -364,7 +402,8 @@ export const setWooSearchClear = () => {
     try {
       await dispatch({ type: WOO_DB_SEARCH_CLEAR });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: WOO_DB_SEARCH_CLEAR_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };
@@ -374,7 +413,8 @@ export const setWooDbDataReady = (state) => {
     try {
       await dispatch({ type: WOO_DB_DATA_READY, payload: state });
     } catch (error) {
-      console.log("error", error);
+      dispatch({ type: WOO_DB_DATA_READY_ERROR, payload: error });
+      console.error("error", error);
     }
   };
 };

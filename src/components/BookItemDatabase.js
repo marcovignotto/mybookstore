@@ -13,8 +13,13 @@ import {
 } from "../store/actions/itemAction";
 
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
+import Grid from "@material-ui/core/Grid";
+
+import Divider from "@material-ui/core/Divider";
 
 import classNames from "classnames/bind";
+
+import FadeIn from "react-fade-in";
 
 /**
  * @desc converts Promises in true/false
@@ -117,18 +122,29 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     const data = dispatch(
       updateWooDb(id, newPrice, newStockQuantity, newBookStatus)
     );
-    const result = MakeQuerablePromise(data);
-    result.then(function () {
-      setItemIsDeleted(result.isFulfilled());
+    // console.log(data);
+    // const result = MakeQuerablePromise(data);
+    // console.log(result);
+    // console.log(result.isFulfilled());
+    data.then(function (res) {
+      // console.log(res);
+      if (res >= 200 && res <= 399) {
+        setItemIsUpdated(true);
+        setShowDeleteBtns((prev) => !prev);
+      } else {
+        setItemIsUpdated(false);
+        setShowDeleteBtns((prev) => !prev);
+      }
+      // setItemIsUpdated(result.isFulfilled());
     });
+    // console.log(itemIsDeleted);
 
-    setItemIsUpdated((prev) => !prev);
-    setShowDeleteBtns((prev) => !prev);
+    // setItemIsUpdated((prev) => !prev);
     setTimeout(() => {
       setItemIsUpdated((prev) => !prev);
-      setItemIsDeleted((prev) => !prev);
+      // setItemIsDeleted((prev) => !prev);
       setShowDeleteBtns((prev) => !prev);
-    }, 2000);
+    }, 3000);
   };
 
   const handleDeleteConfirm = (event) => {
@@ -237,7 +253,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   return (
     <div className="book-item">
       <div
-        style={cardStyle}
+        // style={cardStyle}
         className={itemClass}
         onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
       >
@@ -365,10 +381,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             (styles, item) =>
               item && (
                 <animated.div style={styles}>
-                  <div className="add-to-store" style={cardStyleAddDb}>
-                    <div className="item1"></div>
-                    <div className="item2"></div>
-                    <div className="item3">
+                  <Grid className="add-to-store" style={cardStyleAddDb}>
+                    <div className="add-to-store-inputs">
+                      <Divider orientation="vertical" flexItem light />
+                      <label>€:</label>
                       <input
                         className="input-price"
                         type="number"
@@ -378,9 +394,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         placeholder={newPrice.price}
                         onChange={handleBookPrice}
                       />
-                      €
-                    </div>
-                    <div className="item4">
+                      {/* </div>
+                    <div className="item4"> */}
+                      <Divider orientation="vertical" flexItem light />
+                      <label>Qnt:</label>
                       <input
                         className="input-stock"
                         type="number"
@@ -390,9 +407,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         placeholder={newStockQuantity.stock}
                         onChange={handleBookQuantity}
                       />{" "}
-                      pcs
-                    </div>
-                    <div className="item5">
+                      {/* </div>
+                    <div className="item5"> */}
+                      <Divider orientation="vertical" flexItem light />
+                      <label>Status:</label>
                       <form>
                         <select
                           className="input-status"
@@ -407,20 +425,19 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                           <option value="like-new">Like New</option>
                         </select>
                       </form>
-                    </div>
-
-                    <div className="item6">
+                      {/* </div> */}
+                      <Divider orientation="vertical" flexItem light />
+                      {/* <div className="item6"> */}
                       {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
                         ? updateAndDelete
                         : null}
-
                       {!showDeleteBtns && showDeleteConfirm
                         ? confirmation
                         : null}
                       {itemIsDeleted && !itemIsUpdated ? bookDeleted : null}
                       {itemIsUpdated ? bookUpdated : null}
                     </div>
-                  </div>
+                  </Grid>
                 </animated.div>
               )
           )}

@@ -19,6 +19,7 @@ import Grid from "@material-ui/core/Grid";
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
 
 import FadeIn from "react-fade-in";
 
@@ -207,7 +208,10 @@ const BookItem = ({ item, loading }) => {
   };
 
   const [isItemAdded, setIsItemAdded] = useState(false);
-
+  const [isItemNotAdded, setIsItemNotAdded] = useState(false);
+  /**
+   * @desc dispatches data and wait for the confirmation
+   */
   const addToDb = () => {
     const data = dispatch(
       addToWooDb(
@@ -219,9 +223,18 @@ const BookItem = ({ item, loading }) => {
         price
       )
     );
+
+    /**
+     * @desc converts promise in true/false
+     */
     const result = MakeQuerablePromise(data);
+
+    /**
+     * @desc shows if is added or not
+     */
     result.then(function () {
-      setIsItemAdded(result.isFulfilled()); //true
+      if (result.isFulfilled()) return setIsItemAdded(true); //true
+      if (!result.isFulfilled()) return setIsItemNotAdded(true); //false
     });
   };
 
@@ -242,6 +255,14 @@ const BookItem = ({ item, loading }) => {
     <>
       <div className="item-added">
         <div>Book Added</div>
+      </div>
+    </>
+  );
+
+  const itemNotAdded = (
+    <>
+      <div className="item-not-added">
+        <div>Book not added</div>
       </div>
     </>
   );
@@ -391,9 +412,11 @@ const BookItem = ({ item, loading }) => {
             ""
           ) : (
             <Grid container className="add-to-store" style={cardStyleAddDb}>
-              <Grid item className="item1"></Grid>
-              <Grid item className="item2"></Grid>
-              <Grid item className="item3">
+              {/* <Grid item className="item1"></Grid>
+              <Grid item className="item2"></Grid> */}
+              <div item className="add-to-store-inputs">
+                <Divider orientation="vertical" flexItem light />
+                <label>€:</label>
                 <input
                   className="input-price"
                   type="number"
@@ -402,9 +425,11 @@ const BookItem = ({ item, loading }) => {
                   placeholder="10"
                   onChange={bookPrice}
                 />
-                €
-              </Grid>
-              <Grid item className="item4">
+
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item4" lg={1}> */}
+                <label>Qnt:</label>
                 <input
                   className="input-stock"
                   type="number"
@@ -413,8 +438,10 @@ const BookItem = ({ item, loading }) => {
                   defaultValue="1"
                   onChange={bookQuantity}
                 />
-              </Grid>
-              <Grid item className="item5">
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item5" lg={4}> */}
+                <label>Status:</label>
                 <form>
                   <select
                     className="input-status"
@@ -428,11 +455,15 @@ const BookItem = ({ item, loading }) => {
                     <option value="like-new">Like New</option>
                   </select>
                 </form>
-              </Grid>
-
-              <Grid item className="item6">
-                {isItemAdded ? itemAdded : addItem}
-              </Grid>
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item6" lg={6}> */}
+                {isItemAdded
+                  ? itemAdded
+                  : isItemNotAdded
+                  ? itemNotAdded
+                  : addItem}
+              </div>
             </Grid>
           )}
         </Grid>
