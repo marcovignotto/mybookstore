@@ -208,7 +208,10 @@ const BookItem = ({ item, loading }) => {
   };
 
   const [isItemAdded, setIsItemAdded] = useState(false);
-
+  const [isItemNotAdded, setIsItemNotAdded] = useState(false);
+  /**
+   * @desc dispatches data and wait for the confirmation
+   */
   const addToDb = () => {
     const data = dispatch(
       addToWooDb(
@@ -220,9 +223,18 @@ const BookItem = ({ item, loading }) => {
         price
       )
     );
+
+    /**
+     * @desc converts promise in true/false
+     */
     const result = MakeQuerablePromise(data);
+
+    /**
+     * @desc shows if is added or not
+     */
     result.then(function () {
-      setIsItemAdded(result.isFulfilled()); //true
+      if (result.isFulfilled()) return setIsItemAdded(true); //true
+      if (!result.isFulfilled()) return setIsItemNotAdded(true); //false
     });
   };
 
@@ -243,6 +255,14 @@ const BookItem = ({ item, loading }) => {
     <>
       <div className="item-added">
         <div>Book Added</div>
+      </div>
+    </>
+  );
+
+  const itemNotAdded = (
+    <>
+      <div className="item-not-added">
+        <div>Book not added</div>
       </div>
     </>
   );
@@ -438,7 +458,11 @@ const BookItem = ({ item, loading }) => {
                 {/* </Grid> */}
                 <Divider orientation="vertical" flexItem light />
                 {/* <Grid item className="item6" lg={6}> */}
-                {isItemAdded ? itemAdded : addItem}
+                {isItemAdded
+                  ? itemAdded
+                  : isItemNotAdded
+                  ? itemNotAdded
+                  : addItem}
               </div>
             </Grid>
           )}
