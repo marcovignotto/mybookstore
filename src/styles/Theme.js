@@ -3,9 +3,11 @@ import { createMuiTheme } from "@material-ui/core/styles";
 export const colors = {
   arcBlue: "#0B72B9",
   arcOrange: "#FFBA60",
-  primaryMain: "#324376", //dark blue
-  primaryLight: "#586BA4", // light blue
-  secondaryMain: "#a49158", // sand / gold
+  primaryMain: "#EB5E28", // red/orange //dark blue "#324376"
+  primaryLight: "#FCE3DA", // light blue   "#586BA4",
+  // primaryLight: "FFFCF2", // white // light blue   "#586BA4",
+  // secondaryMain: "#a49158", // sand / gold
+  secondaryMain: "#CCC5B9", // light grey
   errorMain: "#EA1E0B", // Red
   warningMain: "#F76C5E", // light red / orange
   infoMain: "#F5DD90", // light yellow
@@ -56,7 +58,7 @@ export const theme = createMuiTheme({
       justifyContent: "center",
       justifyItems: "center",
       "&:hover": {
-        color: colors.secondaryMain,
+        color: colors.primaryLight,
       },
     },
   },
@@ -68,7 +70,7 @@ export const theme = createMuiTheme({
     btnAddDb: {
       fontSize: "0.9rem",
       textTransform: "uppercase",
-      backgroundColor: colors.secondaryMain,
+      backgroundColor: colors.primaryLight,
       color: "white",
       borderRadius: "5px",
       padding: "5px",
