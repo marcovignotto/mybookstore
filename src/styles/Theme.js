@@ -3,21 +3,25 @@ import { createMuiTheme } from "@material-ui/core/styles";
 export const colors = {
   arcBlue: "#0B72B9",
   arcOrange: "#FFBA60",
-  primaryMain: "#324376", //dark blue
-  primaryLight: "#586BA4", // light blue
-  secondaryMain: "#a49158", // sand / gold
+  primaryMain: "#EB5E28", // red/orange //dark blue "#324376"
+  primaryLight: "#FCE3DA", // light blue   "#586BA4",
+  // primaryLight: "FFFCF2", // white // light blue   "#586BA4",
+  // secondaryMain: "#a49158", // sand / gold
+  secondaryMain: "#CCC5B9", // light grey
   errorMain: "#EA1E0B", // Red
   warningMain: "#F76C5E", // light red / orange
   infoMain: "#F5DD90", // light yellow
   successMain: "#918F0F", // olive
-  btnOver: "red",
+  btnOver: "#CCC5B9",
+  // btnOver: "#F08256",
 };
 
 export const theme = createMuiTheme({
   overrides: {
-    MuiButton: {
+    MuiFormLabel: {
       root: {
         // padding: "0px",
+        lineHeight: "1.11",
       },
     },
   },
@@ -45,6 +49,21 @@ export const theme = createMuiTheme({
       textTransform: "uppercase",
     },
   },
+
+  css: {
+    tab: {
+      minWidth: 10,
+      marginLeft: "50px",
+      marginRight: "50px",
+      textAlign: "center",
+      justifyContent: "center",
+      justifyItems: "center",
+      "&:hover": {
+        color: colors.primaryLight,
+      },
+    },
+  },
+
   "& .MuiButton-root": {
     padding: "0px",
   },
@@ -52,33 +71,36 @@ export const theme = createMuiTheme({
     btnAddDb: {
       fontSize: "0.9rem",
       textTransform: "uppercase",
-      backgroundColor: colors.secondaryMain,
+      backgroundColor: colors.primaryMain,
       color: "white",
       borderRadius: "5px",
       padding: "5px",
       paddingRight: "8px",
       paddingLeft: "8px",
+      marginLeft: "20px",
       "&:hover": {
         backgroundColor: colors.btnOver,
       },
     },
     btnUpdateItem: {
-      fontSize: "0.8rem",
-      // width: "250px",
-      textTransform: colors.secondaryMain,
-      backgroundColor: "red",
+      fontSize: "0.9rem",
+      textTransform: "uppercase",
+      backgroundColor: colors.primaryMain,
       color: "white",
       borderRadius: "5px",
-      padding: "0px",
-      paddingRight: "8px",
-      paddingLeft: "8px",
+      marginBottom: "5px",
+      marginTop: "5px",
+      marginLeft: "20px",
       "&:hover": {
         backgroundColor: colors.btnOver,
+      },
+      "&:focus": {
+        backgroundColor: "red",
       },
     },
   },
   tableFound: {
-    backgroundColor: colors.secondaryMain,
+    backgroundColor: colors.primaryMain,
   },
 });
 
@@ -87,7 +109,11 @@ export const theme = createMuiTheme({
 export const cardColors = {
   cardBackground: "white",
   cardText: colors.primaryMain,
-  cardAddDbBackground: "#e5e5e5",
+  // cardAddDbBackground:
+  //   "linear-gradient(36deg, rgba(255,228,145,1) 12%, rgba(255,214,88,1) 90%)",
+  // cardAddDbBackground: "#ffd961",
+  // cardAddDbBackground: "#e5e5e5",
+  cardAddDbBackground: "white",
 };
 
 export const cardStyle = {
@@ -109,7 +135,7 @@ export const cardStyleAddDb = {
   marginBottom: 5,
   backgroundColor: cardColors.cardAddDbBackground,
   color: cardColors.cardText,
-  border: "0px 0px 2px 2px solid rgba(0, 0, 0, 0)",
-  borderRadius: 3,
-  boxShadow: "1px 2px 9px -4px rgba(0,0,0,0.10)",
+  border: "1px solid rgba(0, 0, 0, 0.1)",
+  borderRadius: "0px 0px 5px 5px",
+  boxShadow: "0px 2px 5px -4px rgba(0,0,0,0.50)",
 };

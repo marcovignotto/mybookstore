@@ -1,3 +1,9 @@
+/**
+ * @description Insert section of the app
+ * to search into Google Books APIs
+ * and insert into WooCommerce
+ */
+
 import React, { Fragment, useState, useEffect } from "react";
 
 import { useDispatch, connect } from "react-redux";
@@ -10,18 +16,27 @@ import {
 
 import BookItem from "./BookItem";
 
+/**
+ * @description MatUI
+ */
+
 import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
 import { makeStyles } from "@material-ui/core/styles";
-
 import Typography from "@material-ui/core/Typography";
-
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
+
+import FadeIn from "react-fade-in";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
     "& > *": {
       margin: theme.spacing(1),
       width: "50ch",
@@ -36,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     textAlign: "center",
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
     whiteSpace: "nowrap",
     marginBottom: theme.spacing(1),
   },
@@ -48,22 +63,25 @@ const useStyles = makeStyles((theme) => ({
 
   inputs: {
     display: "flex",
-    flexDirection: "column",
-    // width: 800,
+    flexDirection: "row",
+    width: "100%",
     marginRight: 30,
     "& > *": {
       marginTop: 20,
     },
   },
   titleauthor: {
+    width: "50%",
     // width: 800,
     display: "flex",
     flexDirection: "column",
+    marginRight: "30px",
     "& > :first-child": {
       marginRight: 20,
     },
     "& > div": {
-      width: 450,
+      width: "100%",
+      paddingRight: 30,
       marginBottom: 20,
     },
     "& > :last-child": {
@@ -71,14 +89,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   isbn: {
+    width: "50%",
     display: "flex",
     flexDirection: "column",
+    marginLeft: "30px",
+    // marginRight: "30px",
     "& > *": {
-      width: 450,
-      marginBottom: 20,
+      width: "100%",
+      // marginBottom: 20,
     },
     "& > :first-child": {
-      marginRight: 20,
+      // marginRight: 20,
     },
   },
 
@@ -87,10 +108,19 @@ const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
     flexDirection: "row",
+    justifyContent: "center",
+    // height: 60,
+    marginTop: 20,
     "& > *": {
       width: 200,
       marginBottom: 20,
-      marginRight: 20,
+      marginRight: 50,
+      marginLeft: 50,
+      // padding: 0,
+    },
+    "& > :last-child": {
+      // marginLeft: "2rem",
+      // marginRight: 20,
     },
   },
 
@@ -113,6 +143,8 @@ const Insert = ({ data, loading, googleSearched }) => {
   const [disableTitleAuthorsText, setDisableTitleAuthorsText] = useState(false);
 
   const [searched, setSearched] = useState(false);
+
+  const [results, setResults] = useState(20);
 
   function noDataTimeout() {
     setTimeout(() => {
@@ -146,13 +178,20 @@ const Insert = ({ data, loading, googleSearched }) => {
     title: "",
     author: "",
     isbn: "",
+    results: "",
   });
 
   const { title, author, isbn } = item;
 
+  /**
+   * @desc sets the kind of search
+   * and controlls the opacity and the status of the inputs
+   * @param {*} e
+   */
+
   const onChange = (e) => {
     e.preventDefault();
-    setItem({ ...item, [e.target.id]: e.target.value });
+    setItem({ ...item, [e.target.id]: e.target.value, results: results });
 
     if (item.title || item.author) {
       setDisableIsbnText(true);
@@ -163,9 +202,36 @@ const Insert = ({ data, loading, googleSearched }) => {
     }
   };
 
+  const handleChangeResults = (event) => {
+    setResults(event.target.value);
+  };
+
+  const itemsToDisplay = [
+    {
+      value: 10,
+      label: 10,
+    },
+    {
+      value: 20,
+      label: 20,
+    },
+    {
+      value: 30,
+      label: 30,
+    },
+    {
+      value: 40,
+      label: 40,
+    },
+  ];
+
+  /**
+   * @description Adds book to WooCommerce
+   * @param {*} e
+   */
+
   const onSubmit = (e) => {
     e.preventDefault();
-
     setInProgress(true);
     setItem(item);
     dispatch(googleSearch(item));
@@ -173,6 +239,9 @@ const Insert = ({ data, loading, googleSearched }) => {
     setSearched(true);
   };
 
+  /**
+   * @description clear search once is over
+   */
   const clearSearch = () => {
     setItem({
       title: "",
@@ -190,9 +259,13 @@ const Insert = ({ data, loading, googleSearched }) => {
     setInProgress(false);
   };
 
+  /**
+   * @desc tablehead for books results
+   */
+
   const tableHead = (
     <>
-      <Grid container className={["table-found", classes.tableFound]}>
+      <Grid container className={`table-found ${classes.tableFound}`}>
         <Grid item className="item1"></Grid>
         <Grid item className="item2">
           Cover
@@ -213,6 +286,10 @@ const Insert = ({ data, loading, googleSearched }) => {
     </>
   );
 
+  /**
+   * @desc message for no results
+   */
+
   const showNodata = (
     <div className="no-data">No books found, try another research</div>
   );
@@ -221,21 +298,43 @@ const Insert = ({ data, loading, googleSearched }) => {
     <Fragment>
       <div id="book-search">
         <div className="items">
+          {/* <Divider light /> */}
+
           <div className={classes.inputs}>
+            {/* <Divider orientation="vertical" flexItem light /> */}
+
             <div
               className={classes.titleauthor}
-              style={{ display: !disableTitleAuthorsText ? "flex" : "none" }}
+              style={{ opacity: !disableTitleAuthorsText ? 1 : 0.5 }}
             >
-              <Typography variant="h4" color="primary" gutterBottom>
-                Search for a book to insert
-              </Typography>
+              <div
+                style={{
+                  display: !disableIsbnText ? "flex" : "none",
+                  marginBottom: "0px",
+                }}
+              >
+                <Typography variant="h4" color="primary" gutterBottom>
+                  Search for a book to add
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: disableIsbnText ? "flex" : "none",
+                  marginBottom: "0px",
+                }}
+              >
+                <Typography variant="h4" color="primary" gutterBottom>
+                  Insert Title / Author
+                </Typography>
+              </div>
+
               <TextField
                 id="title"
                 label="Title"
                 variant="outlined"
                 value={title}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableTitleAuthorsText}
               />
               <TextField
                 id="author"
@@ -243,12 +342,14 @@ const Insert = ({ data, loading, googleSearched }) => {
                 variant="outlined"
                 value={author}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableTitleAuthorsText}
               />
             </div>
+
+            <Divider orientation="vertical" flexItem light />
             <div
               className={classes.isbn}
-              style={{ display: !disableIsbnText ? "flex" : "none" }}
+              style={{ opacity: !disableIsbnText ? 1 : 0.5 }}
             >
               <div
                 style={{ display: !disableTitleAuthorsText ? "flex" : "none" }}
@@ -271,26 +372,37 @@ const Insert = ({ data, loading, googleSearched }) => {
                 variant="outlined"
                 value={isbn}
                 onChange={onChange}
-                disabled={searched}
+                disabled={searched || disableIsbnText}
               />
             </div>
-            <div className={classes.buttons}>
-              <Button
-                variant="contained"
-                onClick={onSubmit}
-                disabled={searched}
-              >
-                Search
-              </Button>
-              <Button variant="contained" onClick={clearSearch}>
-                Clear Search
-              </Button>
-            </div>
+          </div>
+          <Divider light />
+          <div className={classes.buttons}>
+            <Button variant="contained" onClick={onSubmit} disabled={searched}>
+              Search
+            </Button>
+
+            <TextField
+              id="standard-select-results"
+              select
+              // label="Select"
+              value={results}
+              onChange={handleChangeResults}
+              helperText="Max items to display"
+            >
+              {itemsToDisplay.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            <Button variant="contained" onClick={clearSearch}>
+              Clear Search
+            </Button>
           </div>
         </div>
       </div>
       {isDataReady ? tableHead : null}
-
       <div className="items-found">
         {loading ? (
           <>
@@ -305,11 +417,11 @@ const Insert = ({ data, loading, googleSearched }) => {
             )}
           </>
         ) : (
-          <>
+          <FadeIn>
             {noDatafound
               ? showNodata
               : dataFound.map((item) => <BookItem item={item} key={item.id} />)}
-          </>
+          </FadeIn>
         )}
       </div>
     </Fragment>

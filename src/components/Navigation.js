@@ -1,6 +1,13 @@
+/**
+ * @description App's menu
+ */
 import React, { Fragment, useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
+
+/**
+ * @description MatUI
+ */
 
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Slide from "@material-ui/core/Slide";
@@ -16,24 +23,17 @@ const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: "1em",
+    marginLeft: 0,
   },
   tab: {
     ...theme.typography.tab,
-    minWidth: 10,
-    marginLeft: "100px",
-    "&:hover": {
-      color: "white",
-    },
+    ...theme.css.tab,
   },
 }));
 
 function HideOnScroll(props) {
   const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
   const trigger = useScrollTrigger();
-
   return (
     <Slide appear={false} direction="down" in={!trigger}>
       {children}
@@ -59,10 +59,18 @@ const Navigation = (props) => {
     }
   }, [value]);
 
+  /**
+   * @desc Menu's routes
+   */
+
   const routes = [
     { name: "Insert Book", link: "/insert", activeIndex: 0 },
     { name: "Book's Database", link: "/database", activeIndex: 1 },
   ];
+
+  /**
+   * @description set current path
+   */
 
   useEffect(() => {
     [...routes].forEach((route) => {
@@ -86,7 +94,19 @@ const Navigation = (props) => {
     <Fragment>
       <HideOnScroll {...props}>
         <AppBar>
-          <Toolbar>
+          {/* <div>Logo</div> */}
+          <Toolbar
+            disableGutters={true}
+            style={{
+              float: "none",
+              width: "100%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              // textAlign: "center",
+              // alignContent: "center",
+              justifyContent: "center",
+            }}
+          >
             <Tabs value={value} onChange={handleChange}>
               <Tab
                 className={classes.tab}

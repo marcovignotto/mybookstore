@@ -1,3 +1,7 @@
+/**
+ * @description Single Book Item for insert
+ */
+
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, connect } from "react-redux";
@@ -15,6 +19,9 @@ import Grid from "@material-ui/core/Grid";
 import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+
+import FadeIn from "react-fade-in";
 
 // new MAT UI import
 
@@ -74,12 +81,12 @@ function getSizeOpen() {
   };
 }
 
-const BookItem = ({ item }) => {
+const BookItem = ({ item, loading }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const [imgSrc, setImgSrc] = useState(undefined);
-  const [identifiers, setIdentifiers] = useState(["00000000000"]);
+  const [identifiers, setIdentifiers] = useState([]);
   const [isbnToSend, setIsbnToSend] = useState();
 
   const [thumbAdd, setThumbAdd] = useState();
@@ -92,21 +99,19 @@ const BookItem = ({ item }) => {
 
   const [menuContentsAnimation, setMenuContentsAnimation] = useState();
 
+  const [areIdentifiersReady, setIsIdentifiersReady] = useState(false);
+
   const styleAnimation = {
-    "animation-name": menuAnimation,
-    "animation-duration": "0.2s",
-    "animation-timing-function": "linear",
+    animationName: menuAnimation,
+    animationDuration: "0.2s",
+    animationTimingFunction: "linear",
   };
 
   const styleContentsAnimation = {
-    "animation-name": menuContentsAnimation,
-    "animation-duration": "0.2s",
-    "animation-timing-function": "linear",
+    animationName: menuContentsAnimation,
+    animationDuration: "0.2s",
+    animationTimingFunction: "linear",
   };
-
-  // console.log(menuAnimation);
-
-  // console.log(styleContentsAnimation);
 
   const [cardSizes, setCardSizes] = useState({
     width: "",
@@ -145,10 +150,14 @@ const BookItem = ({ item }) => {
     }
   }, [addToStore]);
 
+  /**
+   * @desc set indentifiers
+   */
   useEffect(() => {
     if (item.volumeInfo.industryIdentifiers === undefined) {
       setIdentifiers(["00000000000"]);
       setIsbnToSend(["00000000000"]);
+      setIsIdentifiersReady(true);
     } else {
       async function mapIndentifiers() {
         const mapIden = await item.volumeInfo.industryIdentifiers.map(
@@ -158,7 +167,8 @@ const BookItem = ({ item }) => {
         );
 
         await setIdentifiers(mapIden);
-        const res = await mapIden.map((item) => setIsbnToSend(item.identifier));
+        const res = await mapIden.map((item) => setIsbnToSend(mapIden));
+        setIsIdentifiersReady(true);
         return res;
       }
       mapIndentifiers();
@@ -198,7 +208,10 @@ const BookItem = ({ item }) => {
   };
 
   const [isItemAdded, setIsItemAdded] = useState(false);
-
+  const [isItemNotAdded, setIsItemNotAdded] = useState(false);
+  /**
+   * @desc dispatches data and wait for the confirmation
+   */
   const addToDb = () => {
     const data = dispatch(
       addToWooDb(
@@ -210,9 +223,18 @@ const BookItem = ({ item }) => {
         price
       )
     );
+
+    /**
+     * @desc converts promise in true/false
+     */
     const result = MakeQuerablePromise(data);
+
+    /**
+     * @desc shows if is added or not
+     */
     result.then(function () {
-      setIsItemAdded(result.isFulfilled()); //true
+      if (result.isFulfilled()) return setIsItemAdded(true); //true
+      if (!result.isFulfilled()) return setIsItemNotAdded(true); //false
     });
   };
 
@@ -231,121 +253,223 @@ const BookItem = ({ item }) => {
 
   const itemAdded = (
     <>
-      <div className="item-added">
+      {/* <div className="item-added"> */}
+      <div className={`item-added ${classes.btnAddDb}`}>
         <div>Book Added</div>
       </div>
     </>
   );
+
+  const itemNotAdded = (
+    <>
+      <div className={`item-added ${classes.btnAddDb}`}>
+        <div>Book not added</div>
+      </div>
+    </>
+  );
+
+  // console.log(identifiers.length);
+  // useEffect(() => {
+  //   // console.log(identifiers === undefined);
+  //   identifiers.map((item) => {
+  //     if (item.identifier?.search(":") === -1) {
+  //       return item.identifier;
+  //     } else {
+  //       console.log(
+  //         item.identifier?.substring(item.identifier.search(":") + 1)
+  //       );
+  //       return item.identifier?.substring(item.identifier.search(":") + 1);
+  //     }
+  //   });
+  // }, [identifiers]);
+
+  // key={extractIdentifier(item.identifier)}
+
+  const extractIdentifier = (id) => {
+    // console.log(id);
+    if (id.search(":") === -1) {
+      return id;
+    } else {
+      return id.substring(id.search(":") + 1);
+    }
+  };
+
+  // console.log(identifiers.length);
+  // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
   return (
-    <Grid container className="book-item">
-      <Grid
-        container
-        className={!addToStore ? "items-table" : "items-table-selected"}
-        style={(cardStyle, styleAnimation, styleContentsAnimation)}
-        onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-      >
-        <Grid item className="item1">
+    <>
+      {/* to start waits loading from reducer */}
+      {loading ? null : (
+        <Grid container className="book-item">
+          <Grid
+            container
+            className={!addToStore ? "items-table" : "items-table-selected"}
+            style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <Grid item className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </Grid>
+            <Grid
+              item
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={imgSrc} alt="" />
+            </Grid>
+            <Grid
+              item
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {!addToStore && item.volumeInfo.title.length > 59
+                ? item.volumeInfo.title.substring(0, 60) + "..."
+                : item.volumeInfo.title}
+            </Grid>
+            <Grid
+              item
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {item.volumeInfo.authors === undefined
+                ? ""
+                : !addToStore && item.volumeInfo.authors.join(", ").length > 59
+                ? item.volumeInfo.authors.join(", ").substring(0, 60) + "..."
+                : item.volumeInfo.authors.join(", ")}
+            </Grid>
+            {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+            {identifiers.length === 0
+              ? null
+              : identifiers.map((item) => {
+                  let other = "";
+                  let isbn10 = "";
+                  let isbn13 = "";
+                  if (item.type === "OTHER") other = item.identifier;
+                  if (item.type === "ISBN_10") isbn10 = item.identifier;
+                  if (item.type === "ISBN_13") isbn13 = item.identifier;
+
+                  if (other.length > 0) {
+                    return (
+                      <>
+                        <Grid
+                          style={{ textAlign: "center" }}
+                          key={extractIdentifier(other)}
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {other}
+                        </Grid>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <Grid
+                          key={
+                            isbn13.length === 0
+                              ? Math.floor(Math.random() * 100000)
+                              : isbn13
+                          }
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 13: " : null}
+                          {isbn13.length === 0 ? null : isbn13}
+                        </Grid>
+                        <Grid
+                          key={isbn10}
+                          item
+                          className="item6"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 10: " : null}
+                          {isbn10.length === 0 ? null : isbn10}
+                        </Grid>
+                      </>
+                    );
+                  }
+                })}
+
+            {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+          </Grid>
+
           {!addToStore ? (
-            <button onClick={clickAddToStore} className="btn-add">
-              <i className="fas fa-plus"></i>
-            </button>
+            ""
           ) : (
-            <button onClick={clickRemoveFromStore} className="btn-add">
-              <i className="fas fa-minus"></i>
-            </button>
+            <Grid container className="add-to-store" style={cardStyleAddDb}>
+              {/* <Grid item className="item1"></Grid>
+              <Grid item className="item2"></Grid> */}
+              <div item className="add-to-store-inputs">
+                <Divider orientation="vertical" flexItem light />
+                <label>€:</label>
+                <input
+                  className="input-price"
+                  type="number"
+                  name="price"
+                  value={price.price}
+                  placeholder="10"
+                  onChange={bookPrice}
+                />
+
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item4" lg={1}> */}
+                <label>Qnt:</label>
+                <input
+                  className="input-stock"
+                  type="number"
+                  name="stock"
+                  value={stockQuantity.books}
+                  defaultValue="1"
+                  onChange={bookQuantity}
+                />
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item5" lg={4}> */}
+                <label>Status:</label>
+                <form>
+                  <select
+                    className="input-status"
+                    id="status"
+                    name="status"
+                    onChange={changeBookStatus}
+                    value={bookStatus.status}
+                  >
+                    <option value="crap">Crap</option>
+                    <option value="good">Good</option>
+                    <option value="like-new">Like New</option>
+                  </select>
+                </form>
+                {/* </Grid> */}
+                <Divider orientation="vertical" flexItem light />
+                {/* <Grid item className="item6" lg={6}> */}
+                {isItemAdded
+                  ? itemAdded
+                  : isItemNotAdded
+                  ? itemNotAdded
+                  : addItem}
+              </div>
+            </Grid>
           )}
         </Grid>
-        <Grid
-          item
-          className="item2"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          <img src={imgSrc} alt="" />
-        </Grid>
-        <Grid
-          item
-          className="item3"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {item.volumeInfo.title}
-        </Grid>
-        <Grid
-          item
-          className="item4"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {item.volumeInfo.authors}
-        </Grid>
-        <Grid
-          item
-          className="item5"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          ----
-        </Grid>
-        <Grid
-          item
-          className="item6"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {identifiers.map((item) => (
-            <Grid item>
-              {item.type} : {item.identifier}
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
-
-      {!addToStore ? (
-        ""
-      ) : (
-        <Grid container className="add-to-store" style={cardStyleAddDb}>
-          <Grid item className="item1"></Grid>
-          <Grid item className="item2"></Grid>
-          <Grid item className="item3">
-            <input
-              className="input-price"
-              type="number"
-              name="price"
-              value={price.price}
-              placeholder="10"
-              onChange={bookPrice}
-            />
-            €
-          </Grid>
-          <Grid item className="item4">
-            <input
-              className="input-stock"
-              type="number"
-              name="stock"
-              value={stockQuantity.books}
-              defaultValue="1"
-              onChange={bookQuantity}
-            />
-          </Grid>
-          <Grid item className="item5">
-            <form>
-              <select
-                className="input-status"
-                id="status"
-                name="status"
-                onChange={changeBookStatus}
-                value={bookStatus.status}
-                defaultValue="good"
-              >
-                <option value="crap">Crap</option>
-                <option value="good">Good</option>
-                <option value="like-new">Like New</option>
-              </select>
-            </form>
-          </Grid>
-
-          <Grid item className="item6">
-            {isItemAdded ? itemAdded : addItem}
-          </Grid>
-        </Grid>
       )}
-    </Grid>
+    </>
   );
 };
 
