@@ -19,6 +19,8 @@ import Divider from "@material-ui/core/Divider";
 
 import classNames from "classnames/bind";
 
+import FadeIn from "react-fade-in";
+
 /**
  * @desc converts Promises in true/false
  */
@@ -120,18 +122,29 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     const data = dispatch(
       updateWooDb(id, newPrice, newStockQuantity, newBookStatus)
     );
-    const result = MakeQuerablePromise(data);
-    result.then(function () {
-      setItemIsDeleted(result.isFulfilled());
+    // console.log(data);
+    // const result = MakeQuerablePromise(data);
+    // console.log(result);
+    // console.log(result.isFulfilled());
+    data.then(function (res) {
+      // console.log(res);
+      if (res >= 200 && res <= 399) {
+        setItemIsUpdated(true);
+        setShowDeleteBtns((prev) => !prev);
+      } else {
+        setItemIsUpdated(false);
+        setShowDeleteBtns((prev) => !prev);
+      }
+      // setItemIsUpdated(result.isFulfilled());
     });
+    // console.log(itemIsDeleted);
 
-    setItemIsUpdated((prev) => !prev);
-    setShowDeleteBtns((prev) => !prev);
+    // setItemIsUpdated((prev) => !prev);
     setTimeout(() => {
       setItemIsUpdated((prev) => !prev);
-      setItemIsDeleted((prev) => !prev);
+      // setItemIsDeleted((prev) => !prev);
       setShowDeleteBtns((prev) => !prev);
-    }, 2000);
+    }, 3000);
   };
 
   const handleDeleteConfirm = (event) => {

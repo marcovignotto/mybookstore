@@ -20,9 +20,10 @@ import {
   GOOGLE_SEARCH_CLEAR_ERROR,
   GOOGLE_SEARCH_SEARCHED,
   GOOGLE_SEARCH_SEARCHED_ERROR,
-  ADD_TO_WOO_DB,
+  // ADD_TO_WOO_DB,
   ADD_TO_WOO_DB_ERROR,
-  UPDATE_WOO_DB,
+  // UPDATE_WOO_DB,
+  UPDATE_WOO_DB_ERROR,
   WOO_DB_ALL,
   WOO_DB_IN,
   WOO_DB_OUT,
@@ -276,10 +277,12 @@ export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
         data,
       });
 
-      return resultReq;
-
-      // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq.data });
+      /**
+       * @desc sends status back
+       */
+      return resultReq.then((x) => x.status);
     } catch (error) {
+      dispatch({ type: UPDATE_WOO_DB_ERROR, payload: error });
       console.log(error);
     }
   };
