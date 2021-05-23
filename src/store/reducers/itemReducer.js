@@ -6,6 +6,7 @@ import {
   GOOGLE_SEARCH_SEARCHED,
   GOOGLE_SEARCH_SEARCHED_ERROR,
   ADD_TO_WOO_DB,
+  ADD_TO_WOO_DB_ERROR,
   UPDATE_WOO_DB,
   WOO_DB_ALL,
   WOO_DB_IN,
@@ -72,6 +73,12 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case GOOGLE_SEARCH_SEARCHED_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case ADD_TO_WOO_DB_ERROR:
       return {
         ...state,
         error: action.payload,

@@ -21,6 +21,7 @@ import {
   GOOGLE_SEARCH_SEARCHED,
   GOOGLE_SEARCH_SEARCHED_ERROR,
   ADD_TO_WOO_DB,
+  ADD_TO_WOO_DB_ERROR,
   UPDATE_WOO_DB,
   WOO_DB_ALL,
   WOO_DB_IN,
@@ -219,15 +220,19 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
           data,
         });
 
-        console.log("res from items", resultReq);
-        dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
-        return resultReq.then((x) => console.log(x.status));
+        // console.log("res from items", resultReq);
+        return resultReq.then((x) => x.status);
+        // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
         // return resultReq;
       })
-      .then(function (res) {
-        return res;
-      })
-      .catch((error) => console.log(error));
+      // .then(function (res) {
+      //   console.log(res);
+      //   return res;
+      // })
+      .catch((error) => {
+        dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
+        console.log(error);
+      });
   };
 };
 
