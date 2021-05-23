@@ -253,7 +253,8 @@ const BookItem = ({ item, loading }) => {
 
   const itemAdded = (
     <>
-      <div className="item-added">
+      {/* <div className="item-added"> */}
+      <div className={`item-added ${classes.btnAddDb}`}>
         <div>Book Added</div>
       </div>
     </>
@@ -261,7 +262,7 @@ const BookItem = ({ item, loading }) => {
 
   const itemNotAdded = (
     <>
-      <div className="item-not-added">
+      <div className={`item-added ${classes.btnAddDb}`}>
         <div>Book not added</div>
       </div>
     </>

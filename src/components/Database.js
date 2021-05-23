@@ -299,13 +299,14 @@ const Database = ({
                   name="filter"
                   value={wooDbSeaState}
                   onChange={handleChangeStock}
-                  // classes={{ root: classes.radio, checked: classes.checked }}
+                  // classes="inputs-radio-group"
                 >
                   <FormControlLabel value="" control={<Radio />} label="All" />
                   <FormControlLabel
                     value="stock_status=instock&"
                     control={<Radio />}
                     label="In Stock"
+                    // className="input-radio"
                   />
                   <FormControlLabel
                     value="stock_status=outofstock&"
@@ -319,7 +320,7 @@ const Database = ({
                   variant="contained"
                   size="large"
                   color="secondary"
-                  className={classes.margin}
+                  className="btn-clear-db-search"
                   onClick={clearWooDbSearch}
                 >
                   Clear search

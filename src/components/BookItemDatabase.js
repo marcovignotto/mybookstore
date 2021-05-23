@@ -169,21 +169,24 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const updateAndDelete = (
     <>
-      <Button
-        className={classes.btnUpdateItem}
-        onClick={() => {
-          sendUpdate();
-        }}
-      >
-        Update item
-      </Button>
-      <IconButton aria-label="delete" onClick={handleDeleteConfirm}>
-        <DeleteIcon />
-      </IconButton>
+      <div className="upd-delete">
+        <Button
+          className={`btn-upd-item ${classes.btnUpdateItem}`}
+          onClick={() => {
+            sendUpdate();
+          }}
+        >
+          Update item
+        </Button>
+        <IconButton aria-label="delete" onClick={handleDeleteConfirm}>
+          <DeleteIcon />
+        </IconButton>
+      </div>
     </>
   );
 
   const confirmation = (
+    // <div className="upd-delete">
     <div className="confirmation">
       <div>Are you sure?</div>
       <div className="confirm-buttons">
@@ -204,18 +207,23 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           No
         </button>
       </div>
+      {/* </div> */}
     </div>
   );
 
   const bookDeleted = (
-    <div className="book-delete">
-      <div>Book Deleted</div>
+    <div className="upd-delete">
+      <div className={`book-delete ${classes.btnAddDb}`}>
+        <div>Book Deleted</div>
+      </div>
     </div>
   );
 
   const bookUpdated = (
-    <div className="book-delete">
-      <div>Book Updated</div>
+    <div className="upd-delete">
+      <div className={`book-delete ${classes.btnAddDb}`}>
+        <div>Book Updated</div>
+      </div>
     </div>
   );
 

@@ -83,7 +83,7 @@ export const theme = createMuiTheme({
       },
     },
     btnUpdateItem: {
-      fontSize: "0.8rem",
+      fontSize: "0.9rem",
       textTransform: "uppercase",
       backgroundColor: colors.primaryMain,
       color: "white",
@@ -93,6 +93,9 @@ export const theme = createMuiTheme({
       marginLeft: "20px",
       "&:hover": {
         backgroundColor: colors.btnOver,
+      },
+      "&:focus": {
+        backgroundColor: "red",
       },
     },
   },

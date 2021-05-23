@@ -109,13 +109,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    height: 60,
+    // height: 60,
     marginTop: 20,
     "& > *": {
       width: 200,
       marginBottom: 20,
       marginRight: 50,
       marginLeft: 50,
+      // padding: 0,
     },
     "& > :last-child": {
       // marginLeft: "2rem",
@@ -380,9 +381,7 @@ const Insert = ({ data, loading, googleSearched }) => {
             <Button variant="contained" onClick={onSubmit} disabled={searched}>
               Search
             </Button>
-            <Button variant="contained" onClick={clearSearch}>
-              Clear Search
-            </Button>
+
             <TextField
               id="standard-select-results"
               select
@@ -397,6 +396,9 @@ const Insert = ({ data, loading, googleSearched }) => {
                 </MenuItem>
               ))}
             </TextField>
+            <Button variant="contained" onClick={clearSearch}>
+              Clear Search
+            </Button>
           </div>
         </div>
       </div>
