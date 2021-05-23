@@ -221,8 +221,8 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
 
         console.log("res from items", resultReq);
         dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
-        // return resultReq.then((x) => console.log("Done!"));
-        return resultReq;
+        return resultReq.then((x) => console.log(x.status));
+        // return resultReq;
       })
       .then(function (res) {
         return res;
