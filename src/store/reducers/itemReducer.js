@@ -1,19 +1,32 @@
 import {
   GOOGLE_SEARCH,
+  GOOGLE_SEARCH_ERROR,
   GOOGLE_SEARCH_CLEAR,
+  GOOGLE_SEARCH_CLEAR_ERROR,
   GOOGLE_SEARCH_SEARCHED,
+  GOOGLE_SEARCH_SEARCHED_ERROR,
   ADD_TO_WOO_DB,
   UPDATE_WOO_DB,
   WOO_DB_ALL,
+  WOO_DB_ALL_ERROR,
   WOO_DB_IN,
+  WOO_DB_IN_ERROR,
   WOO_DB_OUT,
+  WOO_DB_OUT_ERROR,
   WOO_DB_DELETE_ALL,
+  WOO_DB_DELETE_ALL_ERROR,
   WOO_DB_DELETE_IN,
+  WOO_DB_DELETE_IN_ERROR,
   WOO_DB_DELETE_OUT,
+  WOO_DB_DELETE_OUT_ERROR,
   WOO_DB_SEARCH_STATE,
+  WOO_DB_SEARCH_STATE_ERROR,
   WOO_DB_SEARCH_TERM,
+  WOO_DB_SEARCH_TERM_ERROR,
   WOO_DB_SEARCH_CLEAR,
+  WOO_DB_SEARCH_CLEAR_ERROR,
   WOO_DB_DATA_READY,
+  WOO_DB_DATA_READY_ERROR,
 } from "../types";
 
 const initialState = {
@@ -26,6 +39,7 @@ const initialState = {
   wooDbSearchTerm: "",
   wooDbDataReady: false,
   loading: true,
+  error: null,
 };
 
 export default (state = initialState, action) => {
