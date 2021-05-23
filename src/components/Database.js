@@ -19,6 +19,7 @@ import {
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 
 import {
   getWooDbAll,
@@ -35,6 +36,15 @@ import FadeIn from "react-fade-in";
 import BookItemDatabase from "../components/BookItemDatabase";
 
 const useStyles = makeStyles((theme) => ({
+  // overrides: {
+  //   MuiRadio: {
+  //     colorSecondary: {
+  //       // padding: "0px",
+  //       // lineHeight: "1.11",
+  //       color: "red",
+  //     },
+  //   },
+  // },
   root: {
     "& > *": {
       margin: theme.spacing(1),
@@ -66,11 +76,28 @@ const useStyles = makeStyles((theme) => ({
   allfilters: {
     display: "flex",
     flexDirection: "row",
+    // color: "red",
+    color: "red",
+    "&$checked": {
+      color: "blue",
+    },
   },
   clearbtn: {
     display: "flex",
     justifyContent: "center",
+    height: 130,
+    borderRadius: 10,
   },
+  tableFound: {
+    ...theme.tableFound,
+  },
+  root: {
+    color: "red",
+    "&$checked": {
+      color: "blue",
+    },
+  },
+  checked: {},
 }));
 
 const Database = ({
@@ -206,16 +233,39 @@ const Database = ({
     dispatch(setWooDbDataReady(false));
   };
 
+  // const tableHead = (
+  //   <>
+  //     <div className="table-found">
+  //       <div className="item1"></div>
+  //       <div className="item2">Cover</div>
+  //       <div className="item3">Title</div>
+  //       <div className="item4">Author/s</div>
+  //       <div className="item5">ISBN 13</div>
+  //       <div className="item6">ISBN 10</div>
+  //     </div>
+  //   </>
+  // );
+
   const tableHead = (
     <>
-      <div className="table-found">
-        <div className="item1"></div>
-        <div className="item2">Cover</div>
-        <div className="item3">Title</div>
-        <div className="item4">Author/s</div>
-        <div className="item5">ISBN 13</div>
-        <div className="item6">ISBN 10</div>
-      </div>
+      <Grid container className={`table-found ${classes.tableFound}`}>
+        <Grid item className="item1"></Grid>
+        <Grid item className="item2">
+          Cover
+        </Grid>
+        <Grid item className="item3">
+          Title
+        </Grid>
+        <Grid item className="item4">
+          Author/s
+        </Grid>
+        <Grid item className="item5">
+          ISBN 13
+        </Grid>
+        <Grid item className="item6">
+          ISBN 10
+        </Grid>
+      </Grid>
     </>
   );
 
@@ -249,6 +299,7 @@ const Database = ({
                   name="filter"
                   value={wooDbSeaState}
                   onChange={handleChangeStock}
+                  // classes={{ root: classes.radio, checked: classes.checked }}
                 >
                   <FormControlLabel value="" control={<Radio />} label="All" />
                   <FormControlLabel

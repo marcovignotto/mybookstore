@@ -396,7 +396,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       />
                       {/* </div>
                     <div className="item4"> */}
-                      <Divider orientation="vertical" flexItem light />
+                      {/* <Divider orientation="vertical" flexItem light /> */}
                       <label>Qnt:</label>
                       <input
                         className="input-stock"
@@ -409,7 +409,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       />{" "}
                       {/* </div>
                     <div className="item5"> */}
-                      <Divider orientation="vertical" flexItem light />
+                      {/* <Divider orientation="vertical" flexItem light /> */}
                       <label>Status:</label>
                       <form>
                         <select

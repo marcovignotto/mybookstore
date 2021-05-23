@@ -12,7 +12,8 @@ export const colors = {
   warningMain: "#F76C5E", // light red / orange
   infoMain: "#F5DD90", // light yellow
   successMain: "#918F0F", // olive
-  btnOver: "red",
+  btnOver: "#CCC5B9",
+  // btnOver: "#F08256",
 };
 
 export const theme = createMuiTheme({
@@ -70,7 +71,7 @@ export const theme = createMuiTheme({
     btnAddDb: {
       fontSize: "0.9rem",
       textTransform: "uppercase",
-      backgroundColor: colors.primaryLight,
+      backgroundColor: colors.primaryMain,
       color: "white",
       borderRadius: "5px",
       padding: "5px",
@@ -84,7 +85,7 @@ export const theme = createMuiTheme({
     btnUpdateItem: {
       fontSize: "0.8rem",
       textTransform: "uppercase",
-      backgroundColor: colors.secondaryMain,
+      backgroundColor: colors.primaryMain,
       color: "white",
       borderRadius: "5px",
       marginBottom: "5px",
@@ -96,7 +97,7 @@ export const theme = createMuiTheme({
     },
   },
   tableFound: {
-    backgroundColor: colors.secondaryMain,
+    backgroundColor: colors.primaryMain,
   },
 });
 
