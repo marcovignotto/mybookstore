@@ -118,6 +118,25 @@ export const setGoogleSearched = (state) => {
  */
 
 export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
+  console.log("isbn", isbn);
+
+  const getIsbn = (arr) => {
+    let str = "";
+    for (let i = 0; i < arr.length; i++) {
+      let typeOfCode = "";
+      if (arr[i].type.includes("_")) {
+        typeOfCode = arr[i].type.replace("_", " ");
+        str += typeOfCode + ":" + arr[i].identifier + " ";
+      } else {
+        str += arr[i].type + ":" + arr[i].identifier + " ";
+      }
+    }
+
+    return str;
+  };
+
+  console.log(" getIsbn(isbn)", getIsbn(isbn));
+
   /**
    * @desc creates obj for the cover
    * prepares it for the conversion
@@ -191,10 +210,18 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             {
               id: 32,
               key: "_wpm_gtin_code",
-              value: isbn,
+              codes: isbn,
+              value: getIsbn(isbn),
             },
           ],
-          ean_code: isbn,
+
+          // purchase_note: "isbn",
+          // ean_code: getIsbn(isbn),
+          ean_code: getIsbn(isbn),
+
+          /**
+           * @desc gets visualized in WooCommerce Product
+           */
         };
 
         // console.log("data", data);

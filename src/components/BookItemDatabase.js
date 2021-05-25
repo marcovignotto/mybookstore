@@ -55,7 +55,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const {
     id,
     price,
-    ean_code,
+    meta_data,
     name, // Title
     stock_quantity,
     short_description, // Authors
@@ -64,6 +64,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const cover = item?.images[0].src;
   const status = item?.attributes[0].options[0];
+  const ean_code = meta_data[0].value;
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
@@ -257,6 +258,13 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     3,
     short_description.search("</p>")
   );
+
+  let mixedObj = {
+    isbn: 10000,
+    codesArray: [{ one: 1, two: 2 }],
+  };
+
+  console.log("item", item);
 
   return (
     <div className="book-item">
