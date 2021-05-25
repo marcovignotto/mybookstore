@@ -25,13 +25,32 @@ body {
   margin: auto;
 }
 
-/* LOGO */
+/* NAVBAR & LOGO */
+
+.global-nav {
+  font-size: 13px;
+  text-align: center;
+  list-style-type: none;
+  background-color: #205081;
+  line-height: 40px;
+  border-bottom: 1px solid #235990;
+  position: relative;
+}
+
+.nav-left {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
 
 .logo {
-  width: 100px;
-  float: left;
-  /* height: 20px; */
-  /* margin-left: -100px; */
+  width: 200px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.3rem;
+  margin-top: -2px;
+  margin-left: 20px;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
 
 /* BTNS */
