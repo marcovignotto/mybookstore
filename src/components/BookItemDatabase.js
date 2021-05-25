@@ -83,6 +83,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const [itemIsDeleted, setItemIsDeleted] = useState(false);
 
+  const [showEditItem, setShowEditItem] = useState(false);
+
   const itemClass = classNames({
     "items-table": !addToStore,
     "items-table-selected": addToStore,
@@ -100,10 +102,16 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const clickAddToStore = () => {
     setAddToStore(true);
     setShowAnimation(true);
+    setShowDetailedItem(true);
+    setShowDetailedItem(true);
+    setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
     setShowAnimation(false);
+    setShowDetailedItem(false);
+    setShowCompressedItem(true);
+    // setShowEditItem(false);
   };
 
   const handleBookPrice = (e) => {
@@ -228,6 +236,11 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   );
 
   const [showAnimation, setShowAnimation] = useState(false);
+
+  const [showDetailedItem, setShowDetailedItem] = useState(false);
+
+  const [showCompressedItem, setShowCompressedItem] = useState(true);
+
   const transitions = useTransition(showAnimation, {
     // default: { immediate: true },
     from: { opacity: 0 },
@@ -236,9 +249,26 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     // reverse: show,
     delay: 600,
     // config: config.molasses,
+    config: { duration: 400 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
+    onStart: () => setShowEditItem(true),
   });
+
+  const transitionsCompressed = useTransition(showCompressedItem, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 800 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    onStart: () => setShowEditItem(true),
+  });
+
   // return transitions(
   //   (styles, item) => item && <animated.div style={styles}>✌️</animated.div>
   // );
@@ -258,118 +288,132 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     short_description.search("</p>")
   );
 
-  return (
-    <div className="book-item">
-      <div
-        // style={cardStyle}
-        className={itemClass}
-        onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-      >
-        <div className="item1">
-          {!addToStore ? (
-            <button onClick={clickAddToStore} className="btn-add">
-              <i className="fas fa-plus"></i>
-            </button>
-          ) : (
-            <button onClick={clickRemoveFromStore} className="btn-add">
-              <i className="fas fa-minus"></i>
-            </button>
-          )}
-        </div>
-        <div
-          className="item2"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          <img src={cover} alt="" />
-        </div>
-        <div
-          className="item3"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {/* {name} */}
-          {!addToStore && name.length > 59
-            ? name.substring(0, 60) + "..."
-            : name}
-        </div>
-        <div
-          className="item4"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {/* Removed <p> and </p> taken from WooCommerce */}
-          {!addToStore && authorsString.length > 85
-            ? authorsString.substring(0, 86) + "..."
-            : authorsString}
-        </div>
-        {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
-        {Array.isArray(ean_code) && codes.length === 0
-          ? null
-          : codes.map((item) => {
-              let other = "";
-              let isbn10 = "";
-              let isbn13 = "";
-              if (item.type === "OTHER") other = item.identifier;
-              if (item.type === "ISBN_10") isbn10 = item.identifier;
-              if (item.type === "ISBN_13") isbn13 = item.identifier;
+  //   const itemClass = classNames({
+  //   "items-table": !addToStore,
+  //   "items-table-selected": addToStore,
+  //   "items-table-out-of-stock": stockStatus === "outofstock",
+  // });
 
-              if (other.length > 0) {
-                return (
-                  <>
-                    <div
-                      style={{ textAlign: "center" }}
-                      // key={extractIdentifier(other)}
-                      item
-                      className="item5"
-                      onClick={
-                        !addToStore ? clickAddToStore : clickRemoveFromStore
-                      }
-                    >
-                      {other}
-                    </div>
-                  </>
-                );
-              } else {
-                return (
-                  <>
-                    <div
-                      key={
-                        isbn13.length === 0
-                          ? Math.floor(Math.random() * 100000)
-                          : isbn13
-                      }
-                      item
-                      className="item5"
-                      onClick={
-                        !addToStore ? clickAddToStore : clickRemoveFromStore
-                      }
-                    >
-                      {addToStore ? "ISBN 13: " : null}
-                      {isbn13.length === 0 ? null : isbn13}
-                    </div>
-                    <div
-                      key={isbn10}
-                      item
-                      className="item6"
-                      onClick={
-                        !addToStore ? clickAddToStore : clickRemoveFromStore
-                      }
-                    >
-                      {addToStore ? "ISBN 10: " : null}
-                      {isbn10.length === 0 ? null : isbn10}
-                      {stockStatus === "instock" ? (
-                        ""
-                      ) : (
-                        <div className="text-out-of-stock">OUT OF STOCK</div>
-                      )}
-                    </div>
-                  </>
-                );
-              }
-            })}
+  /**
+   * @desc renders the item when compressed
+   */
 
-        {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+  const compressedItem = transitionsCompressed(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <div
+            // style={cardStyle}
+            className={itemClass}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <div className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </div>
+            <div
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={cover} alt="" />
+            </div>
+            <div
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {/* {name} */}
+              {!addToStore && name.length > 59
+                ? name.substring(0, 60) + "..."
+                : name}
+            </div>
+            <div
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {/* Removed <p> and </p> taken from WooCommerce */}
+              {!addToStore && authorsString.length > 85
+                ? authorsString.substring(0, 86) + "..."
+                : authorsString}
+            </div>
+            {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+            {Array.isArray(ean_code) && codes.length === 0
+              ? null
+              : codes.map((item) => {
+                  let other = "";
+                  let isbn10 = "";
+                  let isbn13 = "";
+                  if (item.type === "OTHER") other = item.identifier;
+                  if (item.type === "ISBN_10") isbn10 = item.identifier;
+                  if (item.type === "ISBN_13") isbn13 = item.identifier;
 
-        {/* START OLD DIVS  */}
-        {/* <div
+                  if (other.length > 0) {
+                    return (
+                      <>
+                        <div
+                          style={{ textAlign: "center" }}
+                          // key={extractIdentifier(other)}
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {other}
+                        </div>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <div
+                          key={
+                            isbn13.length === 0
+                              ? Math.floor(Math.random() * 100000)
+                              : isbn13
+                          }
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 13: " : null}
+                          {isbn13.length === 0 ? null : isbn13}
+                        </div>
+                        <div
+                          key={isbn10}
+                          item
+                          className="item6"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 10: " : null}
+                          {isbn10.length === 0 ? null : isbn10}
+                          {stockStatus === "instock" ? (
+                            ""
+                          ) : (
+                            <div className="text-out-of-stock">
+                              OUT OF STOCK
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    );
+                  }
+                })}
+
+            {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+
+            {/* START OLD DIVS  */}
+            {/* <div
           className="item5"
           onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
         >
@@ -381,8 +425,152 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         >
           {/* {console.log(codes)} */}
 
-        {/* END OLD DIVS  */}
-      </div>
+            {/* END OLD DIVS  */}
+          </div>
+        </animated.div>
+      )
+  );
+
+  /**
+   * @desc renders the item when expanded
+   */
+
+  const detailedItem = transitionsExpand(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <div
+            // style={cardStyle}
+            className={itemClass}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <div className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </div>
+            <div
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={cover} alt="" />
+            </div>
+            <div
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {/* {name} */}
+              {!addToStore && name.length > 59
+                ? name.substring(0, 60) + "..."
+                : name}
+            </div>
+            <div
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {/* Removed <p> and </p> taken from WooCommerce */}
+              {!addToStore && authorsString.length > 85
+                ? authorsString.substring(0, 86) + "..."
+                : authorsString}
+            </div>
+            {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+            {Array.isArray(ean_code) && codes.length === 0
+              ? null
+              : codes.map((item) => {
+                  let other = "";
+                  let isbn10 = "";
+                  let isbn13 = "";
+                  if (item.type === "OTHER") other = item.identifier;
+                  if (item.type === "ISBN_10") isbn10 = item.identifier;
+                  if (item.type === "ISBN_13") isbn13 = item.identifier;
+
+                  if (other.length > 0) {
+                    return (
+                      <>
+                        <div
+                          style={{ textAlign: "center" }}
+                          // key={extractIdentifier(other)}
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {other}
+                        </div>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <div
+                          key={
+                            isbn13.length === 0
+                              ? Math.floor(Math.random() * 100000)
+                              : isbn13
+                          }
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 13: " : null}
+                          {isbn13.length === 0 ? null : isbn13}
+                        </div>
+                        <div
+                          key={isbn10}
+                          item
+                          className="item6"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 10: " : null}
+                          {isbn10.length === 0 ? null : isbn10}
+                          {stockStatus === "instock" ? (
+                            ""
+                          ) : (
+                            <div className="text-out-of-stock">
+                              OUT OF STOCK
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    );
+                  }
+                })}
+
+            {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+
+            {/* START OLD DIVS  */}
+            {/* <div
+          className="item5"
+          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+        >
+          ----
+        </div>
+        <div
+          className="item6"
+          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+        >
+          {/* {console.log(codes)} */}
+
+            {/* END OLD DIVS  */}
+          </div>
+        </animated.div>
+      )
+  );
+
+  return (
+    <div className="book-item">
+      {addToStore ? detailedItem : compressedItem}
       {!addToStore
         ? ""
         : transitions(
