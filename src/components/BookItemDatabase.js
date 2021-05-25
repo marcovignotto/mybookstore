@@ -252,7 +252,21 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     config: { duration: 400 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
-    onStart: () => setShowEditItem(true),
+    // onStart: () => setShowEditItem(true),
+  });
+
+  const transitionsExpand = useTransition(showDetailedItem, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 400 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    // onStart: () => setShowEditItem(true),
   });
 
   const transitionsCompressed = useTransition(showCompressedItem, {
@@ -266,7 +280,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     config: { duration: 800 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
-    onStart: () => setShowEditItem(true),
+    // onStart: () => setShowEditItem(true),
   });
 
   // return transitions(
