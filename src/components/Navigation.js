@@ -94,12 +94,15 @@ const Navigation = (props) => {
     <Fragment>
       <HideOnScroll {...props}>
         <AppBar>
-          {/* <div>Logo</div> */}
           <Toolbar
             disableGutters={true}
             style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
               float: "none",
               width: "100%",
+              // height: 30,
               marginLeft: "auto",
               marginRight: "auto",
               // textAlign: "center",
@@ -107,6 +110,7 @@ const Navigation = (props) => {
               justifyContent: "center",
             }}
           >
+            <div className="logo">My Second Hand Bookstore</div>
             <Tabs value={value} onChange={handleChange}>
               <Tab
                 className={classes.tab}

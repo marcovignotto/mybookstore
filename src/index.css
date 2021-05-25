@@ -24,6 +24,16 @@ body {
   width: 960px;
   margin: auto;
 }
+
+/* LOGO */
+
+.logo {
+  width: 100px;
+  float: left;
+  /* height: 20px; */
+  /* margin-left: -100px; */
+}
+
 /* BTNS */
 
 .btn-big {
