@@ -118,8 +118,6 @@ export const setGoogleSearched = (state) => {
  */
 
 export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
-  console.log("isbn", isbn);
-
   const getIsbn = (arr) => {
     let str = "";
     for (let i = 0; i < arr.length; i++) {
@@ -134,8 +132,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
 
     return str;
   };
-
-  console.log(" getIsbn(isbn)", getIsbn(isbn));
 
   /**
    * @desc creates obj for the cover
@@ -205,17 +201,24 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
               variation: false,
               options: status.status,
             },
+            {
+              id: 5,
+              name: "Book codes",
+              position: 1,
+              visible: false,
+              variation: false,
+              options: ["isbn"],
+            },
           ],
           meta_data: [
             {
               id: 32,
               key: "_wpm_gtin_code",
-              codes: isbn,
               value: getIsbn(isbn),
             },
           ],
 
-          // purchase_note: "isbn",
+          // downloads: isbn,
           // ean_code: getIsbn(isbn),
           ean_code: getIsbn(isbn),
 

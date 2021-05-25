@@ -264,6 +264,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     codesArray: [{ one: 1, two: 2 }],
   };
 
+  console.log("ean_code", ean_code);
   console.log("item", item);
 
   return (
