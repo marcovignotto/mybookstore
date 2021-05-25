@@ -78,6 +78,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const [itemIsDeleted, setItemIsDeleted] = useState(false);
 
+  const [showEditItem, setShowEditItem] = useState(false);
+
   const itemClass = classNames({
     "items-table": !addToStore,
     "items-table-selected": addToStore,
@@ -95,10 +97,16 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const clickAddToStore = () => {
     setAddToStore(true);
     setShowAnimation(true);
+    setShowDetailedItem(true);
+    setShowDetailedItem(true);
+    setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
     setShowAnimation(false);
+    setShowDetailedItem(false);
+    setShowCompressedItem(true);
+    // setShowEditItem(false);
   };
 
   const handleBookPrice = (e) => {
@@ -204,17 +212,53 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   );
 
   const [showAnimation, setShowAnimation] = useState(false);
+
+  const [showDetailedItem, setShowDetailedItem] = useState(false);
+
+  const [showCompressedItem, setShowCompressedItem] = useState(true);
+
   const transitions = useTransition(showAnimation, {
     // default: { immediate: true },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     // reverse: show,
-    delay: 400,
+    delay: 1400,
     // config: config.molasses,
+    config: { duration: 400 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
+    onStart: () => console.log("start"),
   });
+
+  const transitionsExpand = useTransition(showDetailedItem, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 400 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    onStart: () => setShowEditItem(true),
+  });
+
+  const transitionsCompressed = useTransition(showCompressedItem, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 800 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    onStart: () => setShowEditItem(true),
+  });
+
   // return transitions(
   //   (styles, item) => item && <animated.div style={styles}>✌️</animated.div>
   // );
@@ -226,71 +270,143 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
   // });
 
+  //   const itemClass = classNames({
+  //   "items-table": !addToStore,
+  //   "items-table-selected": addToStore,
+  //   "items-table-out-of-stock": stockStatus === "outofstock",
+  // });
+
+  /**
+   * @desc renders the item when compressed
+   */
+
+  const compressedItem = transitionsCompressed(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <div
+            style={cardStyle}
+            className={itemClass}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <div className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </div>
+            <div
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={cover} alt="" />
+            </div>
+            <div
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {name}
+            </div>
+            <div
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {short_description}
+            </div>
+            <div
+              className="item5"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              ----
+            </div>
+            <div
+              className="item6"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {Array.isArray(ean_code) ? (
+                codes.map((item) => {
+                  return (
+                    <div>
+                      {item.type} : {item.identifier}
+                    </div>
+                  );
+                })
+              ) : (
+                <div>{codes}</div>
+              )}
+
+              {stockStatus === "instock" ? (
+                ""
+              ) : (
+                <div className="text-out-of-stock">OUT OF STOCK</div>
+              )}
+            </div>
+          </div>
+        </animated.div>
+      )
+  );
+
+  /**
+   * @desc renders the item when expanded
+   */
+
+  const detailedItem = transitionsExpand(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <div
+            style={cardStyle}
+            className={itemClass}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <div className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </div>
+            <div
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={cover} alt="" />
+            </div>
+            <div
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {name}
+            </div>
+            <div
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {short_description}
+            </div>
+            <div
+              className="item5"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              ----
+            </div>
+          </div>
+        </animated.div>
+      )
+  );
+
   return (
     <div className="book-item">
-      <div
-        style={cardStyle}
-        className={itemClass}
-        onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-      >
-        <div className="item1">
-          {!addToStore ? (
-            <button onClick={clickAddToStore} className="btn-add">
-              <i className="fas fa-plus"></i>
-            </button>
-          ) : (
-            <button onClick={clickRemoveFromStore} className="btn-add">
-              <i className="fas fa-minus"></i>
-            </button>
-          )}
-        </div>
-        <div
-          className="item2"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          <img src={cover} alt="" />
-        </div>
-        <div
-          className="item3"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {name}
-        </div>
-        <div
-          className="item4"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {short_description}
-        </div>
-        <div
-          className="item5"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          ----
-        </div>
-        <div
-          className="item6"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {Array.isArray(ean_code) ? (
-            codes.map((item) => {
-              return (
-                <div>
-                  {item.type} : {item.identifier}
-                </div>
-              );
-            })
-          ) : (
-            <div>{codes}</div>
-          )}
-
-          {stockStatus === "instock" ? (
-            ""
-          ) : (
-            <div className="text-out-of-stock">OUT OF STOCK</div>
-          )}
-        </div>
-      </div>
+      {addToStore ? detailedItem : compressedItem}
       {!addToStore
         ? ""
         : transitions(
