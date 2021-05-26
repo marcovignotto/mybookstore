@@ -638,64 +638,73 @@ const BookItem = ({ item, loading }) => {
         <Grid container className="book-item">
           {addToStore ? detailedItem : compressedItem}
 
-          {!addToStore ? (
-            ""
-          ) : (
-            <Grid container className="add-to-store" style={cardStyleAddDb}>
-              {/* <Grid item className="item1"></Grid>
+          {!addToStore
+            ? ""
+            : transitions(
+                (styles, itemAni) =>
+                  itemAni && (
+                    <animated.div style={styles}>
+                      <Grid
+                        container
+                        className="add-to-store"
+                        style={cardStyleAddDb}
+                      >
+                        {/* <Grid item className="item1"></Grid>
               <Grid item className="item2"></Grid> */}
-              <div item className="add-to-store-inputs">
-                <Divider orientation="vertical" flexItem light />
-                <label>€:</label>
-                <input
-                  className="input-price"
-                  type="number"
-                  name="price"
-                  value={price.price}
-                  placeholder="10"
-                  onChange={bookPrice}
-                />
+                        <div item className="add-to-store-inputs">
+                          <Divider orientation="vertical" flexItem light />
+                          <label>€:</label>
+                          <input
+                            className="input-price"
+                            type="number"
+                            name="price"
+                            value={price.price}
+                            placeholder="10"
+                            onChange={bookPrice}
+                          />
 
-                {/* </Grid> */}
-                <Divider orientation="vertical" flexItem light />
-                {/* <Grid item className="item4" lg={1}> */}
-                <label>Qnt:</label>
-                <input
-                  className="input-stock"
-                  type="number"
-                  name="stock"
-                  value={stockQuantity.books}
-                  defaultValue="1"
-                  onChange={bookQuantity}
-                />
-                {/* </Grid> */}
-                <Divider orientation="vertical" flexItem light />
-                {/* <Grid item className="item5" lg={4}> */}
-                <label>Status:</label>
-                <form>
-                  <select
-                    className="input-status"
-                    id="status"
-                    name="status"
-                    onChange={changeBookStatus}
-                    value={bookStatus.status}
-                  >
-                    <option value="crap">Crap</option>
-                    <option value="good">Good</option>
-                    <option value="like-new">Like New</option>
-                  </select>
-                </form>
-                {/* </Grid> */}
-                <Divider orientation="vertical" flexItem light />
-                {/* <Grid item className="item6" lg={6}> */}
-                {isItemAdded
-                  ? itemAdded
-                  : isItemNotAdded
-                  ? itemNotAdded
-                  : addItem}
-              </div>
-            </Grid>
-          )}
+                          {/* </Grid> */}
+                          <Divider orientation="vertical" flexItem light />
+                          {/* <Grid item className="item4" lg={1}> */}
+                          <label>Qnt:</label>
+                          <input
+                            className="input-stock"
+                            type="number"
+                            name="stock"
+                            value={stockQuantity.books}
+                            defaultValue="1"
+                            onChange={bookQuantity}
+                          />
+                          {/* </Grid> */}
+                          <Divider orientation="vertical" flexItem light />
+                          {/* <Grid item className="item5" lg={4}> */}
+                          <label>Status:</label>
+                          <form>
+                            <select
+                              className="input-status"
+                              id="status"
+                              name="status"
+                              onChange={changeBookStatus}
+                              value={bookStatus.status}
+                            >
+                              <option value="crap">Crap</option>
+                              <option value="good">Good</option>
+                              <option value="like-new">Like New</option>
+                            </select>
+                          </form>
+                          {/* </Grid> */}
+                          <Divider orientation="vertical" flexItem light />
+                          {/* <Grid item className="item6" lg={6}> */}
+                          {isItemAdded
+                            ? itemAdded
+                            : isItemNotAdded
+                            ? itemNotAdded
+                            : addItem}
+                        </div>
+                      </Grid>
+                    </animated.div>
+                  )
+              )}
         </Grid>
       )}
     </>
