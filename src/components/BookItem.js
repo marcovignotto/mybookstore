@@ -21,6 +21,13 @@ import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 
+import {
+  useTransition,
+  animated,
+  AnimatedProps,
+  config,
+} from "@react-spring/web";
+
 import FadeIn from "react-fade-in";
 
 // new MAT UI import
@@ -89,7 +96,7 @@ const BookItem = ({ item, loading }) => {
   const [identifiers, setIdentifiers] = useState([]);
   const [isbnToSend, setIsbnToSend] = useState();
 
-  const [thumbAdd, setThumbAdd] = useState();
+  // const [thumbAdd, setThumbAdd] = useState();
   const [stockQuantity, setStockQuantity] = useState({ stock: 1 });
   const [price, setPrice] = useState({ price: 10 });
   const [bookStatus, setBookStatus] = useState({ status: "good" });
@@ -118,6 +125,15 @@ const BookItem = ({ item, loading }) => {
     heightCollapsed: "",
     heightExpanded: "",
   });
+
+  /**
+   * @desc states for animations with react spring
+   */
+  const [showAddToStore, setShowAddToStore] = useState(false);
+
+  const [showDetailedItem, setShowDetailedItem] = useState(false);
+
+  const [showCompressedItem, setShowCompressedItem] = useState(true);
 
   useEffect(() => {
     getSize();
@@ -202,9 +218,17 @@ const BookItem = ({ item, loading }) => {
 
   const clickAddToStore = () => {
     setAddToStore(true);
+    // setShowDetailedItem((prev) => !prev);
+    // setShowCompressedItem((prev) => !prev);
+    setShowDetailedItem(true);
+    setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
+    // setShowDetailedItem((prev) => !prev);
+    // setShowCompressedItem((prev) => !prev);
+    setShowDetailedItem(false);
+    setShowCompressedItem(true);
   };
 
   const [isItemAdded, setIsItemAdded] = useState(false);
@@ -253,7 +277,6 @@ const BookItem = ({ item, loading }) => {
 
   const itemAdded = (
     <>
-      {/* <div className="item-added"> */}
       <div className={`item-added ${classes.btnAddDb}`}>
         <div>Book Added</div>
       </div>
@@ -286,7 +309,6 @@ const BookItem = ({ item, loading }) => {
   // key={extractIdentifier(item.identifier)}
 
   const extractIdentifier = (id) => {
-    // console.log(id);
     if (id.search(":") === -1) {
       return id;
     } else {
@@ -294,13 +316,87 @@ const BookItem = ({ item, loading }) => {
     }
   };
 
-  // console.log(identifiers.length);
-  // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
-  return (
-    <>
-      {/* to start waits loading from reducer */}
-      {loading ? null : (
-        <Grid container className="book-item">
+  /**
+   * @desc Animations with react spring
+   */
+
+  const transitions = useTransition(showAddToStore, {
+    // default: { immediate: true },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 200 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    // onStart: () => setShowEditItem(true),
+  });
+
+  const transitionsExpand = useTransition(showDetailedItem, {
+    // default: { immediate: true },
+    // transformOrigin: "top",
+    from: {
+      opacity: 0.5,
+      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translateY(0%) scaleY(1) scaleX(1)",
+      // maxHeight: "1000px",
+    },
+    leave: {
+      opacity: 0.5,
+      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    // reverse: show,
+    delay: 0,
+    config: config.molasses,
+    // config: config.gentle,
+    config: { duration: 300 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    // onStart: () => setShowEditItem(true),
+    // onChange: () => setShowAddToStore(true),
+    onDestroyed: () => setShowAddToStore((showAddToStore) => !showAddToStore),
+  });
+
+  const transitionsCompressed = useTransition(showCompressedItem, {
+    // default: { immediate: true },
+    from: {
+      opacity: 0.5,
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
+      // maxHeight: "1000px",
+    },
+    leave: {
+      opacity: 0.5,
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 300 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    // onStart: () => setShowEditItem(true),
+  });
+
+  /**
+   * @desc renders the item when compressed
+   */
+  const compressedItem = transitionsCompressed(
+    (styles, itemAni) =>
+      itemAni && (
+        <animated.div style={styles}>
           <Grid
             container
             className={!addToStore ? "items-table" : "items-table-selected"}
@@ -408,6 +504,137 @@ const BookItem = ({ item, loading }) => {
 
             {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
           </Grid>
+        </animated.div>
+      )
+  );
+
+  /**
+   * @desc renders the item when expanded
+   */
+
+  const detailedItem = transitionsExpand(
+    (styles, itemAni) =>
+      itemAni && (
+        <animated.div style={styles}>
+          <Grid
+            container
+            className={!addToStore ? "items-table" : "items-table-selected"}
+            style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+          >
+            <Grid item className="item1">
+              {!addToStore ? (
+                <button onClick={clickAddToStore} className="btn-add">
+                  <i className="fas fa-plus"></i>
+                </button>
+              ) : (
+                <button onClick={clickRemoveFromStore} className="btn-add">
+                  <i className="fas fa-minus"></i>
+                </button>
+              )}
+            </Grid>
+            <Grid
+              item
+              className="item2"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              <img src={imgSrc} alt="" />
+            </Grid>
+            <Grid
+              item
+              className="item3"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {!addToStore && item.volumeInfo.title.length > 59
+                ? item.volumeInfo.title.substring(0, 60) + "..."
+                : item.volumeInfo.title}
+            </Grid>
+            <Grid
+              item
+              className="item4"
+              onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
+            >
+              {item.volumeInfo.authors === undefined
+                ? ""
+                : !addToStore && item.volumeInfo.authors.join(", ").length > 59
+                ? item.volumeInfo.authors.join(", ").substring(0, 60) + "..."
+                : item.volumeInfo.authors.join(", ")}
+            </Grid>
+            {/* START Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+            {identifiers.length === 0
+              ? null
+              : identifiers.map((item) => {
+                  let other = "";
+                  let isbn10 = "";
+                  let isbn13 = "";
+                  if (item.type === "OTHER") other = item.identifier;
+                  if (item.type === "ISBN_10") isbn10 = item.identifier;
+                  if (item.type === "ISBN_13") isbn13 = item.identifier;
+
+                  if (other.length > 0) {
+                    return (
+                      <>
+                        <Grid
+                          style={{ textAlign: "center" }}
+                          key={extractIdentifier(other)}
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {other}
+                        </Grid>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <Grid
+                          key={
+                            isbn13.length === 0
+                              ? Math.floor(Math.random() * 100000)
+                              : isbn13
+                          }
+                          item
+                          className="item5"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 13: " : null}
+                          {isbn13.length === 0 ? null : isbn13}
+                        </Grid>
+                        <Grid
+                          key={isbn10}
+                          item
+                          className="item6"
+                          onClick={
+                            !addToStore ? clickAddToStore : clickRemoveFromStore
+                          }
+                        >
+                          {addToStore ? "ISBN 10: " : null}
+                          {isbn10.length === 0 ? null : isbn10}
+                        </Grid>
+                      </>
+                    );
+                  }
+                })}
+
+            {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
+          </Grid>
+        </animated.div>
+      )
+  );
+
+  // console.log(identifiers.length);
+  // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
+  return (
+    <>
+      {/* to start waits loading from reducer */}
+      {loading ? null : (
+        <Grid container className="book-item">
+          {addToStore ? detailedItem : compressedItem}
 
           {!addToStore ? (
             ""

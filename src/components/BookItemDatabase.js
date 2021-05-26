@@ -644,6 +644,11 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       )
   );
 
+  /**
+   * @desc transitionsDelete to animate it on delete
+   * @uses itemIsDeleted
+   */
+
   return transitionsDelete(
     (styles, item) =>
       item && (
