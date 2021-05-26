@@ -339,6 +339,32 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     // onStart: () => setShowEditItem(true),
   });
 
+  const transitionsDelete = useTransition(!itemIsDeleted, {
+    // default: { immediate: true },
+    from: {
+      opacity: 0.35,
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
+      // maxHeight: "1000px",
+    },
+    leave: {
+      opacity: 0.35,
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    // reverse: show,
+    delay: 0,
+    // config: config.molasses,
+    config: { duration: 400 },
+    // onStart: () => set(!show),
+    // onChange: () => set(!show),
+    // onStart: () => setShowEditItem(true),
+  });
+
   /**
    * @desc emoves <p> and </p> taken from WooCommerce
    */
@@ -618,76 +644,83 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       )
   );
 
-  return (
-    <div className="book-item">
-      {addToStore ? detailedItem : compressedItem}
-      {!addToStore
-        ? ""
-        : transitions(
-            (styles, item) =>
-              item && (
-                <animated.div style={styles}>
-                  <Grid className="add-to-store" style={cardStyleAddDb}>
-                    <div className="add-to-store-inputs">
-                      <Divider orientation="vertical" flexItem light />
-                      <label>€:</label>
-                      <input
-                        className="input-price"
-                        type="number"
-                        name="price"
-                        value={price.price}
-                        defaultValue={newPrice.price}
-                        placeholder={newPrice.price}
-                        onChange={handleBookPrice}
-                      />
-                      {/* </div>
+  return transitionsDelete(
+    (styles, item) =>
+      item && (
+        <animated.div style={styles}>
+          <div className="book-item">
+            {addToStore ? detailedItem : compressedItem}
+            {!addToStore
+              ? ""
+              : transitions(
+                  (styles, item) =>
+                    item && (
+                      <animated.div style={styles}>
+                        <Grid className="add-to-store" style={cardStyleAddDb}>
+                          <div className="add-to-store-inputs">
+                            <Divider orientation="vertical" flexItem light />
+                            <label>€:</label>
+                            <input
+                              className="input-price"
+                              type="number"
+                              name="price"
+                              value={price.price}
+                              defaultValue={newPrice.price}
+                              placeholder={newPrice.price}
+                              onChange={handleBookPrice}
+                            />
+                            {/* </div>
                     <div className="item4"> */}
-                      {/* <Divider orientation="vertical" flexItem light /> */}
-                      <label>Qnt:</label>
-                      <input
-                        className="input-stock"
-                        type="number"
-                        name="stock"
-                        value={stock_quantity.quantity}
-                        defaultValue={newStockQuantity.stock}
-                        placeholder={newStockQuantity.stock}
-                        onChange={handleBookQuantity}
-                      />{" "}
-                      {/* </div>
+                            {/* <Divider orientation="vertical" flexItem light /> */}
+                            <label>Qnt:</label>
+                            <input
+                              className="input-stock"
+                              type="number"
+                              name="stock"
+                              value={stock_quantity.quantity}
+                              defaultValue={newStockQuantity.stock}
+                              placeholder={newStockQuantity.stock}
+                              onChange={handleBookQuantity}
+                            />{" "}
+                            {/* </div>
                     <div className="item5"> */}
-                      {/* <Divider orientation="vertical" flexItem light /> */}
-                      <label>Status:</label>
-                      <form>
-                        <select
-                          className="input-status"
-                          id="status"
-                          name="status"
-                          onChange={handleBookStatus}
-                          value={status.books}
-                          defaultValue={newBookStatus.status}
-                        >
-                          <option value="Crap">Crap</option>
-                          <option value="Good">Good</option>
-                          <option value="like-new">Like New</option>
-                        </select>
-                      </form>
-                      {/* </div> */}
-                      <Divider orientation="vertical" flexItem light />
-                      {/* <div className="item6"> */}
-                      {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
-                        ? updateAndDelete
-                        : null}
-                      {!showDeleteBtns && showDeleteConfirm
-                        ? confirmation
-                        : null}
-                      {itemIsDeleted && !itemIsUpdated ? bookDeleted : null}
-                      {itemIsUpdated ? bookUpdated : null}
-                    </div>
-                  </Grid>
-                </animated.div>
-              )
-          )}
-    </div>
+                            {/* <Divider orientation="vertical" flexItem light /> */}
+                            <label>Status:</label>
+                            <form>
+                              <select
+                                className="input-status"
+                                id="status"
+                                name="status"
+                                onChange={handleBookStatus}
+                                value={status.books}
+                                defaultValue={newBookStatus.status}
+                              >
+                                <option value="Crap">Crap</option>
+                                <option value="Good">Good</option>
+                                <option value="like-new">Like New</option>
+                              </select>
+                            </form>
+                            {/* </div> */}
+                            <Divider orientation="vertical" flexItem light />
+                            {/* <div className="item6"> */}
+                            {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
+                              ? updateAndDelete
+                              : null}
+                            {!showDeleteBtns && showDeleteConfirm
+                              ? confirmation
+                              : null}
+                            {itemIsDeleted && !itemIsUpdated
+                              ? bookDeleted
+                              : null}
+                            {itemIsUpdated ? bookUpdated : null}
+                          </div>
+                        </Grid>
+                      </animated.div>
+                    )
+                )}
+          </div>
+        </animated.div>
+      )
   );
 };
 
