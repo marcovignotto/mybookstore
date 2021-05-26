@@ -635,7 +635,7 @@ const BookItem = ({ item, loading }) => {
     <>
       {/* to start waits loading from reducer */}
       {loading ? null : (
-        <Grid container className="book-item">
+        <div className="book-item">
           {addToStore ? detailedItem : compressedItem}
 
           {!addToStore
@@ -705,7 +705,7 @@ const BookItem = ({ item, loading }) => {
                     </animated.div>
                   )
               )}
-        </Grid>
+        </div>
       )}
     </>
   );
