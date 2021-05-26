@@ -168,11 +168,35 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const deleteItem = () => {
     const data = dispatch(deleteWooDb(id));
 
-    const result = MakeQuerablePromise(data);
-    result.then(function () {
-      setItemIsDeleted(result.isFulfilled());
+    // const result = MakeQuerablePromise(data);
+
+    // console.log(data);
+
+    // (res) {
+    //   // console.log(res);
+    //   if (res >= 200 && res <= 399) {
+    //     setItemIsUpdated(true);
+    //     setShowDeleteBtns((prev) => !prev);
+    //   } else {
+    //     setItemIsUpdated(false);
+    //     setShowDeleteBtns((prev) => !prev);
+    //   }
+
+    data.then(function (res) {
+      // console.log(res);
+
+      if (res >= 200 && res <= 399) {
+        // setItemIsUpdated(true);
+        // setShowDeleteBtns((prev) => !prev);
+        setItemIsDeleted(true);
+        setShowDeleteConfirm(false);
+      } else {
+        setItemIsDeleted(false);
+        // setItemIsUpdated(false);
+        // setShowDeleteBtns((prev) => !prev);
+        setShowDeleteConfirm(false);
+      }
     });
-    setShowDeleteConfirm(false);
   };
 
   const updateAndDelete = (
@@ -235,6 +259,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     </div>
   );
 
+  /**
+   * @desc Animations with react spring
+   */
+
   const [showAddToStore, setShowAddToStore] = useState(false);
 
   const [showDetailedItem, setShowDetailedItem] = useState(false);
@@ -282,59 +310,42 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
     // onChange: () => setShowAddToStore(true),
-    onDelayEnd: () => setShowAddToStore((showAddToStore) => !showAddToStore),
+    onDestroyed: () => setShowAddToStore((showAddToStore) => !showAddToStore),
   });
 
   const transitionsCompressed = useTransition(showCompressedItem, {
     // default: { immediate: true },
     from: {
       opacity: 0.5,
-      transform: "translateY(70%) scaleY(0.85) scaleX(1)",
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
       // maxHeight: "0px",
     },
     enter: {
       opacity: 1,
-      transform: "translateY(0%) scaleY(1) scaleX(1)",
+      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
       // maxHeight: "1000px",
     },
     leave: {
       opacity: 0.5,
-      transform: "translateY(70%) scaleY(0.85) scaleX(1)",
+      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
       // maxHeight: "0px",
     },
     // reverse: show,
     delay: 0,
-    config: config.molasses,
+    // config: config.molasses,
     config: { duration: 300 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
   });
 
-  // return transitions(
-  //   (styles, item) => item && <animated.div style={styles}>✌️</animated.div>
-  // );
-  // const [index, set] = useState(0);
-  // const transitions = useTransition(index, {
-  //   keys: null,
-  //   from: { opacity: 0, transform: "translate3d(100%,0,0)" },
-  //   enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
-  //   leave: { opacity: 0, transform: "translate3d(-50%,0,0)" },
-  // });
-  {
-    /* Removed <p> and </p> taken from WooCommerce */
-  }
-
+  /**
+   * @desc emoves <p> and </p> taken from WooCommerce
+   */
   let authorsString = short_description.substring(
     3,
     short_description.search("</p>")
   );
-
-  //   const itemClass = classNames({
-  //   "items-table": !addToStore,
-  //   "items-table-selected": addToStore,
-  //   "items-table-out-of-stock": stockStatus === "outofstock",
-  // });
 
   /**
    * @desc renders the item when compressed

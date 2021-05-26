@@ -305,7 +305,7 @@ export const deleteWooDb = (id) => {
         dispatch({ type: WOO_DB_DELETE_IN, payload: id });
         dispatch({ type: WOO_DB_DELETE_OUT, payload: id });
       }, 2000);
-      return resultReq;
+      return resultReq.then((x) => x.status);
     } catch (error) {
       dispatch({ type: WOO_DB_DELETE_ERROR, payload: error });
       console.error("error", error);

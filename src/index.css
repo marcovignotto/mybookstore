@@ -331,6 +331,7 @@ body {
 }
 .book-item .items-table .item2 img {
   max-height: 80px;
+  /* max-width: 60px; */
 }
 
 .book-item .items-table .item3 {
