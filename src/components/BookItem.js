@@ -108,23 +108,23 @@ const BookItem = ({ item, loading }) => {
 
   const [areIdentifiersReady, setIsIdentifiersReady] = useState(false);
 
-  const styleAnimation = {
-    animationName: menuAnimation,
-    animationDuration: "0.2s",
-    animationTimingFunction: "linear",
-  };
+  // const styleAnimation = {
+  //   animationName: menuAnimation,
+  //   animationDuration: "0.2s",
+  //   animationTimingFunction: "linear",
+  // };
 
-  const styleContentsAnimation = {
-    animationName: menuContentsAnimation,
-    animationDuration: "0.2s",
-    animationTimingFunction: "linear",
-  };
+  // const styleContentsAnimation = {
+  //   animationName: menuContentsAnimation,
+  //   animationDuration: "0.2s",
+  //   animationTimingFunction: "linear",
+  // };
 
-  const [cardSizes, setCardSizes] = useState({
-    width: "",
-    heightCollapsed: "",
-    heightExpanded: "",
-  });
+  // const [cardSizes, setCardSizes] = useState({
+  //   width: "",
+  //   heightCollapsed: "",
+  //   heightExpanded: "",
+  // });
 
   /**
    * @desc states for animations with react spring
@@ -135,36 +135,36 @@ const BookItem = ({ item, loading }) => {
 
   const [showCompressedItem, setShowCompressedItem] = useState(true);
 
-  useEffect(() => {
-    getSize();
-    setCardSizes({
-      ...cardSizes,
-      width: getSize().width,
-      heightCollapsed: getSize().heightCollapsed,
-    });
+  // useEffect(() => {
+  //   getSize();
+  //   setCardSizes({
+  //     ...cardSizes,
+  //     width: getSize().width,
+  //     heightCollapsed: getSize().heightCollapsed,
+  //   });
 
-    //eslint-disable-next-line
-  }, []);
-  useEffect(() => {
-    if (addToStore) {
-      getSizeOpen();
-      setCardSizes({
-        ...cardSizes,
-        heightExpanded: getSizeOpen().heightExpanded,
-      });
+  //   //eslint-disable-next-line
+  // }, []);
+  // useEffect(() => {
+  //   if (addToStore) {
+  //     getSizeOpen();
+  //     setCardSizes({
+  //       ...cardSizes,
+  //       heightExpanded: getSizeOpen().heightExpanded,
+  //     });
 
-      const animations = createKeyframeAnimation(
-        cardSizes.heightCollapsed,
-        getSizeOpen().heightExpanded,
-        cardSizes.width
-      );
+  //     const animations = createKeyframeAnimation(
+  //       cardSizes.heightCollapsed,
+  //       getSizeOpen().heightExpanded,
+  //       cardSizes.width
+  //     );
 
-      setMenuAnimation(animations.menuAnimation);
-      setMenuContentsAnimation(animations.menuContentsAnimation);
-    } else {
-      return;
-    }
-  }, [addToStore]);
+  //     setMenuAnimation(animations.menuAnimation);
+  //     setMenuContentsAnimation(animations.menuContentsAnimation);
+  //   } else {
+  //     return;
+  //   }
+  // }, [addToStore]);
 
   /**
    * @desc set indentifiers
@@ -399,8 +399,9 @@ const BookItem = ({ item, loading }) => {
         <animated.div style={styles}>
           <Grid
             container
-            className={!addToStore ? "items-table" : "items-table-selected"}
-            style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            className="items-table"
+            // style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
             <Grid item className="item1">
@@ -518,8 +519,9 @@ const BookItem = ({ item, loading }) => {
         <animated.div style={styles}>
           <Grid
             container
-            className={!addToStore ? "items-table" : "items-table-selected"}
-            style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            className="items-table-selected"
+            // style={(cardStyle, styleAnimation, styleContentsAnimation)}
+            style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
             <Grid item className="item1">

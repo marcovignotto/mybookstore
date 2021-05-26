@@ -103,7 +103,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     setAddToStore(true);
     // setShowAddToStore(true);
     setShowDetailedItem(true);
-    setShowDetailedItem(true);
     setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
