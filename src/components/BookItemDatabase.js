@@ -257,13 +257,27 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const transitionsExpand = useTransition(showDetailedItem, {
     // default: { immediate: true },
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    // transformOrigin: "top",
+    from: {
+      opacity: 0.5,
+      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translateY(0%) scaleY(1) scaleX(1)",
+      // maxHeight: "1000px",
+    },
+    leave: {
+      opacity: 0.5,
+      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
     // reverse: show,
     delay: 0,
-    // config: config.molasses,
-    config: { duration: 400 },
+    config: config.molasses,
+    // config: config.gentle,
+    config: { duration: 300 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
@@ -271,13 +285,25 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const transitionsCompressed = useTransition(showCompressedItem, {
     // default: { immediate: true },
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: {
+      opacity: 0.5,
+      transform: "translateY(70%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
+    enter: {
+      opacity: 1,
+      transform: "translateY(0%) scaleY(1) scaleX(1)",
+      // maxHeight: "1000px",
+    },
+    leave: {
+      opacity: 0.5,
+      transform: "translateY(70%) scaleY(0.85) scaleX(1)",
+      // maxHeight: "0px",
+    },
     // reverse: show,
     delay: 0,
-    // config: config.molasses,
-    config: { duration: 800 },
+    config: config.molasses,
+    config: { duration: 300 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
@@ -373,7 +399,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         <div
                           style={{ textAlign: "center" }}
                           // key={extractIdentifier(other)}
-                          item
+                          // item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -392,7 +418,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                               ? Math.floor(Math.random() * 100000)
                               : isbn13
                           }
-                          item
+                          // item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -403,7 +429,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         </div>
                         <div
                           key={isbn10}
-                          item
+                          // item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -510,7 +536,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         <div
                           style={{ textAlign: "center" }}
                           // key={extractIdentifier(other)}
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -529,7 +554,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                               ? Math.floor(Math.random() * 100000)
                               : isbn13
                           }
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -540,7 +564,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         </div>
                         <div
                           key={isbn10}
-                          item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
