@@ -101,14 +101,14 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const clickAddToStore = () => {
     setAddToStore(true);
-    setShowAnimation(true);
+    // setShowAddToStore(true);
     setShowDetailedItem(true);
     setShowDetailedItem(true);
     setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
-    setShowAnimation(false);
+    // setShowAddToStore(false);
     setShowDetailedItem(false);
     setShowCompressedItem(true);
     // setShowEditItem(false);
@@ -235,21 +235,21 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     </div>
   );
 
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [showAddToStore, setShowAddToStore] = useState(false);
 
   const [showDetailedItem, setShowDetailedItem] = useState(false);
 
   const [showCompressedItem, setShowCompressedItem] = useState(true);
 
-  const transitions = useTransition(showAnimation, {
+  const transitions = useTransition(showAddToStore, {
     // default: { immediate: true },
     from: { opacity: 0 },
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     // reverse: show,
-    delay: 600,
+    delay: 0,
     // config: config.molasses,
-    config: { duration: 400 },
+    config: { duration: 200 },
     // onStart: () => set(!show),
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
@@ -281,6 +281,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     // onStart: () => set(!show),
     // onChange: () => set(!show),
     // onStart: () => setShowEditItem(true),
+    // onChange: () => setShowAddToStore(true),
+    onDelayEnd: () => setShowAddToStore((showAddToStore) => !showAddToStore),
   });
 
   const transitionsCompressed = useTransition(showCompressedItem, {
