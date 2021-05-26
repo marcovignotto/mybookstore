@@ -28,6 +28,12 @@ import {
   config,
 } from "@react-spring/web";
 
+import {
+  transitions,
+  transitionsCompressed,
+  transitionsExpand,
+} from "../animations/animations";
+
 import FadeIn from "react-fade-in";
 
 // new MAT UI import
@@ -320,85 +326,27 @@ const BookItem = ({ item, loading }) => {
    * @desc Animations with react spring
    */
 
-  const transitions = useTransition(showAddToStore, {
-    // default: { immediate: true },
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    // reverse: show,
-    delay: 0,
-    // config: config.molasses,
-    config: { duration: 200 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
+  const transitionsAni = useTransition(showAddToStore, {
+    ...transitions,
   });
 
-  const transitionsExpand = useTransition(showDetailedItem, {
-    // default: { immediate: true },
-    // transformOrigin: "top",
-    from: {
-      opacity: 0.5,
-      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    enter: {
-      opacity: 1,
-      transform: "translateY(0%) scaleY(1) scaleX(1)",
-      // maxHeight: "1000px",
-    },
-    leave: {
-      opacity: 0.5,
-      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    // reverse: show,
-    delay: 0,
-    config: config.molasses,
-    // config: config.gentle,
-    config: { duration: 300 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
-    // onChange: () => setShowAddToStore(true),
+  const transitionsExpandAni = useTransition(showDetailedItem, {
+    ...transitionsExpand,
     onDestroyed: () => setShowAddToStore((showAddToStore) => !showAddToStore),
   });
 
-  const transitionsCompressed = useTransition(showCompressedItem, {
-    // default: { immediate: true },
-    from: {
-      opacity: 0.5,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    enter: {
-      opacity: 1,
-      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
-      // maxHeight: "1000px",
-    },
-    leave: {
-      opacity: 0.5,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    // reverse: show,
-    delay: 0,
-    // config: config.molasses,
-    config: { duration: 300 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
+  const transitionsCompressedAni = useTransition(showCompressedItem, {
+    ...transitionsCompressed,
   });
 
   /**
    * @desc renders the item when compressed
    */
-  const compressedItem = transitionsCompressed(
+  const compressedItem = transitionsCompressedAni(
     (styles, itemAni) =>
       itemAni && (
         <animated.div style={styles}>
           <Grid
-            container
             className={"items-table"}
             // style={(cardStyle, styleAnimation, styleContentsAnimation)}
             style={cardStyle}
@@ -416,14 +364,12 @@ const BookItem = ({ item, loading }) => {
               )}
             </Grid>
             <Grid
-              item
               className="item2"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
               <img src={imgSrc} alt="" />
             </Grid>
             <Grid
-              item
               className="item3"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
@@ -432,7 +378,6 @@ const BookItem = ({ item, loading }) => {
                 : item.volumeInfo.title}
             </Grid>
             <Grid
-              item
               className="item4"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
@@ -459,7 +404,6 @@ const BookItem = ({ item, loading }) => {
                         <Grid
                           style={{ textAlign: "center" }}
                           key={extractIdentifier(other)}
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -478,7 +422,6 @@ const BookItem = ({ item, loading }) => {
                               ? Math.floor(Math.random() * 100000)
                               : isbn13
                           }
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -489,7 +432,6 @@ const BookItem = ({ item, loading }) => {
                         </Grid>
                         <Grid
                           key={isbn10}
-                          item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -513,7 +455,7 @@ const BookItem = ({ item, loading }) => {
    * @desc renders the item when expanded
    */
 
-  const detailedItem = transitionsExpand(
+  const detailedItem = transitionsExpandAni(
     (styles, itemAni) =>
       itemAni && (
         <animated.div style={styles}>
@@ -536,14 +478,12 @@ const BookItem = ({ item, loading }) => {
               )}
             </Grid>
             <Grid
-              item
               className="item2"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
               <img src={imgSrc} alt="" />
             </Grid>
             <Grid
-              item
               className="item3"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
@@ -552,7 +492,6 @@ const BookItem = ({ item, loading }) => {
                 : item.volumeInfo.title}
             </Grid>
             <Grid
-              item
               className="item4"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
@@ -579,7 +518,6 @@ const BookItem = ({ item, loading }) => {
                         <Grid
                           style={{ textAlign: "center" }}
                           key={extractIdentifier(other)}
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -598,7 +536,6 @@ const BookItem = ({ item, loading }) => {
                               ? Math.floor(Math.random() * 100000)
                               : isbn13
                           }
-                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -609,7 +546,6 @@ const BookItem = ({ item, loading }) => {
                         </Grid>
                         <Grid
                           key={isbn10}
-                          item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
@@ -640,7 +576,7 @@ const BookItem = ({ item, loading }) => {
 
           {!addToStore
             ? ""
-            : transitions(
+            : transitionsAni(
                 (styles, itemAni) =>
                   itemAni && (
                     <animated.div style={styles}>
@@ -651,7 +587,7 @@ const BookItem = ({ item, loading }) => {
                       >
                         {/* <Grid item className="item1"></Grid>
               <Grid item className="item2"></Grid> */}
-                        <div item className="add-to-store-inputs">
+                        <div className="add-to-store-inputs">
                           <Divider orientation="vertical" flexItem light />
                           <label>€:</label>
                           <input
