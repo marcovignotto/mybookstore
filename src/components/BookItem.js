@@ -399,7 +399,7 @@ const BookItem = ({ item, loading }) => {
         <animated.div style={styles}>
           <Grid
             container
-            className="items-table"
+            className={"items-table"}
             // style={(cardStyle, styleAnimation, styleContentsAnimation)}
             style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
@@ -519,7 +519,7 @@ const BookItem = ({ item, loading }) => {
         <animated.div style={styles}>
           <Grid
             container
-            className="items-table-selected"
+            className={"items-table-selected"}
             // style={(cardStyle, styleAnimation, styleContentsAnimation)}
             style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
