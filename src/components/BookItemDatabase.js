@@ -55,7 +55,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const {
     id,
     price,
-    ean_code,
+    meta_data,
     name, // Title
     stock_quantity,
     short_description, // Authors
@@ -64,6 +64,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const cover = item?.images[0].src;
   const status = item?.attributes[0].options[0];
+  const ean_code = item?.attributes;
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
@@ -374,6 +375,15 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   );
 
   /**
+   * @desc obj to fill with codes
+   */
+  const objCodes = {
+    isbn_10: "",
+    isbn_13: "",
+    other: "",
+  };
+
+  /**
    * @desc renders the item when compressed
    */
 
@@ -425,26 +435,28 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             {Array.isArray(ean_code) && codes.length === 0
               ? null
               : codes.map((item) => {
-                  let other = "";
-                  let isbn10 = "";
-                  let isbn13 = "";
-                  if (item.type === "OTHER") other = item.identifier;
-                  if (item.type === "ISBN_10") isbn10 = item.identifier;
-                  if (item.type === "ISBN_13") isbn13 = item.identifier;
+                  /**
+                   * @desc fills the obj
+                   */
+                  if (item.name === "OTHER") objCodes.other = item.options[0];
+                  if (item.name === "ISBN 10")
+                    objCodes.isbn10 = item.options[0];
+                  if (item.name === "ISBN 13")
+                    objCodes.isbn13 = item.options[0];
 
-                  if (other.length > 0) {
+                  if (objCodes.other !== "Not provided") {
                     return (
                       <>
                         <div
                           style={{ textAlign: "center" }}
                           // key={extractIdentifier(other)}
-                          // item
+                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
-                          {other}
+                          {objCodes.other}
                         </div>
                       </>
                     );
@@ -453,29 +465,33 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       <>
                         <div
                           key={
-                            isbn13.length === 0
+                            objCodes.isbn13.length === 0
                               ? Math.floor(Math.random() * 100000)
-                              : isbn13
+                              : objCodes.isbn13
                           }
-                          // item
+                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
                           {addToStore ? "ISBN 13: " : null}
-                          {isbn13.length === 0 ? null : isbn13}
+                          {objCodes.isbn13.length === 0
+                            ? null
+                            : objCodes.isbn13}
                         </div>
                         <div
-                          key={isbn10}
-                          // item
+                          key={objCodes.isbn10}
+                          item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
                           {addToStore ? "ISBN 10: " : null}
-                          {isbn10.length === 0 ? null : isbn10}
+                          {objCodes.isbn10.length === 0
+                            ? null
+                            : objCodes.isbn10}
                           {stockStatus === "instock" ? (
                             ""
                           ) : (
@@ -562,25 +578,28 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             {Array.isArray(ean_code) && codes.length === 0
               ? null
               : codes.map((item) => {
-                  let other = "";
-                  let isbn10 = "";
-                  let isbn13 = "";
-                  if (item.type === "OTHER") other = item.identifier;
-                  if (item.type === "ISBN_10") isbn10 = item.identifier;
-                  if (item.type === "ISBN_13") isbn13 = item.identifier;
+                  /**
+                   * @desc fills the obj
+                   */
+                  if (item.name === "OTHER") objCodes.other = item.options[0];
+                  if (item.name === "ISBN 10")
+                    objCodes.isbn10 = item.options[0];
+                  if (item.name === "ISBN 13")
+                    objCodes.isbn13 = item.options[0];
 
-                  if (other.length > 0) {
+                  if (objCodes.other !== "Not provided") {
                     return (
                       <>
                         <div
                           style={{ textAlign: "center" }}
                           // key={extractIdentifier(other)}
+                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
-                          {other}
+                          {objCodes.other}
                         </div>
                       </>
                     );
@@ -589,27 +608,33 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       <>
                         <div
                           key={
-                            isbn13.length === 0
+                            objCodes.isbn13.length === 0
                               ? Math.floor(Math.random() * 100000)
-                              : isbn13
+                              : objCodes.isbn13
                           }
+                          item
                           className="item5"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
                           {addToStore ? "ISBN 13: " : null}
-                          {isbn13.length === 0 ? null : isbn13}
+                          {objCodes.isbn13.length === 0
+                            ? null
+                            : objCodes.isbn13}
                         </div>
                         <div
-                          key={isbn10}
+                          key={objCodes.isbn10}
+                          item
                           className="item6"
                           onClick={
                             !addToStore ? clickAddToStore : clickRemoveFromStore
                           }
                         >
                           {addToStore ? "ISBN 10: " : null}
-                          {isbn10.length === 0 ? null : isbn10}
+                          {objCodes.isbn10.length === 0
+                            ? null
+                            : objCodes.isbn10}
                           {stockStatus === "instock" ? (
                             ""
                           ) : (

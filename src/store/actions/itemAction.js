@@ -118,6 +118,21 @@ export const setGoogleSearched = (state) => {
  */
 
 export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
+  const getIsbn = (arr) => {
+    let str = "";
+    for (let i = 0; i < arr.length; i++) {
+      let typeOfCode = "";
+      if (arr[i].type.includes("_")) {
+        typeOfCode = arr[i].type.replace("_", " ");
+        str += typeOfCode + " : " + arr[i].identifier + " ";
+      } else {
+        str += arr[i].type + " : " + arr[i].identifier + " ";
+      }
+    }
+
+    return str;
+  };
+
   /**
    * @desc creates obj for the cover
    * prepares it for the conversion
@@ -161,6 +176,34 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
     fetchData()
       .then(function (results) {
         /**
+         * @desc obj creation for the codes
+         */
+
+        //1. create obj
+        const objCodes = {
+          isbn_10: "Not provided",
+          isbn_13: "Not provided",
+          other: "Not provided",
+        };
+
+        //
+        const extractArr = () => {
+          isbn.map((x) => {
+            if (x.type === "OTHER") {
+              objCodes.other = x.identifier;
+            }
+            if (x.type === "ISBN_10") {
+              objCodes.isbn_10 = x.identifier;
+            }
+            if (x.type === "ISBN_13") {
+              objCodes.isbn_13 = x.identifier;
+            }
+          });
+        };
+
+        extractArr();
+
+        /**
          * @desc remapping the data in a new obj
          */
         const data = {
@@ -179,7 +222,31 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
           ],
           attributes: [
             {
-              id: 4,
+              id: 6,
+              name: "ISBN 10",
+              position: 1,
+              visible: true,
+              variation: false,
+              options: [objCodes.isbn_10],
+            },
+            {
+              id: 7,
+              name: "ISBN 13",
+              position: 2,
+              visible: true,
+              variation: false,
+              options: [objCodes.isbn_13],
+            },
+            {
+              id: 8,
+              name: "OTHER",
+              position: 3,
+              visible: true,
+              variation: false,
+              options: [objCodes.other],
+            },
+            {
+              id: 0,
               name: "Book status",
               position: 0,
               visible: true,
@@ -191,10 +258,14 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             {
               id: 32,
               key: "_wpm_gtin_code",
-              value: isbn,
+              value: getIsbn(isbn),
             },
           ],
-          ean_code: isbn,
+          ean_code: getIsbn(isbn),
+
+          /**
+           * @desc gets visualized in WooCommerce Product
+           */
         };
 
         // console.log("data", data);

@@ -293,7 +293,7 @@ const BookItem = ({ item, loading }) => {
       return id.substring(id.search(":") + 1);
     }
   };
-
+  // console.log("item", item);
   // console.log(identifiers.length);
   // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
   return (
