@@ -603,7 +603,10 @@ body {
   transition: 0.5s;
 }
 
-.book-item .add-to-store * :not(.btn-upd-item):focus {
+.book-item
+  .add-to-store
+  *
+  :not(.btn-upd-item):not(.btn-confirm-no):not(.btn-confirm-yes):focus {
   outline: none;
   background-color: var(--inputs-focus-color);
   color: white;
