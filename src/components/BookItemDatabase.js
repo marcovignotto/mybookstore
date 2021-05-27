@@ -135,7 +135,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const sendUpdate = () => {
     const data = dispatch(
-      updateWooDb(id, newPrice, newStockQuantity, newBookStatus)
+      updateWooDb(id, newPrice, newStockQuantity, newBookStatus, codes)
     );
     // console.log(data);
     // const result = MakeQuerablePromise(data);

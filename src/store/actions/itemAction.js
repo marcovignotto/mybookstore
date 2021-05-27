@@ -312,7 +312,13 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
  * @desc PUT on WooCommerce
  */
 
-export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
+export const updateWooDb = (
+  id,
+  newPrice,
+  newStockQuantity,
+  newBookStatus,
+  codes
+) => {
   const data = {
     regular_price: `${newPrice.price}`,
     stock_quantity: newStockQuantity.stock,
@@ -325,6 +331,9 @@ export const updateWooDb = (id, newPrice, newStockQuantity, newBookStatus) => {
         variation: false,
         options: newBookStatus.status,
       },
+      { ...codes[1] },
+      { ...codes[2] },
+      { ...codes[3] },
     ],
   };
 

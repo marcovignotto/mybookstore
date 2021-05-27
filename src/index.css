@@ -298,7 +298,7 @@ body {
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   cursor: pointer;
-  background-color: #dc143c;
+  /* background-color: #cd4c6692; */
   overflow: hidden;
 }
 
@@ -314,11 +314,14 @@ body {
 .book-item {
   color: var(--text-list-color) !important;
 }
+.book-item .items-table {
+  color: var(--table-selected-text-color);
+}
 
 .book-item .items-table:hover {
   background-color: var(--items-table-hover) !important;
   cursor: pointer;
-  color: #f08256;
+  color: var(--text-list-color) !important;
 }
 
 .book-item .items-table .item1 {
