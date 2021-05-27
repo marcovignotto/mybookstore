@@ -177,6 +177,46 @@ export const theme = createMuiTheme({
       display: "grid", // Overrides default theme
     },
   },
+
+  database: {
+    blocks: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+    },
+    block1: {
+      display: "flex",
+      flexDirection: "column",
+      width: 600,
+      marginRight: 30,
+      "& > *": {
+        marginTop: 20,
+      },
+    },
+    block2: {
+      display: "flex",
+      flexDirection: "column",
+      width: 300,
+      "& > *": {
+        marginTop: 20,
+      },
+    },
+    allfilters: {
+      display: "flex",
+      flexDirection: "row",
+      // color: "red",
+      color: "red",
+      "&$checked": {
+        color: "blue",
+      },
+    },
+    clearbtn: {
+      display: "flex",
+      justifyContent: "center",
+      height: 130,
+      borderRadius: 10,
+    },
+  },
 });
 
 // CARD INSERT STYLE

@@ -36,21 +36,13 @@ import FadeIn from "react-fade-in";
 import BookItemDatabase from "../components/BookItemDatabase";
 
 const useStyles = makeStyles((theme) => ({
-  // overrides: {
-  //   MuiRadio: {
-  //     colorSecondary: {
-  //       // padding: "0px",
-  //       // lineHeight: "1.11",
-  //       color: "red",
-  //     },
-  //   },
-  // },
   root: {
     "& > *": {
       margin: theme.spacing(1),
       width: "50ch",
     },
   },
+
   blocks: {
     display: "flex",
     flexDirection: "row",
@@ -87,17 +79,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: 130,
     borderRadius: 10,
+    // ...theme.database.tableFound,
   },
   tableFound: {
-    ...theme.tableFound,
+    ...theme.insert.tableFound,
   },
-  root: {
-    color: "red",
-    "&$checked": {
-      color: "blue",
-    },
-  },
-  checked: {},
 }));
 
 const Database = ({
