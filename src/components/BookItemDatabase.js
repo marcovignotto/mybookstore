@@ -66,8 +66,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const status = item?.attributes[0].options[0];
   const ean_code = item?.attributes;
 
-  console.log("ean_code", ean_code);
-
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
 
@@ -310,7 +308,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         {Array.isArray(ean_code) && codes.length === 0
           ? null
           : codes.map((item) => {
-              console.log(item);
               let other = "";
               let isbn10 = "";
               let isbn13 = "";
@@ -318,7 +315,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
               if (item.name === "ISBN 10") isbn10 = item.options[0];
               if (item.name === "ISBN 13") isbn13 = item.options[0];
 
-              console.log(other, isbn10, isbn13);
+              console.log("other:", other);
+              console.log("isbn10:", isbn10);
+              console.log("isbn13:", isbn13);
 
               if (other !== "Not provided") {
                 return (
