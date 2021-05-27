@@ -259,8 +259,14 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     short_description.search("</p>")
   );
 
-  // console.log("ean_code", ean_code);
-  // console.log("item", item);
+  /**
+   * @desc obj to fill with codes
+   */
+  const objCodes = {
+    isbn_10: "",
+    isbn_13: "",
+    other: "",
+  };
 
   return (
     <div className="book-item">
@@ -308,18 +314,14 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         {Array.isArray(ean_code) && codes.length === 0
           ? null
           : codes.map((item) => {
-              let other = "";
-              let isbn10 = "";
-              let isbn13 = "";
-              if (item.name === "OTHER") other = item.options[0];
-              if (item.name === "ISBN 10") isbn10 = item.options[0];
-              if (item.name === "ISBN 13") isbn13 = item.options[0];
+              /**
+               * @desc fills the obj
+               */
+              if (item.name === "OTHER") objCodes.other = item.options[0];
+              if (item.name === "ISBN 10") objCodes.isbn10 = item.options[0];
+              if (item.name === "ISBN 13") objCodes.isbn13 = item.options[0];
 
-              console.log("other:", other);
-              console.log("isbn10:", isbn10);
-              console.log("isbn13:", isbn13);
-
-              if (other !== "Not provided") {
+              if (objCodes.other !== "Not provided") {
                 return (
                   <>
                     <div
@@ -331,7 +333,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                         !addToStore ? clickAddToStore : clickRemoveFromStore
                       }
                     >
-                      {other}
+                      {objCodes.other}
                     </div>
                   </>
                 );
@@ -340,9 +342,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                   <>
                     <div
                       key={
-                        isbn13.length === 0
+                        objCodes.isbn13.length === 0
                           ? Math.floor(Math.random() * 100000)
-                          : isbn13
+                          : objCodes.isbn13
                       }
                       item
                       className="item5"
@@ -351,10 +353,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       }
                     >
                       {addToStore ? "ISBN 13: " : null}
-                      {isbn13.length === 0 ? null : isbn13}
+                      {objCodes.isbn13.length === 0 ? null : objCodes.isbn13}
                     </div>
                     <div
-                      key={isbn10}
+                      key={objCodes.isbn10}
                       item
                       className="item6"
                       onClick={
@@ -362,7 +364,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       }
                     >
                       {addToStore ? "ISBN 10: " : null}
-                      {isbn10.length === 0 ? null : isbn10}
+                      {objCodes.isbn10.length === 0 ? null : objCodes.isbn10}
                       {stockStatus === "instock" ? (
                         ""
                       ) : (
