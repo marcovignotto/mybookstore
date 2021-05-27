@@ -175,6 +175,8 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
     };
     fetchData()
       .then(function (results) {
+        console.log("isbn", isbn);
+
         /**
          * @desc remapping the data in a new obj
          */
@@ -193,21 +195,45 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             },
           ],
           attributes: [
+            // {
+            //   id: 5,
+            //   name: "Book codes",
+            //   position: 1,
+            //   visible: false,
+            //   variation: true,
+            //   options: [{ code: "isbn" }],
+            // },
             {
-              id: 4,
+              id: 6,
+              name: "ISBN 10",
+              position: 1,
+              visible: true,
+              variation: false,
+              options: ["1234567890"],
+            },
+            {
+              id: 7,
+              name: "ISBN 13",
+              position: 2,
+              visible: true,
+              variation: false,
+              options: ["1234567890123"],
+            },
+            {
+              id: 8,
+              name: "OTHER",
+              position: 3,
+              visible: true,
+              variation: false,
+              options: ["STANDFORD:12898098"],
+            },
+            {
+              id: 0,
               name: "Book status",
               position: 0,
               visible: true,
               variation: false,
               options: status.status,
-            },
-            {
-              id: 5,
-              name: "Book codes",
-              position: 1,
-              visible: false,
-              variation: false,
-              options: ["isbn"],
             },
           ],
           meta_data: [
