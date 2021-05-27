@@ -124,9 +124,9 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
       let typeOfCode = "";
       if (arr[i].type.includes("_")) {
         typeOfCode = arr[i].type.replace("_", " ");
-        str += typeOfCode + ":" + arr[i].identifier + " ";
+        str += typeOfCode + " : " + arr[i].identifier + " ";
       } else {
-        str += arr[i].type + ":" + arr[i].identifier + " ";
+        str += arr[i].type + " : " + arr[i].identifier + " ";
       }
     }
 
@@ -175,7 +175,33 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
     };
     fetchData()
       .then(function (results) {
-        console.log("isbn", isbn);
+        /**
+         * @desc obj creation for the codes
+         */
+
+        //1. create obj
+        const objCodes = {
+          isbn_10: "Not provided",
+          isbn_13: "Not provided",
+          other: "Not provided",
+        };
+
+        //
+        const extractArr = () => {
+          isbn.map((x) => {
+            if (x.type === "OTHER") {
+              objCodes.other = x.identifier;
+            }
+            if (x.type === "ISBN_10") {
+              objCodes.isbn_10 = x.identifier;
+            }
+            if (x.type === "ISBN_13") {
+              objCodes.isbn_13 = x.identifier;
+            }
+          });
+        };
+
+        extractArr();
 
         /**
          * @desc remapping the data in a new obj
@@ -195,21 +221,13 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             },
           ],
           attributes: [
-            // {
-            //   id: 5,
-            //   name: "Book codes",
-            //   position: 1,
-            //   visible: false,
-            //   variation: true,
-            //   options: [{ code: "isbn" }],
-            // },
             {
               id: 6,
               name: "ISBN 10",
               position: 1,
               visible: true,
               variation: false,
-              options: ["1234567890"],
+              options: [objCodes.isbn_10],
             },
             {
               id: 7,
@@ -217,7 +235,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
               position: 2,
               visible: true,
               variation: false,
-              options: ["1234567890123"],
+              options: [objCodes.isbn_13],
             },
             {
               id: 8,
@@ -225,7 +243,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
               position: 3,
               visible: true,
               variation: false,
-              options: ["STANDFORD:12898098"],
+              options: [objCodes.other],
             },
             {
               id: 0,
@@ -243,9 +261,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
               value: getIsbn(isbn),
             },
           ],
-
-          // downloads: isbn,
-          // ean_code: getIsbn(isbn),
           ean_code: getIsbn(isbn),
 
           /**

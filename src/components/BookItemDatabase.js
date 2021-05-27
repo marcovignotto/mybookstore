@@ -64,7 +64,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const cover = item?.images[0].src;
   const status = item?.attributes[0].options[0];
-  const ean_code = meta_data[0].value;
+  const ean_code = item?.attributes;
+
+  console.log("ean_code", ean_code);
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showDeleteBtns, setShowDeleteBtns] = useState(true);
@@ -259,13 +261,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     short_description.search("</p>")
   );
 
-  let mixedObj = {
-    isbn: 10000,
-    codesArray: [{ one: 1, two: 2 }],
-  };
-
   // console.log("ean_code", ean_code);
-  console.log("item", item);
+  // console.log("item", item);
 
   return (
     <div className="book-item">
@@ -313,14 +310,17 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         {Array.isArray(ean_code) && codes.length === 0
           ? null
           : codes.map((item) => {
+              console.log(item);
               let other = "";
               let isbn10 = "";
               let isbn13 = "";
-              if (item.type === "OTHER") other = item.identifier;
-              if (item.type === "ISBN_10") isbn10 = item.identifier;
-              if (item.type === "ISBN_13") isbn13 = item.identifier;
+              if (item.name === "OTHER") other = item.options[0];
+              if (item.name === "ISBN 10") isbn10 = item.options[0];
+              if (item.name === "ISBN 13") isbn13 = item.options[0];
 
-              if (other.length > 0) {
+              console.log(other, isbn10, isbn13);
+
+              if (other !== "Not provided") {
                 return (
                   <>
                     <div
