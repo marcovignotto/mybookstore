@@ -62,71 +62,24 @@ const useStyles = makeStyles((theme) => ({
   // FORM
 
   inputs: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    marginRight: 30,
-    "& > *": {
-      marginTop: 20,
-    },
+    ...theme.insert.inputs,
   },
   titleauthor: {
-    width: "50%",
-    // width: 800,
-    display: "flex",
-    flexDirection: "column",
-    marginRight: "30px",
-    "& > :first-child": {
-      marginRight: 20,
-    },
-    "& > div": {
-      width: "100%",
-      paddingRight: 30,
-      marginBottom: 20,
-    },
-    "& > :last-child": {
-      marginRight: 0,
-    },
+    ...theme.insert.titleauthor,
   },
   isbn: {
-    width: "50%",
-    display: "flex",
-    flexDirection: "column",
-    marginLeft: "30px",
-    // marginRight: "30px",
-    "& > *": {
-      width: "100%",
-      // marginBottom: 20,
-    },
-    "& > :first-child": {
-      // marginRight: 20,
-    },
+    ...theme.insert.isbn,
   },
 
   // BUTTONS
 
   buttons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    // height: 60,
-    marginTop: 20,
-    "& > *": {
-      width: 200,
-      marginBottom: 20,
-      marginRight: 50,
-      marginLeft: 50,
-      // padding: 0,
-    },
-    "& > :last-child": {
-      // marginLeft: "2rem",
-      // marginRight: 20,
-    },
+    ...theme.insert.buttons,
   },
 
   // Tables
   tableFound: {
-    ...theme.tableFound,
+    ...theme.insert.tableFound,
     display: "grid", // Overrides default theme
   },
 }));

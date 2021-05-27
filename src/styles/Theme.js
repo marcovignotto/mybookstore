@@ -25,7 +25,6 @@ export const theme = createMuiTheme({
       },
     },
   },
-
   palette: {
     common: {
       blue: `${colors.arcBlue}`,
@@ -40,7 +39,7 @@ export const theme = createMuiTheme({
     info: { main: `${colors.infoMain}` },
     success: { main: `${colors.successMain}` },
   },
-  //   typography: { useNextVariants: true },
+
   typography: {
     tab: {
       fontFamily: "Raleway",
@@ -50,6 +49,7 @@ export const theme = createMuiTheme({
     },
   },
 
+  // special CSS
   css: {
     tab: {
       minWidth: 10,
@@ -67,6 +67,8 @@ export const theme = createMuiTheme({
   "& .MuiButton-root": {
     padding: "0px",
   },
+
+  // BUTTONS
   buttons: {
     btnAddDb: {
       fontSize: "0.9rem",
@@ -99,8 +101,81 @@ export const theme = createMuiTheme({
       },
     },
   },
-  tableFound: {
-    backgroundColor: colors.primaryMain,
+
+  // TABLES
+
+  // INSERT
+
+  // FORM
+  insert: {
+    inputs: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+      marginRight: 30,
+      "& > *": {
+        marginTop: 20,
+      },
+    },
+    titleauthor: {
+      width: "50%",
+      // width: 800,
+      display: "flex",
+      flexDirection: "column",
+      marginRight: "30px",
+      "& > :first-child": {
+        marginRight: 20,
+      },
+      "& > div": {
+        width: "100%",
+        paddingRight: 30,
+        marginBottom: 20,
+      },
+      "& > :last-child": {
+        marginRight: 0,
+      },
+    },
+    isbn: {
+      width: "50%",
+      display: "flex",
+      flexDirection: "column",
+      marginLeft: "30px",
+      // marginRight: "30px",
+      "& > *": {
+        width: "100%",
+        // marginBottom: 20,
+      },
+      "& > :first-child": {
+        // marginRight: 20,
+      },
+    },
+
+    // BUTTONS
+
+    buttons: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      // height: 60,
+      marginTop: 20,
+      "& > *": {
+        width: 200,
+        marginBottom: 20,
+        marginRight: 50,
+        marginLeft: 50,
+        // padding: 0,
+      },
+      "& > :last-child": {
+        // marginLeft: "2rem",
+        // marginRight: 20,
+      },
+    },
+
+    // Tables
+    tableFound: {
+      backgroundColor: colors.primaryMain,
+      display: "grid", // Overrides default theme
+    },
   },
 });
 
