@@ -312,11 +312,11 @@ body {
 /* BOOK ITEM */
 
 .book-item {
-  color: var(--text-list-color);
+  color: var(--text-list-color) !important;
 }
 
 .book-item .items-table:hover {
-  background-color: var(--items-table-hover);
+  background-color: var(--items-table-hover) !important;
   cursor: pointer;
   color: #f08256;
 }

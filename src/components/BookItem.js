@@ -68,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
   btnAddDb: {
     ...theme.buttons.btnAddDb,
   },
-  bookData: {
-    backgroundColor: theme.palette.primary.light,
-    color: "white",
-    "& > *": {
-      margin: 0,
-    },
-  },
-  bookAdd: {},
+  // bookData: {
+  //   backgroundColor: theme.palette.primary.light,
+  //   color: "white",
+  //   "& > *": {
+  //     margin: 0,
+  //   },
+  // },
+  // bookAdd: {},
 }));
 
 function getSize() {
