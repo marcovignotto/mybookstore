@@ -41,6 +41,13 @@ import {
   config,
 } from "@react-spring/web";
 
+import {
+  transitions,
+  transitionsCompressed,
+  transitionsExpand,
+  transitionsDelete,
+} from "../animations/animations";
+
 const useStyles = makeStyles((theme) => ({
   btnUpdateItem: {
     ...theme.buttons.btnUpdateItem,
@@ -103,7 +110,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
   const clickAddToStore = () => {
     setAddToStore(true);
     // setShowAddToStore(true);
-    setShowDetailedItem(true);
     setShowDetailedItem(true);
     setShowCompressedItem(false);
   };
@@ -270,100 +276,21 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const [showCompressedItem, setShowCompressedItem] = useState(true);
 
-  const transitions = useTransition(showAddToStore, {
-    // default: { immediate: true },
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    // reverse: show,
-    delay: 0,
-    // config: config.molasses,
-    config: { duration: 200 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
+  const transitionsAni = useTransition(showAddToStore, {
+    ...transitions,
   });
 
-  const transitionsExpand = useTransition(showDetailedItem, {
-    // default: { immediate: true },
-    // transformOrigin: "top",
-    from: {
-      opacity: 0.5,
-      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    enter: {
-      opacity: 1,
-      transform: "translateY(0%) scaleY(1) scaleX(1)",
-      // maxHeight: "1000px",
-    },
-    leave: {
-      opacity: 0.5,
-      transform: "translateY(-50%) scaleY(0.85) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    // reverse: show,
-    delay: 0,
-    config: config.molasses,
-    // config: config.gentle,
-    config: { duration: 300 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
-    // onChange: () => setShowAddToStore(true),
+  const transitionsExpandAni = useTransition(showDetailedItem, {
+    ...transitionsExpand,
     onDestroyed: () => setShowAddToStore((showAddToStore) => !showAddToStore),
   });
 
-  const transitionsCompressed = useTransition(showCompressedItem, {
-    // default: { immediate: true },
-    from: {
-      opacity: 0.5,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    enter: {
-      opacity: 1,
-      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
-      // maxHeight: "1000px",
-    },
-    leave: {
-      opacity: 0.5,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    // reverse: show,
-    delay: 0,
-    // config: config.molasses,
-    config: { duration: 300 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
+  const transitionsCompressedAni = useTransition(showCompressedItem, {
+    ...transitionsCompressed,
   });
 
-  const transitionsDelete = useTransition(!itemIsDeleted, {
-    // default: { immediate: true },
-    from: {
-      opacity: 0.35,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    enter: {
-      opacity: 1,
-      transform: "translateY(0%) translateX(0%) scaleY(1) scaleX(1)",
-      // maxHeight: "1000px",
-    },
-    leave: {
-      opacity: 0.35,
-      transform: "translateY(70%) translateX(0%) scaleY(0.65) scaleX(1)",
-      // maxHeight: "0px",
-    },
-    // reverse: show,
-    delay: 0,
-    // config: config.molasses,
-    config: { duration: 400 },
-    // onStart: () => set(!show),
-    // onChange: () => set(!show),
-    // onStart: () => setShowEditItem(true),
+  const transitionsDeleteAni = useTransition(!itemIsDeleted, {
+    ...transitionsDelete,
   });
 
   /**
@@ -387,7 +314,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
    * @desc renders the item when compressed
    */
 
-  const compressedItem = transitionsCompressed(
+  const compressedItem = transitionsCompressedAni(
     (styles, item) =>
       item && (
         <animated.div style={styles}>
@@ -530,7 +457,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
    * @desc renders the item when expanded
    */
 
-  const detailedItem = transitionsExpand(
+  const detailedItem = transitionsExpandAni(
     (styles, item) =>
       item && (
         <animated.div style={styles}>
@@ -669,7 +596,12 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       )
   );
 
-  return transitionsDelete(
+  /**
+   * @desc transitionsDelete to animate it on delete
+   * @uses itemIsDeleted
+   */
+
+  return transitionsDeleteAni(
     (styles, item) =>
       item && (
         <animated.div style={styles}>
@@ -677,7 +609,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
             {addToStore ? detailedItem : compressedItem}
             {!addToStore
               ? ""
-              : transitions(
+              : transitionsAni(
                   (styles, item) =>
                     item && (
                       <animated.div style={styles}>
