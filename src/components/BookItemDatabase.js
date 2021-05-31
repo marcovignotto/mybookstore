@@ -19,13 +19,6 @@ import Divider from "@material-ui/core/Divider";
 
 import classNames from "classnames/bind";
 
-import FadeIn from "react-fade-in";
-
-/**
- * @desc converts Promises in true/false
- */
-import { MakeQuerablePromise } from "../utils/convertPromises";
-
 /**
  * @desc MatUI
  */
@@ -34,12 +27,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  useTransition,
-  animated,
-  AnimatedProps,
-  config,
-} from "@react-spring/web";
+import { useTransition, animated } from "@react-spring/web";
 
 import {
   transitions,
@@ -91,8 +79,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const [itemIsDeleted, setItemIsDeleted] = useState(false);
 
-  const [showEditItem, setShowEditItem] = useState(false);
-
   const itemClass = classNames({
     "items-table": !addToStore,
     "items-table-selected": addToStore,
@@ -109,16 +95,13 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const clickAddToStore = () => {
     setAddToStore(true);
-    // setShowAddToStore(true);
     setShowDetailedItem(true);
     setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
-    // setShowAddToStore(false);
     setShowDetailedItem(false);
     setShowCompressedItem(true);
-    // setShowEditItem(false);
   };
 
   const handleBookPrice = (e) => {
@@ -137,12 +120,8 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
     const data = dispatch(
       updateWooDb(id, newPrice, newStockQuantity, newBookStatus, codes)
     );
-    // console.log(data);
-    // const result = MakeQuerablePromise(data);
-    // console.log(result);
-    // console.log(result.isFulfilled());
+
     data.then(function (res) {
-      // console.log(res);
       if (res >= 200 && res <= 399) {
         setItemIsUpdated(true);
         setShowDeleteBtns((prev) => !prev);
@@ -150,14 +129,9 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         setItemIsUpdated(false);
         setShowDeleteBtns((prev) => !prev);
       }
-      // setItemIsUpdated(result.isFulfilled());
     });
-    // console.log(itemIsDeleted);
-
-    // setItemIsUpdated((prev) => !prev);
     setTimeout(() => {
       setItemIsUpdated((prev) => !prev);
-      // setItemIsDeleted((prev) => !prev);
       setShowDeleteBtns((prev) => !prev);
     }, 3000);
   };
@@ -174,37 +148,20 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
 
   const deleteItem = () => {
     const data = dispatch(deleteWooDb(id));
-
-    // const result = MakeQuerablePromise(data);
-
-    // console.log(data);
-
-    // (res) {
-    //   // console.log(res);
-    //   if (res >= 200 && res <= 399) {
-    //     setItemIsUpdated(true);
-    //     setShowDeleteBtns((prev) => !prev);
-    //   } else {
-    //     setItemIsUpdated(false);
-    //     setShowDeleteBtns((prev) => !prev);
-    //   }
-
     data.then(function (res) {
-      // console.log(res);
-
       if (res >= 200 && res <= 399) {
-        // setItemIsUpdated(true);
-        // setShowDeleteBtns((prev) => !prev);
         setItemIsDeleted(true);
         setShowDeleteConfirm(false);
       } else {
         setItemIsDeleted(false);
-        // setItemIsUpdated(false);
-        // setShowDeleteBtns((prev) => !prev);
         setShowDeleteConfirm(false);
       }
     });
   };
+
+  /**
+   * @desc Upd btn and delete icon
+   */
 
   const updateAndDelete = (
     <>
@@ -227,9 +184,10 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       </div>
     </>
   );
-
+  /**
+   * @desc Confirmation message
+   */
   const confirmation = (
-    // <div className="upd-delete">
     <div className="confirmation">
       <div>Are you sure?</div>
       <div className="confirm-buttons">
@@ -250,10 +208,12 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
           No
         </button>
       </div>
-      {/* </div> */}
     </div>
   );
 
+  /**
+   * @desc upd/del messages
+   */
   const bookDeleted = (
     <div className="upd-delete">
       <div className={`book-delete ${classes.btnAddDb}`}>
@@ -323,7 +283,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       item && (
         <animated.div style={styles}>
           <div
-            // style={cardStyle}
             className={itemClass}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
@@ -348,7 +307,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
               className="item3"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
-              {/* {name} */}
               {!addToStore && name.length > 59
                 ? name.substring(0, 60) + "..."
                 : name}
@@ -357,7 +315,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
               className="item4"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
-              {/* Removed <p> and </p> taken from WooCommerce */}
               {!addToStore && authorsString.length > 85
                 ? authorsString.substring(0, 86) + "..."
                 : authorsString}
@@ -380,7 +337,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       <>
                         <div
                           style={{ textAlign: "center" }}
-                          // key={extractIdentifier(other)}
                           item
                           className="item5"
                           onClick={
@@ -437,21 +393,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                 })}
 
             {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
-
-            {/* START OLD DIVS  */}
-            {/* <div
-          className="item5"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          ----
-        </div>
-        <div
-          className="item6"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {/* {console.log(codes)} */}
-
-            {/* END OLD DIVS  */}
           </div>
         </animated.div>
       )
@@ -466,7 +407,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
       item && (
         <animated.div style={styles}>
           <div
-            // style={cardStyle}
             className={itemClass}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
@@ -491,7 +431,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
               className="item3"
               onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
             >
-              {/* {name} */}
               {!addToStore && name.length > 59
                 ? name.substring(0, 60) + "..."
                 : name}
@@ -523,7 +462,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                       <>
                         <div
                           style={{ textAlign: "center" }}
-                          // key={extractIdentifier(other)}
                           item
                           className="item5"
                           onClick={
@@ -580,21 +518,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                 })}
 
             {/* END Indentifiers ISBN_10 / ISBN_13 / OTHER */}
-
-            {/* START OLD DIVS  */}
-            {/* <div
-          className="item5"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          ----
-        </div>
-        <div
-          className="item6"
-          onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
-        >
-          {/* {console.log(codes)} */}
-
-            {/* END OLD DIVS  */}
           </div>
         </animated.div>
       )
@@ -630,9 +553,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                               placeholder={newPrice.price}
                               onChange={handleBookPrice}
                             />
-                            {/* </div>
-                    <div className="item4"> */}
-                            {/* <Divider orientation="vertical" flexItem light /> */}
                             <label>Qnt:</label>
                             <input
                               className="input-stock"
@@ -643,9 +563,6 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                               placeholder={newStockQuantity.stock}
                               onChange={handleBookQuantity}
                             />{" "}
-                            {/* </div>
-                    <div className="item5"> */}
-                            {/* <Divider orientation="vertical" flexItem light /> */}
                             <label>Status:</label>
                             <form>
                               <select
@@ -661,9 +578,7 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
                                 <option value="like-new">Like New</option>
                               </select>
                             </form>
-                            {/* </div> */}
                             <Divider orientation="vertical" flexItem light />
-                            {/* <div className="item6"> */}
                             {showDeleteBtns && !itemIsDeleted && !itemIsUpdated
                               ? updateAndDelete
                               : null}

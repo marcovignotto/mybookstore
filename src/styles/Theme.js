@@ -115,7 +115,6 @@ export const theme = createMuiTheme({
     },
     titleauthor: {
       width: "50%",
-      // width: 800,
       display: "flex",
       flexDirection: "column",
       marginRight: "30px",
@@ -136,14 +135,10 @@ export const theme = createMuiTheme({
       display: "flex",
       flexDirection: "column",
       marginLeft: "30px",
-      // marginRight: "30px",
       "& > *": {
         width: "100%",
-        // marginBottom: 20,
       },
-      "& > :first-child": {
-        // marginRight: 20,
-      },
+      "& > :first-child": {},
     },
 
     // BUTTONS
@@ -152,19 +147,14 @@ export const theme = createMuiTheme({
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
-      // height: 60,
       marginTop: 20,
       "& > *": {
         width: 200,
         marginBottom: 20,
         marginRight: 50,
         marginLeft: 50,
-        // padding: 0,
       },
-      "& > :last-child": {
-        // marginLeft: "2rem",
-        // marginRight: 20,
-      },
+      "& > :last-child": {},
     },
 
     // Tables

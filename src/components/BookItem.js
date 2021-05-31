@@ -15,17 +15,12 @@ import noImage from "../images/no-image.jpg";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-import { colors, cardStyle, cardStyleAddDb } from "../styles/Theme";
+import { cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 
-import {
-  useTransition,
-  animated,
-  AnimatedProps,
-  config,
-} from "@react-spring/web";
+import { useTransition, animated } from "@react-spring/web";
 
 import {
   transitions,
@@ -33,65 +28,11 @@ import {
   transitionsExpand,
 } from "../animations/animations";
 
-import FadeIn from "react-fade-in";
-
-// new MAT UI import
-
-import clsx from "clsx";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-
-// End new MAT UI
-
-// collapse MAT UI
-import Switch from "@material-ui/core/Switch";
-import Paper from "@material-ui/core/Paper";
-// import Collapse from "@material-ui/core/Collapse";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Check } from "@material-ui/icons";
-// end collapse MAT UI
-
 const useStyles = makeStyles((theme) => ({
   btnAddDb: {
     ...theme.buttons.btnAddDb,
   },
-  // bookData: {
-  //   backgroundColor: theme.palette.primary.light,
-  //   color: "white",
-  //   "& > *": {
-  //     margin: 0,
-  //   },
-  // },
-  // bookAdd: {},
 }));
-
-function getSize() {
-  var table = document.getElementsByClassName("items-table");
-  return {
-    heightCollapsed: table[0].offsetHeight,
-    width: table[0].offsetWidth,
-  };
-}
-function getSizeOpen() {
-  var selected = document.getElementsByClassName("items-table-selected");
-  var addStore = document.getElementsByClassName("add-to-store");
-
-  return {
-    heightExpanded: selected[0].offsetHeight + addStore[0].offsetHeight,
-  };
-}
 
 const BookItem = ({ item, loading }) => {
   const dispatch = useDispatch();
@@ -101,35 +42,12 @@ const BookItem = ({ item, loading }) => {
   const [identifiers, setIdentifiers] = useState([]);
   const [isbnToSend, setIsbnToSend] = useState();
 
-  // const [thumbAdd, setThumbAdd] = useState();
   const [stockQuantity, setStockQuantity] = useState({ stock: 1 });
   const [price, setPrice] = useState({ price: 10 });
   const [bookStatus, setBookStatus] = useState({ status: "good" });
   const [addToStore, setAddToStore] = useState(false);
 
-  const [menuAnimation, setMenuAnimation] = useState();
-
-  const [menuContentsAnimation, setMenuContentsAnimation] = useState();
-
   const [areIdentifiersReady, setIsIdentifiersReady] = useState(false);
-
-  // const styleAnimation = {
-  //   animationName: menuAnimation,
-  //   animationDuration: "0.2s",
-  //   animationTimingFunction: "linear",
-  // };
-
-  // const styleContentsAnimation = {
-  //   animationName: menuContentsAnimation,
-  //   animationDuration: "0.2s",
-  //   animationTimingFunction: "linear",
-  // };
-
-  // const [cardSizes, setCardSizes] = useState({
-  //   width: "",
-  //   heightCollapsed: "",
-  //   heightExpanded: "",
-  // });
 
   /**
    * @desc states for animations with react spring
@@ -139,37 +57,6 @@ const BookItem = ({ item, loading }) => {
   const [showDetailedItem, setShowDetailedItem] = useState(false);
 
   const [showCompressedItem, setShowCompressedItem] = useState(true);
-
-  // useEffect(() => {
-  //   getSize();
-  //   setCardSizes({
-  //     ...cardSizes,
-  //     width: getSize().width,
-  //     heightCollapsed: getSize().heightCollapsed,
-  //   });
-
-  //   //eslint-disable-next-line
-  // }, []);
-  // useEffect(() => {
-  //   if (addToStore) {
-  //     getSizeOpen();
-  //     setCardSizes({
-  //       ...cardSizes,
-  //       heightExpanded: getSizeOpen().heightExpanded,
-  //     });
-
-  //     const animations = createKeyframeAnimation(
-  //       cardSizes.heightCollapsed,
-  //       getSizeOpen().heightExpanded,
-  //       cardSizes.width
-  //     );
-
-  //     setMenuAnimation(animations.menuAnimation);
-  //     setMenuContentsAnimation(animations.menuContentsAnimation);
-  //   } else {
-  //     return;
-  //   }
-  // }, [addToStore]);
 
   /**
    * @desc set indentifiers
@@ -223,21 +110,18 @@ const BookItem = ({ item, loading }) => {
 
   const clickAddToStore = () => {
     setAddToStore(true);
-    // setShowDetailedItem((prev) => !prev);
-    // setShowCompressedItem((prev) => !prev);
     setShowDetailedItem(true);
     setShowCompressedItem(false);
   };
   const clickRemoveFromStore = () => {
     setAddToStore(false);
-    // setShowDetailedItem((prev) => !prev);
-    // setShowCompressedItem((prev) => !prev);
     setShowDetailedItem(false);
     setShowCompressedItem(true);
   };
 
   const [isItemAdded, setIsItemAdded] = useState(false);
   const [isItemNotAdded, setIsItemNotAdded] = useState(false);
+
   /**
    * @desc dispatches data and wait for the confirmation
    */
@@ -296,23 +180,6 @@ const BookItem = ({ item, loading }) => {
     </>
   );
 
-  // console.log(identifiers.length);
-  // useEffect(() => {
-  //   // console.log(identifiers === undefined);
-  //   identifiers.map((item) => {
-  //     if (item.identifier?.search(":") === -1) {
-  //       return item.identifier;
-  //     } else {
-  //       console.log(
-  //         item.identifier?.substring(item.identifier.search(":") + 1)
-  //       );
-  //       return item.identifier?.substring(item.identifier.search(":") + 1);
-  //     }
-  //   });
-  // }, [identifiers]);
-
-  // key={extractIdentifier(item.identifier)}
-
   const extractIdentifier = (id) => {
     if (id.search(":") === -1) {
       return id;
@@ -347,7 +214,6 @@ const BookItem = ({ item, loading }) => {
         <animated.div style={styles}>
           <Grid
             className={"items-table"}
-            // style={(cardStyle, styleAnimation, styleContentsAnimation)}
             style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
@@ -461,7 +327,6 @@ const BookItem = ({ item, loading }) => {
           <Grid
             container
             className={"items-table-selected"}
-            // style={(cardStyle, styleAnimation, styleContentsAnimation)}
             style={cardStyle}
             onClick={!addToStore ? clickAddToStore : clickRemoveFromStore}
           >
@@ -564,8 +429,6 @@ const BookItem = ({ item, loading }) => {
       )
   );
 
-  // console.log(identifiers.length);
-  // console.log("item.volumeInfo.authors", item.volumeInfo.authors.join(", "));
   return (
     <>
       {/* to start waits loading from reducer */}
@@ -584,8 +447,6 @@ const BookItem = ({ item, loading }) => {
                         className="add-to-store"
                         style={cardStyleAddDb}
                       >
-                        {/* <Grid item className="item1"></Grid>
-              <Grid item className="item2"></Grid> */}
                         <div className="add-to-store-inputs">
                           <Divider orientation="vertical" flexItem light />
                           <label>€:</label>
@@ -598,9 +459,7 @@ const BookItem = ({ item, loading }) => {
                             onChange={bookPrice}
                           />
 
-                          {/* </Grid> */}
                           <Divider orientation="vertical" flexItem light />
-                          {/* <Grid item className="item4" lg={1}> */}
                           <label>Qnt:</label>
                           <input
                             className="input-stock"
@@ -610,9 +469,7 @@ const BookItem = ({ item, loading }) => {
                             defaultValue="1"
                             onChange={bookQuantity}
                           />
-                          {/* </Grid> */}
                           <Divider orientation="vertical" flexItem light />
-                          {/* <Grid item className="item5" lg={4}> */}
                           <label>Status:</label>
                           <form>
                             <select
@@ -627,9 +484,7 @@ const BookItem = ({ item, loading }) => {
                               <option value="like-new">Like New</option>
                             </select>
                           </form>
-                          {/* </Grid> */}
                           <Divider orientation="vertical" flexItem light />
-                          {/* <Grid item className="item6" lg={6}> */}
                           {isItemAdded
                             ? itemAdded
                             : isItemNotAdded

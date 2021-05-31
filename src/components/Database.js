@@ -13,7 +13,6 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Input,
 } from "@material-ui/core";
 
 import TextField from "@material-ui/core/TextField";
@@ -68,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
   allfilters: {
     display: "flex",
     flexDirection: "row",
-    // color: "red",
     color: "red",
     "&$checked": {
       color: "blue",
@@ -101,14 +99,6 @@ const Database = ({
   const [dataToMap, setDataToMap] = useState(dataIn);
 
   const [inProgress, setInProgress] = useState(false);
-
-  function sendWooDbDataReady(state) {
-    new Promise((resolve, reject) => {
-      // do anything here
-      dispatch(setWooDbDataReady(state));
-      resolve();
-    });
-  }
 
   useLayoutEffect(() => {
     let where = wooDbSeaState;
