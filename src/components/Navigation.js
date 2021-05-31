@@ -117,13 +117,13 @@ const Navigation = (props) => {
             </div>
             <Tabs value={value} onChange={handleChange}>
               <Tab
-                className={classes.tab}
+                className={`${classes.tab} btn-insert`}
                 component={Link}
                 to="/insert"
                 label="Insert"
               />
               <Tab
-                className={classes.tab}
+                className={`${classes.tab} btn-database`}
                 component={Link}
                 to="/database"
                 label="Database"

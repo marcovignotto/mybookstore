@@ -331,7 +331,12 @@ const Insert = ({ data, loading, googleSearched }) => {
           </div>
           <Divider light />
           <div className={classes.buttons}>
-            <Button variant="contained" onClick={onSubmit} disabled={searched}>
+            <Button
+              className="btn-search"
+              variant="contained"
+              onClick={onSubmit}
+              disabled={searched}
+            >
               Search
             </Button>
 

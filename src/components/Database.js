@@ -272,6 +272,7 @@ const Database = ({
               variant="contained"
               onClick={() => searchIntoWooDb(wooDbSeaState, wooDbSearchTerm)}
               disabled={wooDbDataReady}
+              className="btn-search-db"
             >
               Search
             </Button>
