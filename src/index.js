@@ -26,11 +26,11 @@ const rootReducer = combineReducers({
 const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(ReduxThunk),
-    window.navigator.userAgent.includes("Chrome")
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : compose
+    applyMiddleware(ReduxThunk)
+    // window.navigator.userAgent.includes("Chrome")
+    //   ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    //       window.__REDUX_DEVTOOLS_EXTENSION__()
+    //   : compose
   )
 );
 
