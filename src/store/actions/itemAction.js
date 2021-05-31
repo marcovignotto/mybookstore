@@ -1,28 +1,11 @@
 import {
-  // GOOGLE_SEARCH,
-  // GOOGLE_SEARCH_CLEAR,
-  // GOOGLE_SEARCH_SEARCHED,
-  // ADD_TO_WOO_DB,
-  // UPDATE_WOO_DB,
-  // WOO_DB_ALL,
-  // WOO_DB_IN,
-  // WOO_DB_OUT,
-  // WOO_DB_DELETE_ALL,
-  // WOO_DB_DELETE_IN,
-  // WOO_DB_DELETE_OUT,
-  // WOO_DB_SEARCH_STATE,
-  // WOO_DB_SEARCH_TERM,
-  // WOO_DB_SEARCH_CLEAR,
-  // WOO_DB_DATA_READY,
   GOOGLE_SEARCH,
   GOOGLE_SEARCH_ERROR,
   GOOGLE_SEARCH_CLEAR,
   GOOGLE_SEARCH_CLEAR_ERROR,
   GOOGLE_SEARCH_SEARCHED,
   GOOGLE_SEARCH_SEARCHED_ERROR,
-  // ADD_TO_WOO_DB,
   ADD_TO_WOO_DB_ERROR,
-  // UPDATE_WOO_DB,
   UPDATE_WOO_DB_ERROR,
   WOO_DB_ALL,
   WOO_DB_IN,
@@ -268,8 +251,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
            */
         };
 
-        // console.log("data", data);
-
         const dataJson = JSON.stringify(data);
 
         const config = {
@@ -455,7 +436,6 @@ export const getWooDbAll = (stock, searchTerms) => {
  */
 
 export const setWooDbState = (state) => {
-  // console.log(state);
   return async (dispatch) => {
     try {
       await dispatch({ type: WOO_DB_SEARCH_STATE, payload: state });

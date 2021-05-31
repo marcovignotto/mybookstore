@@ -102,11 +102,8 @@ const Navigation = (props) => {
               justifyContent: "space-between",
               float: "none",
               width: "100%",
-              // height: 30,
               marginLeft: "auto",
               marginRight: "auto",
-              // textAlign: "center",
-              // alignContent: "center",
               justifyContent: "center",
             }}
           >

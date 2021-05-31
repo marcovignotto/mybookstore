@@ -13,8 +13,6 @@ body {
   --table-found-bg: #eb5e28;
   --table-selected-text-color: #eb5e28;
   --inputs-focus-color: #eb5e28;
-  /* --items-table-hover: "#CCC5B9";  */
-  /* font-family: "Roboto", sans-serif; */
   font-family: "Lato", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -69,13 +67,11 @@ body {
 }
 .btn-big:hover {
   background-color: rgb(79, 122, 139);
-  /* font-weight: 600 !important; */
 }
 .btn-big:focus {
   font-size: 18px !important;
 
   background-color: rgb(79, 122, 139);
-  /* font-weight: 600 !important; */
 }
 
 .btn-add-db {
@@ -105,7 +101,6 @@ body {
 .btn-add:hover {
   border: 0;
   color: white;
-  /* background-color: grey; */
   border: 3px;
   padding-right: 10px;
   padding-left: 10px;
@@ -177,21 +172,14 @@ body {
   font-weight: 600;
   font-size: 20px;
   transition: color 0.5s;
-  /* transition: border 0.5s ease-in; */
 }
 
 .navbar ul li a:hover {
   color: chocolate;
-
-  /* border-bottom: 4px solid black; */
-  /* border-color: black; */
   border-bottom: 4px solid chocolate;
 }
 
 /* BOOKS */
-
-#book-search {
-}
 
 #book-search h2 {
   color: chocolate;
@@ -199,9 +187,6 @@ body {
   font-size: 2rem;
   padding-bottom: 20px;
   text-transform: uppercase;
-}
-
-#book-search .items {
 }
 
 #book-search form {
@@ -219,21 +204,11 @@ body {
   padding-right: 10px;
   border: 0;
   border-bottom: 1px solid grey;
-  /* border-radius: 5px; */
 }
 #book-search form input:focus {
-  /* border: 0; */
   font-size: 30px;
   background-color: #999;
   background-color: rgb(188, 212, 221);
-  /* color: white; */
-}
-
-#book-search form input:last-child {
-  /* grid-row: 3; */
-  /* position: absolute;
-  top: 250px;
-  width: 470px; */
 }
 
 /* TABLES GRIDS */
@@ -243,7 +218,6 @@ body {
   padding-bottom: 10px;
   display: grid !important;
   grid-template-columns: repeat(18, 1fr);
-  /* background-color: cadetblue; */
   font-weight: 600;
   font-size: 16px;
   color: white;
@@ -298,7 +272,6 @@ body {
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   cursor: pointer;
-  /* background-color: #cd4c6692; */
   overflow: hidden;
 }
 
@@ -334,7 +307,6 @@ body {
 }
 .book-item .items-table .item2 img {
   max-height: 80px;
-  /* max-width: 60px; */
 }
 
 .book-item .items-table .item3 {
@@ -344,7 +316,6 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  /* white-space: nowrap; */
 }
 .book-item .items-table .item4 {
   grid-column: 8 / span 11;
@@ -353,13 +324,11 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   font-style: oblique;
-  /* white-space: nowrap; */
 }
 .book-item .items-table .item5 {
   grid-column: 12 / span 15;
   grid-row: 1;
   padding-left: 6px;
-  /* text-align: left; */
 }
 .book-item .items-table .item6 {
   grid-column: 16 / span 18;
@@ -378,17 +347,6 @@ body {
   position: relative;
   z-index: 1;
   background-color: wheat !important;
-  /* background: rgb(218, 193, 116);
-  background: linear-gradient(
-    186deg,
-    rgba(218, 193, 116, 1) 12%,
-    rgba(255, 255, 234, 1) 90%
-  );
-  background: linear-gradient(
-    36deg,
-    rgba(252, 249, 240, 1) 12%,
-    rgba(213, 223, 255, 1) 90%
-  ); */
 
   background: rgb(235, 94, 40);
   background: linear-gradient(
@@ -396,7 +354,6 @@ body {
     rgb(255, 198, 176) 0%,
     rgba(255, 255, 255, 1) 81%
   );
-  /* background-color: #ccc5b9; */
   background: linear-gradient(
     25deg,
     rgba(255, 252, 242, 1) 41%,
@@ -407,7 +364,6 @@ body {
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   border-radius: 0px 10px 10px 10px;
-  /* -webkit-box-shadow: 0px 7px 9px -6px rgba(0, 0, 0, 0.72); */
   box-shadow: 0px 4px 7px -6px rgba(0, 0, 0, 0.5);
   overflow-y: hidden;
 }
@@ -465,7 +421,6 @@ body {
 /* END .items-table-selected */
 
 .add-to-store {
-  /* border-radius: 10px; */
   border-radius: 0px 0px 7px 7px;
   padding: 10px;
   padding-right: 30px;
@@ -476,7 +431,6 @@ body {
   float: right;
   display: flex;
   flex-direction: row;
-  /* justify-content: space-around; */
   justify-content: flex-end;
   align-items: center;
 }
@@ -492,24 +446,11 @@ body {
   color: var(--inputs-labels);
 }
 
-.inputs-radio-group {
-}
-.input-radio {
-  /* -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; */
-  /* color: #36a749 !important; */
-  /* background-color: #5ccd65 !important; */
-  /* border: 2px solid #000; */
-}
-
 .book-item .add-to-store {
   padding-top: 20px;
   padding-bottom: 20px;
   display: grid;
   grid-template-columns: repeat(18, 1fr);
-  /* background-color: aquamarine; */
-  /* border-radius: 0 0 10px 10px; */
 }
 
 .book-item .add-to-store .item1 {
@@ -578,15 +519,9 @@ body {
   width: 50px;
   padding: 5px;
   color: var(--add-to-store-input);
-
-  /* width: 100%; */
-  /* padding: 12px 20px; */
-  /* margin: 8px 0; */
-  /* box-sizing: border-box; */
   border: 3px solid #ccc;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  /* outline: none; */
 }
 .book-item .add-to-store * .input-status {
   height: 37px;
@@ -594,7 +529,6 @@ body {
   border: 0;
   width: 110px;
   padding-left: 5px;
-  /* padding-right: 5px; */
   color: var(--add-to-store-input);
   margin-right: 20px;
 
@@ -611,14 +545,9 @@ body {
   background-color: var(--inputs-focus-color);
   color: white;
   font-weight: 600;
-  /* border: 2px solid red !important;
-  border: 3px solid #555; */
   border-radius: 0px !important;
   border: 3px solid rgb(128, 124, 117);
 }
-/* .book-item .add-to-store input[type="text"]:focus {
-  border: 3px solid #555;
-} */
 
 .db-selectors {
   display: flex;
@@ -632,7 +561,6 @@ body {
 .confirmation {
   width: 19.5%;
   text-align: center;
-  /* margin: 30px; */
 }
 
 /* CONFIRMATION */
@@ -658,7 +586,6 @@ body {
 .book-delete:hover {
   color: white !important;
   background-color: #cd5c5c !important;
-  /* grid-column: 16 / span 18 !important; */
   width: 70%;
   grid-row: 1 !important;
   padding: 5px !important;
@@ -670,7 +597,6 @@ body {
   padding-right: 9px !important;
   padding-left: 9px !important;
   text-align: center !important;
-  /* width: 104px !important; */
   text-transform: uppercase;
   outline: none;
   border: 3px solid rgb(255, 255, 255);

@@ -217,7 +217,11 @@ const BookItemDatabase = ({ item, data, loading, wooDbSearchState }) => {
         >
           Update item
         </Button>
-        <IconButton aria-label="delete" onClick={handleDeleteConfirm}>
+        <IconButton
+          className="btn-icon-delete"
+          aria-label="delete"
+          onClick={handleDeleteConfirm}
+        >
           <DeleteIcon />
         </IconButton>
       </div>

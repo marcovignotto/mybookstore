@@ -5,22 +5,18 @@ export const colors = {
   arcOrange: "#FFBA60",
   primaryMain: "#EB5E28", // red/orange //dark blue "#324376"
   primaryLight: "#FCE3DA", // light blue   "#586BA4",
-  // primaryLight: "FFFCF2", // white // light blue   "#586BA4",
-  // secondaryMain: "#a49158", // sand / gold
   secondaryMain: "#CCC5B9", // light grey
   errorMain: "#EA1E0B", // Red
   warningMain: "#F76C5E", // light red / orange
   infoMain: "#F5DD90", // light yellow
   successMain: "#918F0F", // olive
   btnOver: "#CCC5B9",
-  // btnOver: "#F08256",
 };
 
 export const theme = createMuiTheme({
   overrides: {
     MuiFormLabel: {
       root: {
-        // padding: "0px",
         lineHeight: "1.11",
       },
     },
@@ -204,7 +200,6 @@ export const theme = createMuiTheme({
     allfilters: {
       display: "flex",
       flexDirection: "row",
-      // color: "red",
       color: "red",
       "&$checked": {
         color: "blue",
@@ -224,10 +219,6 @@ export const theme = createMuiTheme({
 export const cardColors = {
   cardBackground: "white",
   cardText: colors.primaryMain,
-  // cardAddDbBackground:
-  //   "linear-gradient(36deg, rgba(255,228,145,1) 12%, rgba(255,214,88,1) 90%)",
-  // cardAddDbBackground: "#ffd961",
-  // cardAddDbBackground: "#e5e5e5",
   cardAddDbBackground: "white",
 };
 
@@ -243,7 +234,6 @@ export const cardStyle = {
 };
 
 export const cardStyleAddDb = {
-  // zIndex: -1,
   marginTop: -1,
   marginRight: 5,
   marginLeft: 5,

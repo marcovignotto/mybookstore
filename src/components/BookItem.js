@@ -9,7 +9,6 @@ import { useDispatch, connect } from "react-redux";
 import { addToWooDb } from "../store/actions/itemAction";
 
 import { MakeQuerablePromise } from "../utils/convertPromises";
-import { createKeyframeAnimation } from "../utils/cardCollapse";
 
 import noImage from "../images/no-image.jpg";
 

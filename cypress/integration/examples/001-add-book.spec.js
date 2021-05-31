@@ -16,7 +16,7 @@ describe("Add a book, check database if is added", () => {
 
   it("Click search button", () => {
     cy.get(".btn-search").click({ force: true });
-    // cy.wait(1000);
+    cy.wait(3000);
   });
 
   it("Click on the first book named Cujo", () => {

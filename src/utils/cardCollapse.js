@@ -47,12 +47,4 @@ export function createKeyframeAnimation(
     menuAnimation: animation,
     menuContentsAnimation: inverseAnimation,
   };
-  //   return `
-  //   @keyframes menuAnimation {
-  //     ${animation}
-  //   }
-
-  //   @keyframes menuContentsAnimation {
-  //     ${inverseAnimation}
-  //   }`;
 }

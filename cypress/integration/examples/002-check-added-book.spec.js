@@ -2,9 +2,11 @@
  * @desc check is is added into db
  */
 
-describe("Check if thew book is added", () => {
+describe("Check if thew book is added, and change values", () => {
   before(() => {
+    cy.wait(2000);
     cy.visit("http://localhost:3000/");
+    cy.wait(2000);
   });
   it("Click on Database on menu", () => {
     cy.get(".btn-database").click();
@@ -26,5 +28,16 @@ describe("Check if thew book is added", () => {
     cy.get(".input-price").should("have.value", "42");
     cy.get(".input-stock").should("have.value", "42");
     cy.get(".input-status").should("have.value", "Crap");
+  });
+
+  it("Change amounts", () => {
+    cy.get(".input-price").clear().type(55);
+    cy.get(".input-stock").clear().type(55);
+    cy.get(".input-status").select("Good");
+  });
+
+  it("Send update, and wait the confirmation", () => {
+    cy.get(".btn-upd-item").click();
+    cy.get(".book-delete").should("have.text", "Book Updated");
   });
 });

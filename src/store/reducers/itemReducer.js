@@ -5,9 +5,7 @@ import {
   GOOGLE_SEARCH_CLEAR_ERROR,
   GOOGLE_SEARCH_SEARCHED,
   GOOGLE_SEARCH_SEARCHED_ERROR,
-  // ADD_TO_WOO_DB,
   ADD_TO_WOO_DB_ERROR,
-  // UPDATE_WOO_DB,
   UPDATE_WOO_DB_ERROR,
   WOO_DB_ALL,
   WOO_DB_IN,
@@ -144,7 +142,7 @@ export default (state = initialState, action) => {
       if (state.wooDbOut === null) {
         return state;
       } else {
-        const idToFind = action.payload; // arriva ID
+        const idToFind = action.payload;
         const arrayIds = state.wooDbOut.map((item) => console.log(item.id));
         const found = arrayIds.find((element) => element === idToFind);
         return {

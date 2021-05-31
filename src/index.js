@@ -9,20 +9,15 @@ import "./index.css";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import ReduxThunk from "redux-thunk";
 
-// import { composeWithDevTools, actionCreators } from "redux-devtools-extension";
-
 import itemReducer from "./store/reducers/itemReducer";
 
 const rootReducer = combineReducers({
   items: itemReducer,
 });
 
-// const composeEnhancers = composeWithDevTools({
-//   actionCreators,
-//   trace: true,
-//   traceLimit: 25,
-// });
-
+/**
+ * @desc disable redux devtools if cypress requires it
+ */
 const store = createStore(
   rootReducer,
   compose(
@@ -33,17 +28,6 @@ const store = createStore(
     //   : compose
   )
 );
-
-// const store = createStore(
-//   rootReducer,
-//   composeEnhancers(applyMiddleware(ReduxThunk))
-//   // applyMiddleware(ReduxThunk)
-// );
-
-// const store = createStore(
-//   rootReducer,
-//   composeWithDevTools(applyMiddleware(ReduxThunk))
-// );
 
 render(
   <Provider store={store}>

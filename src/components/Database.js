@@ -219,19 +219,6 @@ const Database = ({
     dispatch(setWooDbDataReady(false));
   };
 
-  // const tableHead = (
-  //   <>
-  //     <div className="table-found">
-  //       <div className="item1"></div>
-  //       <div className="item2">Cover</div>
-  //       <div className="item3">Title</div>
-  //       <div className="item4">Author/s</div>
-  //       <div className="item5">ISBN 13</div>
-  //       <div className="item6">ISBN 10</div>
-  //     </div>
-  //   </>
-  // );
-
   const tableHead = (
     <>
       <Grid container className={`table-found ${classes.tableFound}`}>
@@ -286,14 +273,12 @@ const Database = ({
                   name="filter"
                   value={wooDbSeaState}
                   onChange={handleChangeStock}
-                  // classes="inputs-radio-group"
                 >
                   <FormControlLabel value="" control={<Radio />} label="All" />
                   <FormControlLabel
                     value="stock_status=instock&"
                     control={<Radio />}
                     label="In Stock"
-                    // className="input-radio"
                   />
                   <FormControlLabel
                     value="stock_status=outofstock&"
