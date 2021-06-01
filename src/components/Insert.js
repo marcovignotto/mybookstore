@@ -276,8 +276,6 @@ const Insert = ({ data, loading, googleSearched }) => {
     <div className="no-data">No books found, try another research</div>
   );
 
-  console.log(dataFound);
-
   return (
     <Fragment>
       <div id="book-search">
@@ -348,7 +346,7 @@ const Insert = ({ data, loading, googleSearched }) => {
 
               <TextField
                 id="isbn"
-                label="Search a book in the DB"
+                label="Search a ISBN in the DB"
                 variant="outlined"
                 type="number"
                 value={isbn}
