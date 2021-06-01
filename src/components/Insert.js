@@ -12,6 +12,7 @@ import {
   googleSearch,
   setGoogleSearchClear,
   setGoogleSearched,
+  setLoading,
 } from "../store/actions/itemAction";
 
 import BookItem from "./BookItem";
@@ -159,6 +160,8 @@ const Insert = ({ data, loading, googleSearched }) => {
       } else {
         setDisableIsbnText(false);
         setAreFiledsEmpty(true);
+        // Global loading to false
+        dispatch(setLoading(false));
       }
     } else if (isbn) {
       /**
@@ -172,6 +175,8 @@ const Insert = ({ data, loading, googleSearched }) => {
       } else {
         setAreFiledsEmpty(true);
         setDisableTitleAuthorsText(false);
+        // Global loading to false
+        dispatch(setLoading(false));
       }
     }
   };
@@ -231,6 +236,9 @@ const Insert = ({ data, loading, googleSearched }) => {
     setSearched(false);
     setIsDataReady(false);
     setInProgress(false);
+
+    // Global loading to false
+    dispatch(setLoading(false));
   };
 
   /**
@@ -385,7 +393,7 @@ const Insert = ({ data, loading, googleSearched }) => {
       </div>
       {isDataReady ? tableHead : null}
       <div className="items-found">
-        {loading ? (
+        {!loading ? (
           <>
             {inProgress ? (
               <div className="in-progress">
@@ -419,4 +427,5 @@ export default connect(mapStateToProps, {
   googleSearch,
   setGoogleSearchClear,
   setGoogleSearched,
+  setLoading,
 })(Insert);

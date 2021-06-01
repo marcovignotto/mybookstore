@@ -23,6 +23,8 @@ import {
   WOO_DB_SEARCH_CLEAR_ERROR,
   WOO_DB_DATA_READY,
   WOO_DB_DATA_READY_ERROR,
+  SET_LOADING,
+  SET_LOADING_ERROR,
 } from "../types";
 
 import axios from "axios";
@@ -474,6 +476,17 @@ export const setWooDbDataReady = (state) => {
       await dispatch({ type: WOO_DB_DATA_READY, payload: state });
     } catch (error) {
       dispatch({ type: WOO_DB_DATA_READY_ERROR, payload: error });
+      console.error("error", error);
+    }
+  };
+};
+
+export const setLoading = (state) => {
+  return async (dispatch) => {
+    try {
+      await dispatch({ type: SET_LOADING, payload: state });
+    } catch (error) {
+      dispatch({ type: SET_LOADING_ERROR, payload: error });
       console.error("error", error);
     }
   };
