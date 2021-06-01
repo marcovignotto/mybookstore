@@ -5,11 +5,17 @@
 describe("Check if thew book is added, and change values", () => {
   before(() => {
     cy.wait(2000);
-    cy.visit("http://localhost:3000/");
+    cy.visit("http://localhost:3000/database");
     cy.wait(2000);
   });
-  it("Click on Database on menu", () => {
-    cy.get(".btn-database").click();
+  // it("Click on Database on menu", () => {
+  //   cy.get(".btn-database").click();
+  //   cy.wait(2000);
+  // });
+
+  it("Click on Clear Search", () => {
+    cy.get(".btn-clear-db-search").click();
+    cy.wait(2000);
   });
 
   it("Click on search without fields", () => {

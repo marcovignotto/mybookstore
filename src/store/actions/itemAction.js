@@ -253,6 +253,9 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
            */
         };
 
+        /**
+         * @todo remove
+         */
         const dataJson = JSON.stringify(data);
 
         const config = {
@@ -262,7 +265,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
               "Content-Type": "application/json;charset=utf-8",
             },
           },
-          data: dataJson,
+          data: data,
         };
 
         /**
