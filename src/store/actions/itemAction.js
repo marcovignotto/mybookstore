@@ -158,139 +158,170 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
       });
       return result;
     };
-    fetchData()
-      .then(function (results) {
-        /**
-         * @desc obj creation for the codes
-         */
 
-        //1. create obj
-        const objCodes = {
-          isbn_10: "Not provided",
-          isbn_13: "Not provided",
-          other: "Not provided",
-        };
+    try {
+      const imgResults = await fetchData();
 
-        //
-        const extractArr = () => {
-          isbn.map((x) => {
-            if (x.type === "OTHER") {
-              objCodes.other = x.identifier;
-            }
-            if (x.type === "ISBN_10") {
-              objCodes.isbn_10 = x.identifier;
-            }
-            if (x.type === "ISBN_13") {
-              objCodes.isbn_13 = x.identifier;
-            }
-          });
-        };
+      // fetchData().then(async function (results) {
+      /**
+       * @desc obj creation for the codes
+       */
 
-        extractArr();
+      //1. create obj
+      const objCodes = {
+        isbn_10: "Not provided",
+        isbn_13: "Not provided",
+        other: "Not provided",
+      };
 
-        /**
-         * @desc remapping the data in a new obj
-         */
-        const data = {
-          name: `${info.title}`,
-          type: "simple",
-          regular_price: `${price.price}`,
-          description: `${info.description}`,
-          short_description: `${info.authors.join(", ")}`,
-          categories: [{ id: 9 }, { id: 14 }],
-          manage_stock: true,
-          stock_quantity: quantity.stock,
-          images: [
-            {
-              src: results.data.Files[0].Url,
-            },
-          ],
-          attributes: [
-            {
-              id: 6,
-              name: "ISBN 10",
-              position: 1,
-              visible: true,
-              variation: false,
-              options: [objCodes.isbn_10],
-            },
-            {
-              id: 7,
-              name: "ISBN 13",
-              position: 2,
-              visible: true,
-              variation: false,
-              options: [objCodes.isbn_13],
-            },
-            {
-              id: 8,
-              name: "OTHER",
-              position: 3,
-              visible: true,
-              variation: false,
-              options: [objCodes.other],
-            },
-            {
-              id: 0,
-              name: "Book status",
-              position: 0,
-              visible: true,
-              variation: false,
-              options: status.status,
-            },
-          ],
-          meta_data: [
-            {
-              id: 32,
-              key: "_wpm_gtin_code",
-              value: getIsbn(isbn),
-            },
-          ],
-          ean_code: getIsbn(isbn),
-
-          /**
-           * @desc gets visualized in WooCommerce Product
-           */
-        };
-
-        /**
-         * @todo remove
-         */
-        const dataJson = JSON.stringify(data);
-
-        const config = {
-          config: {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json;charset=utf-8",
-            },
-          },
-          data: data,
-        };
-
-        /**
-         * @desc POST in WooCommerce
-         */
-
-        const resultReq = axios({
-          method: "post",
-          url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
-          data,
+      //
+      const extractArr = () => {
+        isbn.map((x) => {
+          if (x.type === "OTHER") {
+            objCodes.other = x.identifier;
+          }
+          if (x.type === "ISBN_10") {
+            objCodes.isbn_10 = x.identifier;
+          }
+          if (x.type === "ISBN_13") {
+            objCodes.isbn_13 = x.identifier;
+          }
         });
+      };
 
-        // console.log("res from items", resultReq);
-        return resultReq.then((x) => x.status);
-        // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
-        // return resultReq;
-      })
+      extractArr();
+
+      /**
+       * @desc remapping the data in a new obj
+       */
+      const data = {
+        name: `${info.title}`,
+        type: "simple",
+        regular_price: `${price.price}`,
+        description: `${info.description}`,
+        short_description: `${info.authors.join(", ")}`,
+        categories: [{ id: 9 }, { id: 14 }],
+        manage_stock: true,
+        stock_quantity: quantity.stock,
+        images: [
+          {
+            src: imgResults.data.Files[0].Url,
+          },
+        ],
+        attributes: [
+          {
+            id: 6,
+            name: "ISBN 10",
+            position: 1,
+            visible: true,
+            variation: false,
+            options: [objCodes.isbn_10],
+          },
+          {
+            id: 7,
+            name: "ISBN 13",
+            position: 2,
+            visible: true,
+            variation: false,
+            options: [objCodes.isbn_13],
+          },
+          {
+            id: 8,
+            name: "OTHER",
+            position: 3,
+            visible: true,
+            variation: false,
+            options: [objCodes.other],
+          },
+          {
+            id: 0,
+            name: "Book status",
+            position: 0,
+            visible: true,
+            variation: false,
+            options: status.status,
+          },
+        ],
+        meta_data: [
+          {
+            id: 32,
+            key: "_wpm_gtin_code",
+            value: getIsbn(isbn),
+          },
+        ],
+        ean_code: getIsbn(isbn),
+
+        /**
+         * @desc gets visualized in WooCommerce Product
+         */
+      };
+
+      /**
+       * @todo remove
+       */
+      // const dataJson = JSON.stringify(data);
+
+      // const config = {
+      //   config: {
+      //     headers: {
+      //       Accept: "application/json, text/plain, */*",
+      //       "Content-Type": "application/json;charset=utf-8",
+      //     },
+      //   },
+      //   data: data,
+      // };
+
+      /**
+       * @function sendPostRequest
+       * @desc POST in WooCommerce
+       */
+
+      const sendPostRequest = async (obj) => {
+        try {
+          const resultReq = await axios({
+            method: "post",
+            url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+            data: obj,
+          });
+
+          // console.log("res from items", resultReq.status);
+          // return resultReq.then((x) => x.status);
+          return resultReq.status;
+        } catch (error) {
+          dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
+          console.error(error);
+        }
+      };
+
+      // try {
+      // const resultReq = await axios({
+      //   method: "post",
+      //   url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+      //   data,
+      // });
+      // console.log(sendPostRequest(data));
+
+      /**
+       * @desc call the function
+       */
+      return sendPostRequest(data);
+      // console.log("res from items", resultReq.status);
+      // // return resultReq.then((x) => x.status);
+      // return resultReq.status;
+      // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      // return resultReq;
+
       // .then(function (res) {
       //   console.log(res);
       //   return res;
       // })
-      .catch((error) => {
-        dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
-        console.log(error);
-      });
+    } catch (error) {
+      dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
+      console.error(error);
+    }
   };
 };
 

@@ -125,8 +125,9 @@ const BookItem = ({ item, loading }) => {
   /**
    * @desc dispatches data and wait for the confirmation
    */
-  const addToDb = () => {
-    const data = dispatch(
+  const addToDb = async () => {
+    // try {
+    const data = await dispatch(
       addToWooDb(
         item.volumeInfo,
         isbnToSend,
@@ -137,18 +138,49 @@ const BookItem = ({ item, loading }) => {
       )
     );
 
-    /**
-     * @desc converts promise in true/false
-     */
-    const result = MakeQuerablePromise(data);
+    //  const data = dispatch(deleteWooDb(id));
+    // data.then(function (res) {
+    //   if (res >= 200 && res <= 399) {
+    //     //  setItemIsDeleted(true);
+    //     console.log("true");
+    //     //  setShowDeleteConfirm(false);
+    //     console.log("");
+    //   } else {
+    //     //  setItemIsDeleted(false);
+    //     console.log("false");
+    //     //  setShowDeleteConfirm(false);
+    //     console.log("");
+    //   }
+    // });
+    // // .then((res) => console.log(res === 201));
+
+    // /**
+    //  * @desc converts promise in true/false
+    //  */
+    // // const result = MakeQuerablePromise(data);
+    // // console.log(result);
+    // data.then((res) => console.log(res));
+    // /**
+    //  * @desc shows if is added or not
+    //  */
+    // data
+    //   .then((res) => {
 
     /**
-     * @desc shows if is added or not
+     * @desc sets wheter is succeful or not
      */
-    result.then(function () {
-      if (result.isFulfilled()) return setIsItemAdded(true); //true
-      if (!result.isFulfilled()) return setIsItemNotAdded(true); //false
-    });
+
+    if (data >= 200 && data <= 399) {
+      //true
+      return setIsItemAdded(true);
+    } else {
+    } //false
+    return setIsItemNotAdded(true);
+    // })
+    // .catch((err) => console.error(err));
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   const addItem = (

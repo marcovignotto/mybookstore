@@ -29,10 +29,13 @@ describe("Add a book, check database if is added", () => {
   it("Change book's price, qnt, quality", () => {
     // change input price
     cy.get(".input-price").clear().type("42");
+    cy.wait(100);
     // change input stock
     cy.get(".input-stock").clear().type("42");
+    cy.wait(100);
     // change input status
     cy.get(".input-status").select("crap");
+    cy.wait(100);
   });
 
   it("Click on button to add book", () => {
