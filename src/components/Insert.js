@@ -393,7 +393,7 @@ const Insert = ({ data, loading, googleSearched }) => {
       </div>
       {isDataReady ? tableHead : null}
       <div className="items-found">
-        {!loading ? (
+        {!loading || areFiledsEmpty ? (
           <>
             {inProgress ? (
               <div className="in-progress">

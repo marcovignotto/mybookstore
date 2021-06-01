@@ -26,6 +26,7 @@ import {
   setWooSearchTerm,
   setWooSearchClear,
   setWooDbDataReady,
+  setLoading,
 } from "../store/actions/itemAction";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -200,6 +201,7 @@ const Database = ({
     await setDataToMap(data);
     await dispatch(setWooDbDataReady(true));
     await setInProgress(false);
+    // dispatch(setLoading(false))
   };
 
   const clearWooDbSearch = () => {
@@ -207,6 +209,7 @@ const Database = ({
     dispatch(setWooDbState("stock_status=instock&"));
     dispatch(setWooSearchTerm(""));
     dispatch(setWooDbDataReady(false));
+    dispatch(setLoading(false));
   };
 
   const tableHead = (
@@ -301,8 +304,15 @@ const Database = ({
                 <CircularProgress />
               </div>
             ) : (
-              <div className="no-data">
-                Type a book title or author(s) to search in the database
+              <div className="no-data-container">
+                <div className="row">
+                  <div className="col-1"></div>
+                  <div className="col-10 no-data-text">
+                    Type a book <strong>Title/Author</strong>(s) to search into
+                    the database.
+                  </div>
+                  <div className="col-1"></div>
+                </div>
               </div>
             )}
           </>
@@ -334,4 +344,5 @@ export default connect(mapStateToProps, {
   setWooSearchTerm,
   setWooSearchClear,
   setWooDbDataReady,
+  setLoading,
 })(Database);
