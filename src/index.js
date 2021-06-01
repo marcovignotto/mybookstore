@@ -3,8 +3,11 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 
 import App from "./App";
-
 import "./index.css";
+
+/**
+ * @desc REDUX
+ */
 
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import ReduxThunk from "redux-thunk";
@@ -21,11 +24,11 @@ const rootReducer = combineReducers({
 const store = createStore(
   rootReducer,
   compose(
-    applyMiddleware(ReduxThunk),
-    window.navigator.userAgent.includes("Chrome")
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : compose
+    applyMiddleware(ReduxThunk)
+    // window.navigator.userAgent.includes("Chrome")
+    //   ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
+    //       window.__REDUX_DEVTOOLS_EXTENSION__()
+    //   : compose
   )
 );
 

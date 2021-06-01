@@ -36,8 +36,10 @@ describe("Add a book, check database if is added", () => {
   });
 
   it("Click on button to add book", () => {
+    cy.wait(2000);
     // click on btn
     cy.get(".makeStyles-btnAddDb-20").click();
+    cy.wait(1000);
     // check if class is changed
     cy.get(".item-added");
   });
