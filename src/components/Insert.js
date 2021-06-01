@@ -164,12 +164,12 @@ const Insert = ({ data, loading, googleSearched }) => {
         // Global loading to false
         dispatch(setLoading(false));
       }
-    } else if (isbn) {
+    } else if (item.isbn) {
       /**
        * @desc enable button through the
        * @state areFiledsEmpty
        */
-      if (isbn.length >= 5) {
+      if (item.isbn.length >= 5) {
         setDisableTitleAuthorsText(true);
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("isbn"));
