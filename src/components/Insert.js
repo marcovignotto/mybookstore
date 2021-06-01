@@ -268,6 +268,8 @@ const Insert = ({ data, loading, googleSearched }) => {
     <div className="no-data">No books found, try another research</div>
   );
 
+  console.log(inProgress, loading);
+
   return (
     <Fragment>
       <div id="book-search">
@@ -340,6 +342,7 @@ const Insert = ({ data, loading, googleSearched }) => {
                 id="isbn"
                 label="Search a book in the DB"
                 variant="outlined"
+                type="number"
                 value={isbn}
                 onChange={onChange}
                 disabled={searched || disableIsbnText}
