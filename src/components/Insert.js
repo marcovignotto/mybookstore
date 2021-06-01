@@ -168,7 +168,7 @@ const Insert = ({ data, loading, googleSearched }) => {
        * @desc enable button through the
        * @state areFiledsEmpty
        */
-      if (isbn.length >= 8) {
+      if (isbn.length >= 5) {
         setDisableTitleAuthorsText(true);
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("isbn"));
@@ -276,7 +276,7 @@ const Insert = ({ data, loading, googleSearched }) => {
     <div className="no-data">No books found, try another research</div>
   );
 
-  console.log(inProgress, loading);
+  console.log(dataFound);
 
   return (
     <Fragment>
@@ -400,8 +400,19 @@ const Insert = ({ data, loading, googleSearched }) => {
                 <CircularProgress />
               </div>
             ) : (
-              <div className="no-data">
-                Type a book title or author(s) to search into the APIs
+              <div className="no-data-container">
+                <div className="row">
+                  <div className="col-1"></div>
+                  <div className="col-10 no-data-text">
+                    Type a book <strong>Title/Author</strong>(s) /{" "}
+                    <strong>ISBN</strong> to search into Google Books.
+                    <br></br>
+                    <br></br>
+                    <strong>Title or Author(s)</strong> need at least 3
+                    charaters,<br></br> <strong>ISBN</strong> at least 5 digits.
+                  </div>
+                  <div className="col-1"></div>
+                </div>
               </div>
             )}
           </>

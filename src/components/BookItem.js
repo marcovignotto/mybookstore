@@ -432,7 +432,7 @@ const BookItem = ({ item, loading }) => {
   return (
     <>
       {/* to start waits loading from reducer */}
-      {loading ? null : (
+      {!loading ? null : (
         <div className="book-item">
           {addToStore ? detailedItem : compressedItem}
 

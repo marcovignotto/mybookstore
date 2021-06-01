@@ -294,7 +294,7 @@ const Database = ({
       </form>
       {wooDbDataReady ? tableHead : null}
       <div className="items-found">
-        {loading || !wooDbDataReady ? (
+        {!loading || !wooDbDataReady ? (
           <>
             {inProgress && dataToMap === null ? (
               <div className="in-progress">
