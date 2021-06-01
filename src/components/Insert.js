@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(1),
     textAlign: "center",
-    // color: theme.palette.text.secondary,
     whiteSpace: "nowrap",
     marginBottom: theme.spacing(1),
   },
@@ -98,6 +97,8 @@ const Insert = ({ data, loading, googleSearched }) => {
   const [searched, setSearched] = useState(false);
 
   const [results, setResults] = useState(20);
+
+  const [areFiledsEmpty, setAreFiledsEmpty] = useState(true);
 
   function noDataTimeout() {
     setTimeout(() => {
@@ -147,11 +148,31 @@ const Insert = ({ data, loading, googleSearched }) => {
     setItem({ ...item, [e.target.id]: e.target.value, results: results });
 
     if (item.title || item.author) {
-      setDisableIsbnText(true);
-      dispatch(setGoogleSearched("title"));
+      /**
+       * @desc enable button through the
+       * @state areFiledsEmpty
+       */
+      if (item.title.length >= 3 || item.author.length >= 3) {
+        setDisableIsbnText(true);
+        setAreFiledsEmpty(false);
+        dispatch(setGoogleSearched("title"));
+      } else {
+        setDisableIsbnText(false);
+        setAreFiledsEmpty(true);
+      }
     } else if (isbn) {
-      setDisableTitleAuthorsText(true);
-      dispatch(setGoogleSearched("isbn"));
+      /**
+       * @desc enable button through the
+       * @state areFiledsEmpty
+       */
+      if (isbn.length >= 8) {
+        setDisableTitleAuthorsText(true);
+        setAreFiledsEmpty(false);
+        dispatch(setGoogleSearched("isbn"));
+      } else {
+        setAreFiledsEmpty(true);
+        setDisableTitleAuthorsText(false);
+      }
     }
   };
 
@@ -251,11 +272,7 @@ const Insert = ({ data, loading, googleSearched }) => {
     <Fragment>
       <div id="book-search">
         <div className="items">
-          {/* <Divider light /> */}
-
           <div className={classes.inputs}>
-            {/* <Divider orientation="vertical" flexItem light /> */}
-
             <div
               className={classes.titleauthor}
               style={{ opacity: !disableTitleAuthorsText ? 1 : 0.5 }}
@@ -335,7 +352,7 @@ const Insert = ({ data, loading, googleSearched }) => {
               className="btn-search"
               variant="contained"
               onClick={onSubmit}
-              disabled={searched}
+              disabled={searched || areFiledsEmpty}
             >
               Search
             </Button>
@@ -343,7 +360,6 @@ const Insert = ({ data, loading, googleSearched }) => {
             <TextField
               id="standard-select-results"
               select
-              // label="Select"
               value={results}
               onChange={handleChangeResults}
               helperText="Max items to display"
@@ -354,7 +370,11 @@ const Insert = ({ data, loading, googleSearched }) => {
                 </MenuItem>
               ))}
             </TextField>
-            <Button variant="contained" onClick={clearSearch}>
+            <Button
+              variant="contained"
+              onClick={clearSearch}
+              disabled={areFiledsEmpty}
+            >
               Clear Search
             </Button>
           </div>
