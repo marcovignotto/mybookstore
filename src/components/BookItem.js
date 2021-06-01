@@ -19,6 +19,7 @@ import { cardStyle, cardStyleAddDb } from "../styles/Theme";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 import { useTransition, animated } from "@react-spring/web";
 
@@ -122,10 +123,13 @@ const BookItem = ({ item, loading }) => {
   const [isItemAdded, setIsItemAdded] = useState(false);
   const [isItemNotAdded, setIsItemNotAdded] = useState(false);
 
+  const [isDataSent, setIsDataSent] = useState(false);
+
   /**
    * @desc dispatches data and wait for the confirmation
    */
   const addToDb = async () => {
+    setIsDataSent(true);
     // try {
     const data = await dispatch(
       addToWooDb(
@@ -172,10 +176,13 @@ const BookItem = ({ item, loading }) => {
 
     if (data >= 200 && data <= 399) {
       //true
+      setIsDataSent(false);
       return setIsItemAdded(true);
     } else {
     } //false
+    setIsDataSent(false);
     return setIsItemNotAdded(true);
+
     // })
     // .catch((err) => console.error(err));
     // } catch (error) {
@@ -193,6 +200,14 @@ const BookItem = ({ item, loading }) => {
       >
         Add to DB
       </Button>
+    </>
+  );
+
+  const itemWaiting = (
+    <>
+      <div className={`item-waiting`}>
+        <LinearProgress />
+      </div>
     </>
   );
 
@@ -517,11 +532,15 @@ const BookItem = ({ item, loading }) => {
                             </select>
                           </form>
                           <Divider orientation="vertical" flexItem light />
-                          {isItemAdded
-                            ? itemAdded
-                            : isItemNotAdded
-                            ? itemNotAdded
-                            : addItem}
+                          <div className="btns-container">
+                            {isDataSent
+                              ? itemWaiting
+                              : isItemAdded
+                              ? itemAdded
+                              : isItemNotAdded
+                              ? itemNotAdded
+                              : addItem}
+                          </div>
                         </div>
                       </Grid>
                     </animated.div>

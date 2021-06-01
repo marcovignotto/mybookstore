@@ -32,8 +32,11 @@ describe("Check if thew book is added, and change values", () => {
 
   it("Check if correct amounts are inserted", () => {
     cy.get(".input-price").should("have.value", "42");
+    cy.wait(200);
     cy.get(".input-stock").should("have.value", "42");
+    cy.wait(200);
     cy.get(".input-status").should("have.value", "Crap");
+    cy.wait(200);
   });
 
   it("Change amounts", () => {

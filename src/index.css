@@ -637,3 +637,11 @@ body {
   font-family: "Roboto", sans-serif;
   color: gray;
 }
+
+.item-waiting {
+  width: 95px;
+  margin-left: 20px;
+}
+.btns-container {
+  width: 140px;
+}
