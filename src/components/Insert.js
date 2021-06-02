@@ -162,12 +162,10 @@ const Insert = ({ data, loading, googleSearched }) => {
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("title"));
       } else {
-        setAreFiledsEmpty(true);
         // Global loading to false
         dispatch(setLoading(false));
       }
     } else if (isbn) {
-      // console.log("ibsn");
       /**
        * @desc enable button through the
        * @state areFiledsEmpty
@@ -177,24 +175,37 @@ const Insert = ({ data, loading, googleSearched }) => {
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("isbn"));
       } else {
-        setAreFiledsEmpty(true);
         // Global loading to false
         dispatch(setLoading(false));
       }
     }
   };
-  console.log("title", title);
+
+  /**
+   * @desc disable input fields
+   */
+
   useEffect(() => {
     if (title.length === 0 && author.length === 0) {
-      console.log("disable false");
       setDisableIsbnText(false);
-      setAreFiledsEmpty(true);
+      /**
+       * @desc disable buttons
+       */
+      if (isbn.length === 0) {
+        setAreFiledsEmpty(true);
+      }
     }
     if (isbn.length === 0) {
       setDisableTitleAuthorsText(false);
-      setAreFiledsEmpty(true);
+
+      /**
+       * @desc disable buttons
+       */
+      if (title.length === 0 && author.length === 0) {
+        setAreFiledsEmpty(true);
+      }
     }
-  }, [areFiledsEmpty, title, author, isbn]);
+  }, [title, author, isbn]);
 
   const handleChangeResults = (event) => {
     setResults(event.target.value);
