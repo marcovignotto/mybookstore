@@ -101,6 +101,7 @@ const Insert = ({ data, loading, googleSearched }) => {
   const [results, setResults] = useState(20);
 
   const [areFiledsEmpty, setAreFiledsEmpty] = useState(true);
+  const [isTyping, setIsTyping] = useState(false);
 
   function noDataTimeout() {
     setTimeout(() => {
@@ -144,43 +145,56 @@ const Insert = ({ data, loading, googleSearched }) => {
    * and controlls the opacity and the status of the inputs
    * @param {*} e
    */
-
+  // console.log("areFiledsEmpty", areFiledsEmpty);
+  // console.log(item.title.length === 0 && item.author.length === 0);
   const onChange = (e) => {
     e.preventDefault();
     setItem({ ...item, [e.target.id]: e.target.value, results: results });
 
-    if (item.title || item.author) {
+    if (title || author) {
+      setDisableIsbnText(true);
+      setIsTyping(true);
       /**
        * @desc enable button through the
        * @state areFiledsEmpty
        */
-      if (item.title.length >= 3 || item.author.length >= 3) {
-        setDisableIsbnText(true);
+      if (title.length >= 3 || author.length >= 3) {
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("title"));
       } else {
-        setDisableIsbnText(false);
         setAreFiledsEmpty(true);
         // Global loading to false
         dispatch(setLoading(false));
       }
-    } else if (item.isbn) {
+    } else if (isbn) {
+      // console.log("ibsn");
       /**
        * @desc enable button through the
        * @state areFiledsEmpty
        */
-      if (item.isbn.length >= 5) {
-        setDisableTitleAuthorsText(true);
+      setDisableTitleAuthorsText(true);
+      if (isbn.length >= 5) {
         setAreFiledsEmpty(false);
         dispatch(setGoogleSearched("isbn"));
       } else {
         setAreFiledsEmpty(true);
-        setDisableTitleAuthorsText(false);
         // Global loading to false
         dispatch(setLoading(false));
       }
     }
   };
+  console.log("title", title);
+  useEffect(() => {
+    if (title.length === 0 && author.length === 0) {
+      console.log("disable false");
+      setDisableIsbnText(false);
+      setAreFiledsEmpty(true);
+    }
+    if (isbn.length === 0) {
+      setDisableTitleAuthorsText(false);
+      setAreFiledsEmpty(true);
+    }
+  }, [areFiledsEmpty, title, author, isbn]);
 
   const handleChangeResults = (event) => {
     setResults(event.target.value);
