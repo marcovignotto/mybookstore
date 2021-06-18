@@ -13,4 +13,4 @@ Every add/update/delete made the app will be immediatly visible on the WooCommer
 
 ## Demo
 
-my-second-hand-bookstore.herokuapp.com/
+[My Secondhand bookstore on Heroku](https://my-second-hand-bookstore.herokuapp.com/)
