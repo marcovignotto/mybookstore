@@ -10,6 +10,7 @@ Every add/update/delete made the app will be immediatly visible on the WooCommer
 
 - React JS
 - Redux
+- Tested with Cypress
 
 ## Demo
 
