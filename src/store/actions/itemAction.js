@@ -208,9 +208,13 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             src: imgResults.data.Files[0].Url,
           },
         ],
+        /**
+         * @desc ids are changing based on the wordpress
+         * console.log(res.data) at line 443 and check the ids
+         */
         attributes: [
           {
-            id: 6,
+            id: 1,
             name: "ISBN 10",
             position: 1,
             visible: true,
@@ -218,7 +222,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             options: [objCodes.isbn_10],
           },
           {
-            id: 7,
+            id: 2,
             name: "ISBN 13",
             position: 2,
             visible: true,
@@ -226,7 +230,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             options: [objCodes.isbn_13],
           },
           {
-            id: 8,
+            id: 3,
             name: "OTHER",
             position: 3,
             visible: true,
@@ -257,21 +261,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
       };
 
       /**
-       * @todo remove
-       */
-      // const dataJson = JSON.stringify(data);
-
-      // const config = {
-      //   config: {
-      //     headers: {
-      //       Accept: "application/json, text/plain, */*",
-      //       "Content-Type": "application/json;charset=utf-8",
-      //     },
-      //   },
-      //   data: data,
-      // };
-
-      /**
        * @function sendPostRequest
        * @desc POST in WooCommerce
        */
@@ -280,7 +269,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
         try {
           const resultReq = await axios({
             method: "post",
-            url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+            url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
             data: obj,
           });
 
@@ -296,7 +285,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
       // try {
       // const resultReq = await axios({
       //   method: "post",
-      //   url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+      //   url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
       //   data,
       // });
       // console.log(sendPostRequest(data));
@@ -370,7 +359,7 @@ export const updateWooDb = (
     try {
       const resultReq = axios({
         method: "put",
-        url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+        url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         data,
       });
 
@@ -394,7 +383,7 @@ export const deleteWooDb = (id) => {
     try {
       const resultReq = axios({
         method: "delete",
-        url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+        url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
       });
 
       setTimeout(() => {
@@ -422,7 +411,7 @@ export const getWooDbAll = (stock, searchTerms) => {
       try {
         const res = await axios.request({
           method: "get",
-          url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?${stock}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+          url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?${stock}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         });
 
         if (stock === "") {
@@ -445,7 +434,7 @@ export const getWooDbAll = (stock, searchTerms) => {
       try {
         const res = await axios.request({
           method: "get",
-          url: `https://www.ours-watches.com/mybookstore/wp-json/wc/v3/products?${stock}&search=${searchTerms}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+          url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?${stock}&search=${searchTerms}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         });
 
         if (stock === "") {
