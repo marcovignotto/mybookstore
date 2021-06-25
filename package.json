@@ -3,6 +3,9 @@
   "description": "App to manage a second hand book store in WooCommerce",
   "version": "2.4.0",
   "private": true,
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
