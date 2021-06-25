@@ -269,7 +269,7 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
         try {
           const resultReq = await axios({
             method: "post",
-            url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+            url: `https://www.marcovignotto.com/mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
             data: obj,
           });
 
@@ -336,7 +336,7 @@ export const updateWooDb = (
     try {
       const resultReq = axios({
         method: "put",
-        url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+        url: `https://www.marcovignotto.com/mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         data,
       });
 
@@ -360,7 +360,7 @@ export const deleteWooDb = (id) => {
     try {
       const resultReq = axios({
         method: "delete",
-        url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+        url: `https://www.marcovignotto.com/mybookstore/wp-json/wc/v3/products/${id}?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
       });
 
       setTimeout(() => {
@@ -388,7 +388,7 @@ export const getWooDbAll = (stock, searchTerms) => {
       try {
         const res = await axios.request({
           method: "get",
-          url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?${stock}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+          url: `https://www.marcovignotto.com/mybookstore/wp-json/wc/v3/products?${stock}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         });
 
         if (stock === "") {
@@ -411,7 +411,7 @@ export const getWooDbAll = (stock, searchTerms) => {
       try {
         const res = await axios.request({
           method: "get",
-          url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?${stock}&search=${searchTerms}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
+          url: `https://www.marcovignotto.com/mybookstore/wp-json/wc/v3/products?${stock}&search=${searchTerms}&per_page=100&consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
         });
 
         if (stock === "") {
