@@ -8,8 +8,6 @@ import { useDispatch, connect } from "react-redux";
 
 import { addToWooDb } from "../store/actions/itemAction";
 
-import { MakeQuerablePromise } from "../utils/convertPromises";
-
 import noImage from "../images/no-image.jpg";
 
 import Button from "@material-ui/core/Button";
@@ -142,34 +140,6 @@ const BookItem = ({ item, loading }) => {
       )
     );
 
-    //  const data = dispatch(deleteWooDb(id));
-    // data.then(function (res) {
-    //   if (res >= 200 && res <= 399) {
-    //     //  setItemIsDeleted(true);
-    //     console.log("true");
-    //     //  setShowDeleteConfirm(false);
-    //     console.log("");
-    //   } else {
-    //     //  setItemIsDeleted(false);
-    //     console.log("false");
-    //     //  setShowDeleteConfirm(false);
-    //     console.log("");
-    //   }
-    // });
-    // // .then((res) => console.log(res === 201));
-
-    // /**
-    //  * @desc converts promise in true/false
-    //  */
-    // // const result = MakeQuerablePromise(data);
-    // // console.log(result);
-    // data.then((res) => console.log(res));
-    // /**
-    //  * @desc shows if is added or not
-    //  */
-    // data
-    //   .then((res) => {
-
     /**
      * @desc sets wheter is succeful or not
      */
@@ -182,12 +152,6 @@ const BookItem = ({ item, loading }) => {
     } //false
     setIsDataSent(false);
     return setIsItemNotAdded(true);
-
-    // })
-    // .catch((err) => console.error(err));
-    // } catch (error) {
-    //   console.error(error);
-    // }
   };
 
   const addItem = (

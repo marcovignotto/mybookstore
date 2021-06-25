@@ -273,8 +273,6 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
             data: obj,
           });
 
-          // console.log("res from items", resultReq.status);
-          // return resultReq.then((x) => x.status);
           return resultReq.status;
         } catch (error) {
           dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
@@ -282,31 +280,10 @@ export const addToWooDb = (info, isbn, item2, quantity, status, price) => {
         }
       };
 
-      // try {
-      // const resultReq = await axios({
-      //   method: "post",
-      //   url: `https://www.marcovignotto.com//mybookstore/wp-json/wc/v3/products?consumer_key=${WOO_CK}&consumer_secret=${WOO_CS}`,
-      //   data,
-      // });
-      // console.log(sendPostRequest(data));
-
       /**
        * @desc call the function
        */
       return sendPostRequest(data);
-      // console.log("res from items", resultReq.status);
-      // // return resultReq.then((x) => x.status);
-      // return resultReq.status;
-      // dispatch({ type: ADD_TO_WOO_DB, payload: resultReq });
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      // return resultReq;
-
-      // .then(function (res) {
-      //   console.log(res);
-      //   return res;
-      // })
     } catch (error) {
       dispatch({ type: ADD_TO_WOO_DB_ERROR, payload: error });
       console.error(error);

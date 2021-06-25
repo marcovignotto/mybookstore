@@ -1,7 +1,7 @@
 {
   "name": "mbs-webapp",
   "description": "App to manage a second hand book store in WooCommerce",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
